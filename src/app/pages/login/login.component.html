@@ -5,13 +5,13 @@
       <mat-card-title>Please login to view car list</mat-card-title>
       <mat-form-field appearance="legacy">
         <mat-label>Enter your login</mat-label>
-        <input type="text" matInput autocomplete="none">
+        <input type="text" matInput autocomplete="none" #username>
       </mat-form-field>
       <mat-form-field appearance="legacy">
         <mat-label>Enter your password</mat-label>
-        <input type="password" matInput autocomplete="none">
+        <input type="password" matInput autocomplete="none" #pass>
       </mat-form-field>
-      <button (click)="login()" mat-raised-button color="primary">Login</button>
+      <button (click)="login(username.value, pass.value)" mat-raised-button color="primary">Login</button>
     </mat-card>
   </div>
 </div>

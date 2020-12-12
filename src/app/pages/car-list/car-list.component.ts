@@ -29,4 +29,8 @@ export class CarListComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+  logOut() {
+    localStorage.clear();
+    this.router.navigate(['']);
+  }
 }
