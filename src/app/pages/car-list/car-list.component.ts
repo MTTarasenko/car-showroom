@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import { AddCarModalComponent } from '../../components/add-car-modal/add-car-modal.component';
 
 @Component({
   selector: 'app-car-list',
@@ -8,13 +10,23 @@ import {Router} from "@angular/router";
 })
 export class CarListComponent implements OnInit {
 
-  constructor(private readonly router: Router) {
+  constructor(private readonly router: Router,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
   }
 
   watchCarDetails() {
-    this.router.navigate(['/car-details'])
+    this.router.navigate(['/car-details']);
+  }
+  addNewCar() {
+    const dialogRef = this.dialog.open(AddCarModalComponent, {
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
