@@ -1,0 +1,50 @@
+.content {
+
+  header {
+    z-index: 100;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    max-height: 70px;
+    padding: 0 40px;
+
+    .logo {
+      display: flex;
+      align-items: center;
+
+      img {
+        max-height: 65px;
+      }
+    }
+
+    .navs {
+      a {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .car-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 100%);
+    background-color: #ffffff;
+    padding: 30px;
+
+    &-info {
+      h4 {
+        font-size: 22px;
+      }
+    }
+
+    &-photo {
+      img {
+        border-radius: 4px;
+        max-height: 300px;
+      }
+    }
+  }
+}
