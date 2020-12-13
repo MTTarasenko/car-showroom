@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 import {SessionServiceService} from '../../services/session-service.service';
 
 
@@ -11,21 +13,33 @@ import {SessionServiceService} from '../../services/session-service.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private readonly router: Router,
-              private service: SessionServiceService) { }
+  loginForm: FormGroup;
 
-  ngOnInit(): void {
+  constructor(private readonly router: Router,
+              private service: SessionServiceService,
+              private fb: FormBuilder) {
   }
 
-  login(uname: string, p: string) {
-    const output = this.service.checkUsernameAndPassword(uname, p);
-    if (output === true)
-    {
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      username: ['', [
+        Validators.required,
+        Validators.minLength(4)
+      ]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(4)
+      ]]
+    });
+  }
+
+  login() {
+    const output = this.service.checkUsernameAndPassword(this.loginForm.controls.username.value, this.loginForm.controls.password.value);
+    if (output === true) {
       this.router.navigate(['/car-list']);
-    }
-    else{
+    } else {
       // this.msg ='Invalid username or password';
     }
-    // this.router.navigate(['/car-list']);
+    this.router.navigate(['/car-list']);
   }
 }
