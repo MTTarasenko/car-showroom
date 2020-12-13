@@ -33,9 +33,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login() {
+  login(): void {
     const output = this.service.checkUsernameAndPassword(this.loginForm.controls.username.value, this.loginForm.controls.password.value);
-    if (output === true) {
+    if (output) {
       this.router.navigate(['/car-list']);
     } else {
       // this.msg ='Invalid username or password';

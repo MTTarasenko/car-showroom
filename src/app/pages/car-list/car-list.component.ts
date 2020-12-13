@@ -24,10 +24,10 @@ export class CarListComponent implements OnInit  {
     this.carListFromServer = this.service.getCarList();
   }
 
-  watchCarDetails(index) {
+  watchCarDetails(index): void {
     this.router.navigate(['/car-details/' + index]);
   }
-  addNewCar() {
+  addNewCar(): void {
     const dialogRef = this.dialog.open(AddCarModalComponent, {
       data: {carList: this.carListFromServer},
       width: '500px'
@@ -41,7 +41,7 @@ export class CarListComponent implements OnInit  {
       }
     });
   }
-  logOut() {
+  logOut(): void {
     localStorage.clear();
     this.router.navigate(['']);
   }

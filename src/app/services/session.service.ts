@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class SessionService {
 
   constructor() { }
-  checkUsernameAndPassword(uname: string, pwd: string) {
+  checkUsernameAndPassword(uname: string, pwd: string): boolean {
     if (uname === 'admin' && pwd === 'admin123'){
       localStorage.setItem('username', 'admin');
       return true;

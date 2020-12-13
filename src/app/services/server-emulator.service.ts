@@ -41,7 +41,7 @@ export class ServerEmulatorService {
   constructor() {
   }
 
-  getCarList() {
+  getCarList(): any {
     return this.carList;
   }
 }
