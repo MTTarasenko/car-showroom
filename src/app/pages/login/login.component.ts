@@ -2,21 +2,21 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import {SessionServiceService} from '../../services/session-service.service';
+import {SessionService} from '../../services/session.service';
 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [SessionServiceService]
+  providers: [SessionService]
 })
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
   constructor(private readonly router: Router,
-              private service: SessionServiceService,
+              private service: SessionService,
               private fb: FormBuilder) {
   }
 

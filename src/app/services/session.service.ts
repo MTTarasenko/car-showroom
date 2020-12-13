@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class SessionServiceService {
+export class SessionService {
 
   constructor() { }
   checkUsernameAndPassword(uname: string, pwd: string) {

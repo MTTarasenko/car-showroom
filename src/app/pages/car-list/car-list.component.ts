@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -9,13 +9,10 @@ import { AddCarModalComponent } from '../../components/add-car-modal/add-car-mod
   templateUrl: './car-list.component.html',
   styleUrls: ['./car-list.component.scss']
 })
-export class CarListComponent implements OnInit {
+export class CarListComponent {
 
   constructor(private readonly router: Router,
               public dialog: MatDialog) {
-  }
-
-  ngOnInit(): void {
   }
 
   watchCarDetails() {
