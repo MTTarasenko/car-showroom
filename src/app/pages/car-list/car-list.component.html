@@ -15,32 +15,11 @@
       <h5>I’ve always been asked, ‘What is my favorite car?’ and I’ve always said ‘The next one.’
         <span>Carroll Shelby</span></h5>
     </div>
-    <div class="car-list">
-      <mat-card (click)="watchCarDetails()">
+    <div class="car-list" *ngIf="carListFromServer">
+      <mat-card (click)="watchCarDetails()" *ngFor="let car of carListFromServer">
         <div>
           <img
-            src="https://cdn.motor1.com/images/mgl/YozWJ/s3/2020-gr-supra-2-0l-turbo.jpg"
-            alt="">
-        </div>
-      </mat-card>
-      <mat-card (click)="watchCarDetails()">
-        <div>
-          <img
-            src="https://pngimg.com/uploads/toyota/toyota_PNG1919.png"
-            alt="">
-        </div>
-      </mat-card>
-      <mat-card (click)="watchCarDetails()">
-        <div>
-          <img
-            src="https://cdn.motor1.com/images/mgl/9np61/s3/toyota-camry-wagon-render.jpg"
-            alt="">
-        </div>
-      </mat-card>
-      <mat-card (click)="watchCarDetails()">
-        <div>
-          <img
-            src="https://a.d-cd.net/fc79b16s-960.jpg"
+            [src]="car.photoURL"
             alt="">
         </div>
       </mat-card>

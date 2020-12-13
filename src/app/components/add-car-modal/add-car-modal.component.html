@@ -1,34 +1,38 @@
 <div class="content">
   <h1 mat-dialog-title>Add new car</h1>
-  <mat-form-field appearance="fill">
-    <mat-label>Car brand and model</mat-label>
-    <input matInput>
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Picture URL</mat-label>
-    <input matInput>
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Year</mat-label>
-    <mat-select>
-      <mat-option value="option1">2001</mat-option>
-      <mat-option value="option2">2002</mat-option>
-      <mat-option value="option3">2003</mat-option>
-      <mat-option value="option4">2004</mat-option>
-      <mat-option value="option5">2005</mat-option>
-      <mat-option value="option6">2006</mat-option>
-      <mat-option value="option7">2007</mat-option>
-      <mat-option value="option8">2008</mat-option>
-      <mat-option value="option9">2009</mat-option>
-      <mat-option value="option10">2010</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Description</mat-label>
-    <textarea matInput></textarea>
-  </mat-form-field>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancel</button>
-    <button mat-button cdkFocusInitial>Add</button>
-  </div>
+  <form [formGroup]="newCarForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Car brand and model</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Picture URL</mat-label>
+      <input matInput formControlName="photoURl">
+      <mat-hint align="end">Must start with http://</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Year</mat-label>
+      <mat-select formControlName="year">
+        <mat-option value="2000">2000</mat-option>
+        <mat-option value="2001">2001</mat-option>
+        <mat-option value="2002">2002</mat-option>
+        <mat-option value="2003">2003</mat-option>
+        <mat-option value="2004">2004</mat-option>
+        <mat-option value="2005">2005</mat-option>
+        <mat-option value="2006">2006</mat-option>
+        <mat-option value="2007">2007</mat-option>
+        <mat-option value="2008">2008</mat-option>
+        <mat-option value="2009">2009</mat-option>
+        <mat-option value="2010">2010</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Cancel</button>
+      <button mat-button cdkFocusInitial>Add</button>
+    </div>
+  </form>
 </div>
