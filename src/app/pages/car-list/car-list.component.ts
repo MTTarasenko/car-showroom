@@ -18,7 +18,7 @@ export class CarListComponent implements OnInit  {
               private service: ServerEmulatorService) {
   }
 
-  carListFromServer = [];
+  carListFromServer;
 
   ngOnInit(): void {
     this.carListFromServer = this.service.getCarList();
@@ -29,11 +29,16 @@ export class CarListComponent implements OnInit  {
   }
   addNewCar() {
     const dialogRef = this.dialog.open(AddCarModalComponent, {
+      data: {carList: this.carListFromServer},
       width: '500px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      console.log(typeof result, result);
+      if (result) {
+        // console.log(this.carListFromServer, this.carListFromServer.push(result));
+        this.carListFromServer.push(result);
+      }
     });
   }
   logOut() {

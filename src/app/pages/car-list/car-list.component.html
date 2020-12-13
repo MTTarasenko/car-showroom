@@ -1,7 +1,7 @@
 <div class="content">
   <header>
     <div class="logo">
-      <img src="assets/img/logo.png" alt="">
+      <img src="assets/img/logo.png" alt="logo">
     </div>
     <div class="navs">
       <button>Catalog</button>
@@ -15,12 +15,11 @@
       <h5>I’ve always been asked, ‘What is my favorite car?’ and I’ve always said ‘The next one.’
         <span>Carroll Shelby</span></h5>
     </div>
-    <div class="car-list" *ngIf="carListFromServer">
+    <div class="car-list" *ngIf="carListFromServer.length != 0">
       <mat-card (click)="watchCarDetails(i)" *ngFor="let car of carListFromServer;let i=index">
         <div>
           <img
-            [src]="car.photoURL"
-            alt="">
+            [src]="car.photoURL" alt="">
         </div>
       </mat-card>
     </div>

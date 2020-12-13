@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import {Component, OnInit, Inject} from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
@@ -13,7 +13,8 @@ export class AddCarModalComponent implements OnInit{
   newCarForm: FormGroup;
 
   constructor(public dialogRef: MatDialogRef<AddCarModalComponent>,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              @Inject(MAT_DIALOG_DATA) public data: {carList: object}) { }
 
   ngOnInit(): void {
     this.newCarForm = this.fb.group({
@@ -21,9 +22,9 @@ export class AddCarModalComponent implements OnInit{
         Validators.required,
         Validators.minLength(2)
       ]],
-      photoURl: ['', [
+      photoURL: ['', [
         Validators.required,
-        // Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')
+        Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')
       ]],
       year: ['', [
         Validators.required,
@@ -31,14 +32,15 @@ export class AddCarModalComponent implements OnInit{
       ]],
       description: ['', [
         Validators.required,
-        Validators.minLength(10)
+        Validators.minLength(6)
       ]],
     });
-
-    this.newCarForm.valueChanges.subscribe(console.log);
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  onAddClick(): void {
+    this.dialogRef.close(this.newCarForm.value);
   }
 }
