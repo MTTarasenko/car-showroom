@@ -9,17 +9,16 @@
       </a>
     </div>
   </header>
-  <div class="car-item">
+  <div class="car-item" *ngIf="selectedCar">
     <div class="car-item-photo">
-      <img src="https://cdn.motor1.com/images/mgl/YozWJ/s3/2020-gr-supra-2-0l-turbo.jpg">
+      <img [src]="selectedCar.photoURL">
     </div>
     <div class="car-item-info">
-      <h4>Toyota Supra</h4>
+      <h4>{{selectedCar.name}}</h4>
       <p>
-        2.0L twin-scroll single-turbo inline 4-cylinder engine, 18-in. cast-aluminum 10-spoke wheels with dual-tone
-        finish, 8.8-in. display screen with Supra Command
+        {{selectedCar.description}}
       </p>
-      <p>Year: 2020</p>
+      <p>{{selectedCar.year}}</p>
     </div>
   </div>
 </div>

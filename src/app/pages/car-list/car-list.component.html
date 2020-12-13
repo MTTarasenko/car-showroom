@@ -4,9 +4,9 @@
       <img src="assets/img/logo.png" alt="">
     </div>
     <div class="navs">
-      <a>Catalog</a>
-      <a (click)="addNewCar()">Add new</a>
-      <a (click)="logOut()">Log out</a>
+      <button>Catalog</button>
+      <button (click)="addNewCar()">Add new</button>
+      <button (click)="logOut()">Log out</button>
     </div>
   </header>
   <section>
@@ -16,7 +16,7 @@
         <span>Carroll Shelby</span></h5>
     </div>
     <div class="car-list" *ngIf="carListFromServer">
-      <mat-card (click)="watchCarDetails()" *ngFor="let car of carListFromServer">
+      <mat-card (click)="watchCarDetails(i)" *ngFor="let car of carListFromServer;let i=index">
         <div>
           <img
             [src]="car.photoURL"

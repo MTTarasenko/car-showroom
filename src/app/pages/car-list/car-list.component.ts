@@ -22,11 +22,10 @@ export class CarListComponent implements OnInit  {
 
   ngOnInit(): void {
     this.carListFromServer = this.service.getCarList();
-    console.log(this.carListFromServer);
   }
 
-  watchCarDetails() {
-    this.router.navigate(['/car-details']);
+  watchCarDetails(index) {
+    this.router.navigate(['/car-details/' + index]);
   }
   addNewCar() {
     const dialogRef = this.dialog.open(AddCarModalComponent, {

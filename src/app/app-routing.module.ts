@@ -15,7 +15,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'car-details',
+    path: 'car-details/:id',
     loadChildren: () => import('./pages/car-details/car-details.module').then(m => m.CarDetailsModule),
     canActivate: [AuthGuardService]
   }
