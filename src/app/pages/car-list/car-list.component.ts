@@ -36,7 +36,6 @@ export class CarListComponent implements OnInit  {
     dialogRef.afterClosed().subscribe(result => {
       console.log(typeof result, result);
       if (result) {
-        // console.log(this.carListFromServer, this.carListFromServer.push(result));
         this.carListFromServer.push(result);
       }
     });
