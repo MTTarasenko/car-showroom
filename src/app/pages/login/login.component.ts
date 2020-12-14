@@ -38,8 +38,7 @@ export class LoginComponent implements OnInit {
     if (output) {
       this.router.navigate(['/car-list']);
     } else {
-      // this.msg ='Invalid username or password';
+
     }
-    this.router.navigate(['/car-list']);
   }
 }
