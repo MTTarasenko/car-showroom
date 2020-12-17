@@ -7,18 +7,32 @@ import {AuthGuardService} from './guards/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
-    path: 'car-list',
-    loadChildren: () => import('./pages/car-list/car-list.module').then(m => m.CarListModule),
-    canActivate: [AuthGuardService]
+    path: '',
+    canActivate: [AuthGuardService],
+    children: [
+      {
+        path: 'car-list',
+        loadChildren: () => import('./pages/car-list/car-list.module').then(m => m.CarListModule),
+      },
+      {
+        path: 'car-details/:id',
+        loadChildren: () => import('./pages/car-details/car-details.module').then(m => m.CarDetailsModule),
+      }
+    ]
   },
-  {
-    path: 'car-details/:id',
-    loadChildren: () => import('./pages/car-details/car-details.module').then(m => m.CarDetailsModule),
-    canActivate: [AuthGuardService]
-  }
+  // {
+  //   path: 'car-list',
+  //   loadChildren: () => import('./pages/car-list/car-list.module').then(m => m.CarListModule),
+  //   canActivate: [AuthGuardService],
+  // },
+  // {
+  //   path: 'car-details/:id',
+  //   loadChildren: () => import('./pages/car-details/car-details.module').then(m => m.CarDetailsModule),
+  //   canActivate: [AuthGuardService]
+  // }
 ];
 
 @NgModule({
