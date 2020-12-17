@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+import {Observable} from 'rxjs';
 
 import {ServerEmulatorService} from '../../services/server-emulator.service';
-
 import {AddCarModalComponent} from '../../components/add-car-modal/add-car-modal.component';
 import {Car} from '../../models/car';
 
@@ -19,13 +19,12 @@ export class CarListComponent implements OnInit {
               private service: ServerEmulatorService) {
   }
 
-  carListFromServer;
   cars: Car[] = [];
+  isNewCarAdded: Observable<boolean>;
 
 
   ngOnInit(): void {
     this.service.getCarList().subscribe(data => this.cars = data);
-    this.service.getCarList().subscribe(data => console.log(data));
   }
 
   watchCarDetails(index): void {
@@ -38,9 +37,8 @@ export class CarListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(typeof result, result);
       if (result) {
-        this.service.addNewCar(result);
+        this.isNewCarAdded = this.service.addNewCar(result);
       }
     });
   }

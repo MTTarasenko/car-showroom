@@ -16,12 +16,15 @@
         <span>Carroll Shelby</span></h5>
     </div>
     <div class="car-list">
-      <mat-card (click)="watchCarDetails(car?.id)" *ngFor="let car of cars;let i=index">
+      <mat-card (click)="watchCarDetails(car?.id)" *ngFor="let car of cars; let i=index">
         <div>
           <img
             [src]="car?.photoURL">
         </div>
       </mat-card>
+    </div>
+    <div *ngIf="(isNewCarAdded | async)">
+      <h3 style="color: white"> new car added</h3>
     </div>
   </section>
 </div>
