@@ -34,14 +34,13 @@ export class CarListComponent implements OnInit {
 
   addNewCar(): void {
     const dialogRef = this.dialog.open(AddCarModalComponent, {
-      data: {carList: this.carListFromServer},
       width: '500px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(typeof result, result);
       if (result) {
-        this.carListFromServer.push(result);
+        this.service.addNewCar(result);
       }
     });
   }

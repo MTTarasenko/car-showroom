@@ -52,13 +52,17 @@ export class ServerEmulatorService {
 
   getCarList(): Observable<Car[]> {
     return of(this.carListArray);
-      // });
   }
 
   getCarById(carID: number): Observable<Car> {
     return this.getCarList()
       .pipe(
-        map(car => car.find(car => car.id === carID))
+        map(data => data.find(car => car.id === carID))
       );
+  }
+
+  addNewCar(newCar): void {
+    newCar.id = this.carListArray[this.carListArray.length - 1].id + 1;
+    this.carListArray.push(newCar);
   }
 }
