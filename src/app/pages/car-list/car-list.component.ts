@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ServerEmulatorService} from '../../services/server-emulator.service';
 
 import { AddCarModalComponent } from '../../components/add-car-modal/add-car-modal.component';
+import {Car} from '../../models/car';
 
 @Component({
   selector: 'app-car-list',
@@ -19,9 +20,11 @@ export class CarListComponent implements OnInit  {
   }
 
   carListFromServer;
+  cars: Car[] = [];
+
 
   ngOnInit(): void {
-    this.carListFromServer = this.service.getCarList();
+    this.service.getCarList().subscribe(data => this.cars = data);
   }
 
   watchCarDetails(index): void {

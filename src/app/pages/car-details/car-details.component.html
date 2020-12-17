@@ -9,16 +9,16 @@
       </a>
     </div>
   </header>
-  <div class="car-item" *ngIf="selectedCar">
+  <div class="car-item">
     <div class="car-item-photo">
-      <img [src]="selectedCar.photoURL">
+      <img [src]="car?.photoURL">
     </div>
     <div class="car-item-info">
-      <h4>{{selectedCar.name}}</h4>
+      <h4>{{car?.name}}</h4>
       <p>
-        {{selectedCar.description}}
+        {{car?.description}}
       </p>
-      <p>{{selectedCar.year}}</p>
+      <p>{{car?.year}}</p>
     </div>
   </div>
 </div>
