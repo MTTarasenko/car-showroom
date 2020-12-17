@@ -4,7 +4,7 @@ import {MatDialog} from '@angular/material/dialog';
 
 import {ServerEmulatorService} from '../../services/server-emulator.service';
 
-import { AddCarModalComponent } from '../../components/add-car-modal/add-car-modal.component';
+import {AddCarModalComponent} from '../../components/add-car-modal/add-car-modal.component';
 import {Car} from '../../models/car';
 
 @Component({
@@ -12,7 +12,7 @@ import {Car} from '../../models/car';
   templateUrl: './car-list.component.html',
   styleUrls: ['./car-list.component.scss']
 })
-export class CarListComponent implements OnInit  {
+export class CarListComponent implements OnInit {
 
   constructor(private readonly router: Router,
               public dialog: MatDialog,
@@ -25,11 +25,13 @@ export class CarListComponent implements OnInit  {
 
   ngOnInit(): void {
     this.service.getCarList().subscribe(data => this.cars = data);
+    this.service.getCarList().subscribe(data => console.log(data));
   }
 
   watchCarDetails(index): void {
     this.router.navigate(['/car-details/' + index]);
   }
+
   addNewCar(): void {
     const dialogRef = this.dialog.open(AddCarModalComponent, {
       data: {carList: this.carListFromServer},
@@ -43,6 +45,7 @@ export class CarListComponent implements OnInit  {
       }
     });
   }
+
   logOut(): void {
     localStorage.clear();
     this.router.navigate(['']);
