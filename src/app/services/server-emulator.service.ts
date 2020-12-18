@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Car} from '../models/car';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 
@@ -61,13 +61,16 @@ export class ServerEmulatorService {
       );
   }
 
-  addNewCar(newCar): Observable<boolean> {
-    if (newCar) {
-      newCar.id = this.carListArray[this.carListArray.length - 1].id + 1;
-      this.carListArray.push(newCar);
-      return of(true);
-    } else {
-      return of(false);
-    }
+  addNewCar(newCar: Car): Observable<boolean> {
+    return new Observable(observer => {
+      if (newCar) {
+        newCar.id = this.carListArray[this.carListArray.length - 1].id + 1;
+        this.carListArray.push(newCar);
+        return observer.next(true);
+      } else {
+        return observer.next(false);
+      }
+    });
   }
 }
+
