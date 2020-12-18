@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ServerEmulatorService} from '../../services/server-emulator.service';
 import {ActivatedRoute} from '@angular/router';
 import {Car} from '../../models/car';

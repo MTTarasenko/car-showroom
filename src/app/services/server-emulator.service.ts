@@ -62,15 +62,20 @@ export class ServerEmulatorService {
   }
 
   addNewCar(newCar: Car): Observable<boolean> {
-    return new Observable(observer => {
-      if (newCar) {
-        newCar.id = this.carListArray[this.carListArray.length - 1].id + 1;
-        this.carListArray.push(newCar);
-        return observer.next(true);
-      } else {
-        return observer.next(false);
-      }
-    });
+    if (newCar) {
+      newCar.id = this.carListArray[this.carListArray.length - 1].id + 1;
+      this.carListArray.push(newCar);
+      return of(true);
+    }
+    // return new Observable(observer => {
+    //   if (newCar) {
+    //     newCar.id = this.carListArray[this.carListArray.length - 1].id + 1;
+    //     this.carListArray.push(newCar);
+    //     return observer.next(true);
+    //   } else {
+    //     return observer.next(false);
+    //   }
+    // });
   }
 }
 

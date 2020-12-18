@@ -20,7 +20,6 @@ export class CarListComponent implements OnInit {
   }
 
   cars: Car[] = [];
-  isNewCarAdded: Observable<boolean>;
 
 
   ngOnInit(): void {
@@ -38,7 +37,7 @@ export class CarListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.isNewCarAdded = this.service.addNewCar(result);
+       this.service.addNewCar(result).subscribe();
       }
     });
   }
