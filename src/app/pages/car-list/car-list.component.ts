@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {Observable} from 'rxjs';
 
 import {ServerEmulatorService} from '../../services/server-emulator.service';
 import {AddCarModalComponent} from '../../components/add-car-modal/add-car-modal.component';
 import {Car} from '../../models/car';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-car-list',
@@ -20,6 +20,7 @@ export class CarListComponent implements OnInit {
   }
 
   cars: Car[] = [];
+  val: Car ;
 
 
   ngOnInit(): void {
@@ -35,11 +36,12 @@ export class CarListComponent implements OnInit {
       width: '500px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-       this.service.addNewCar(result).subscribe();
-      }
-    });
+
+    dialogRef.afterClosed().pipe(
+      switchMap(result => {
+        return this.service.addNewCar(result);
+      })
+    ).subscribe();
   }
 
   logOut(): void {
