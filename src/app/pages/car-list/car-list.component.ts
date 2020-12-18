@@ -20,7 +20,6 @@ export class CarListComponent implements OnInit {
   }
 
   cars: Car[] = [];
-  val: Car ;
 
 
   ngOnInit(): void {
