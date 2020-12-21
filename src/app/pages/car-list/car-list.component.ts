@@ -27,7 +27,7 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cars = this.activatedRoute.data.pipe(
-      map((data: { cars: Car[] }) => data.cars)
+      map((data: { cars: Car[] }) => data.cars )
     );
   }
 

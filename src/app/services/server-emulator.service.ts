@@ -3,7 +3,6 @@ import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Car} from '../models/car';
 
-
 @Injectable({
   providedIn: 'root'
 })
