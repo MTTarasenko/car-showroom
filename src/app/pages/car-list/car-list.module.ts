@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import {RouterModule} from '@angular/router';
 
 import { CarListComponent } from './car-list.component';
-import {CarListResolverService} from "../../services/car-list-resolver.service";
-// import {CarListResolverService} from '../../services/car-list-resolver.service';
+import {CarListResolverService} from '../../services/car-list-resolver.service';
 
 
 @NgModule({

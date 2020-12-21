@@ -13,7 +13,6 @@ import {CarListResolverService} from '../../services/car-list-resolver.service';
   selector: 'app-car-list',
   templateUrl: './car-list.component.html',
   styleUrls: ['./car-list.component.scss'],
-  // providers: [CarListResolverService]
 })
 export class CarListComponent implements OnInit, OnDestroy {
 
