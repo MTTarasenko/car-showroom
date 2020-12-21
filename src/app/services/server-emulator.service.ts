@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Car} from '../models/car';
 import {Observable, of} from 'rxjs';
-import {delay, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 
 @Injectable({
