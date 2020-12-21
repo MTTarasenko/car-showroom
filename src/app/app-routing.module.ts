@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
 import {AuthGuardService} from './guards/auth-guard.service';
+import {CarListResolverService} from './services/car-list-resolver.service';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
     children: [
       {
         path: 'car-list',
+        resolve: {cars: CarListResolverService},
         loadChildren: () => import('./pages/car-list/car-list.module').then(m => m.CarListModule),
       },
       {

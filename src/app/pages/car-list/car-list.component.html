@@ -15,7 +15,7 @@
       <h5>I’ve always been asked, ‘What is my favorite car?’ and I’ve always said ‘The next one.’
         <span>Carroll Shelby</span></h5>
     </div>
-    <div class="car-list">
+    <div class="car-list" *ngIf="cars.length > 0">
       <mat-card (click)="watchCarDetails(car?.id)" *ngFor="let car of cars; let i=index">
         <div>
           <img

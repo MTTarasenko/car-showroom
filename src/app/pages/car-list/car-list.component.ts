@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 
 import {ServerEmulatorService} from '../../services/server-emulator.service';
@@ -16,14 +16,17 @@ export class CarListComponent implements OnInit {
 
   constructor(private readonly router: Router,
               public dialog: MatDialog,
-              private service: ServerEmulatorService) {
+              private service: ServerEmulatorService,
+              private activatedRoute: ActivatedRoute) {
   }
 
   cars: Car[] = [];
 
 
   ngOnInit(): void {
-    this.service.getCarList().subscribe(data => this.cars = data);
+    this.activatedRoute.data
+      .subscribe((data: { cars: Car[] }) => this.cars = data.cars);
+    // this.service.getCarList().subscribe(data => this.cars = data);
   }
 
   watchCarDetails(index): void {
