@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 
 import {Car} from '../models/car';
@@ -12,7 +12,8 @@ export class CarListResolverService implements Resolve<Car[]> {
 
   cars: Car[];
 
-  constructor(private service: ServerEmulatorService) { }
+  constructor(private service: ServerEmulatorService) {
+  }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<Car[]> | Promise<Car[]> | Car[] {
