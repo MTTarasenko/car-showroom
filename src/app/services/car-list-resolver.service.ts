@@ -4,10 +4,9 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/rou
 import {Car} from '../models/car';
 import {Observable} from 'rxjs';
 import {ServerEmulatorService} from './server-emulator.service';
+import {CarListModule} from "../pages/car-list/car-list.module";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CarListResolverService implements Resolve<Car[]> {
 
   cars: Car[];

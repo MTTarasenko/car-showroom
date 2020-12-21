@@ -15,7 +15,6 @@ const routes: Routes = [
     children: [
       {
         path: 'car-list',
-        resolve: {cars: CarListResolverService},
         loadChildren: () => import('./pages/car-list/car-list.module').then(m => m.CarListModule),
       },
       {

@@ -7,11 +7,13 @@ import {Observable, Subscription} from 'rxjs';
 import {ServerEmulatorService} from '../../services/server-emulator.service';
 import {AddCarModalComponent} from '../../components/add-car-modal/add-car-modal.component';
 import {Car} from '../../models/car';
+import {CarListResolverService} from '../../services/car-list-resolver.service';
 
 @Component({
   selector: 'app-car-list',
   templateUrl: './car-list.component.html',
-  styleUrls: ['./car-list.component.scss']
+  styleUrls: ['./car-list.component.scss'],
+  // providers: [CarListResolverService]
 })
 export class CarListComponent implements OnInit, OnDestroy {
 
@@ -47,7 +49,7 @@ export class CarListComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(dialogRef.afterClosed().pipe(
       switchMap(result => {
-        if (result) {
+        if (result.length > 0) {
           return this.service.addNewCar(result);
         }
       })
