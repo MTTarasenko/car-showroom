@@ -15,8 +15,8 @@
       <h5>I’ve always been asked, ‘What is my favorite car?’ and I’ve always said ‘The next one.’
         <span>Carroll Shelby</span></h5>
     </div>
-    <div class="car-list" *ngIf="cars | async">
-      <mat-card (click)="watchCarDetails(car?.id)" *ngFor="let car of cars | async">
+    <div class="car-list" *ngIf="(cars$ | async) as cars">
+      <mat-card (click)="watchCarDetails(car?.id)" *ngFor="let car of cars">
         <div>
           <img
             [src]="car?.photoURL">

@@ -21,12 +21,12 @@ export class CarListComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute) {
   }
 
-  cars: Observable<Car[]>;
+  cars$: Observable<Car[]>;
 
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    this.cars = this.activatedRoute.data.pipe(
+    this.cars$ = this.activatedRoute.data.pipe(
       map((data: { cars: Car[] }) => data.cars)
     );
   }
