@@ -19,5 +19,4 @@ export class CarListResolverService implements Resolve<Car[]> {
     Observable<Car[]> | Promise<Car[]> | Car[] {
     return this.service.getCarList();
   }
-
 }

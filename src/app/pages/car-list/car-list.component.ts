@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {switchMap} from 'rxjs/operators';
-import {Subscription} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+import {Observable, Subscription} from 'rxjs';
 
 import {ServerEmulatorService} from '../../services/server-emulator.service';
 import {AddCarModalComponent} from '../../components/add-car-modal/add-car-modal.component';
@@ -21,22 +21,17 @@ export class CarListComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute) {
   }
 
-  cars: Car[] = [];
+  cars: Observable<Car[]>;
 
   subscriptions: Subscription[] = [];
-  mainSubscription: Subscription;
-  newCarSubscription: Subscription;
 
   ngOnInit(): void {
-    this.mainSubscription = this.activatedRoute.data
-      .subscribe((data: { cars: Car[] }) => this.cars = data.cars);
+    this.cars = this.activatedRoute.data.pipe(
+      map((data: { cars: Car[] }) => data.cars)
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.push(this.mainSubscription);
-    if (this.newCarSubscription) {
-      this.subscriptions.push(this.newCarSubscription);
-    }
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
@@ -50,11 +45,13 @@ export class CarListComponent implements OnInit, OnDestroy {
     });
 
 
-    this.newCarSubscription = dialogRef.afterClosed().pipe(
+    this.subscriptions.push(dialogRef.afterClosed().pipe(
       switchMap(result => {
-        return this.service.addNewCar(result);
+        if (result) {
+          return this.service.addNewCar(result);
+        }
       })
-    ).subscribe();
+    ).subscribe());
   }
 
   logOut(): void {

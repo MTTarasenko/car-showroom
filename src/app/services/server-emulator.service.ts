@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Car} from '../models/car';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {Car} from '../models/car';
 
 
 @Injectable({
