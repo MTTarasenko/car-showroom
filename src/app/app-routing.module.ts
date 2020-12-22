@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
 import {AuthGuardService} from './guards/auth-guard.service';
-import {CarListResolverService} from './services/car-list-resolver.service';
+import {BasicLayoutComponent} from './layout/basic-layout/basic-layout.component';
 
 const routes: Routes = [
   {
@@ -12,6 +12,7 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuardService],
+    component: BasicLayoutComponent,
     children: [
       {
         path: 'car-list',
