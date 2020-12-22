@@ -18,6 +18,8 @@ header {
   }
 
   .navs {
+    display: flex;
+    width: 100%;
 
     button {
       outline: none;
@@ -33,6 +35,10 @@ header {
       &:hover {
         border-top: 3px solid red;
       }
+    }
+
+    &-logout {
+      margin-left: auto;
     }
   }
 }
