@@ -4,7 +4,10 @@
   </div>
   <div class="navs">
     <a routerLink="/car-list" routerLinkActive="active-link">Catalog</a>
-    <button *ngIf="(isOnCarDetails$ | async)" class="active-link">Car details</button>
+    <a hidden routerLink="/car-details" routerLinkActive #details="routerLinkActive" class=""></a>
+    <button *ngIf="details.isActive" class="active-link">
+      Car details
+    </button>
     <button (click)="addNewCar()">Add new</button>
     <button class="navs-logout" (click)="logOut()">Log out</button>
   </div>
