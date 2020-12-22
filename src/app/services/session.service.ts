@@ -1,18 +1,23 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
 
-  constructor() { }
+  constructor() {
+  }
+
   checkUsernameAndPassword(uname: string, pwd: string): boolean {
-    if (uname === 'admin' && pwd === 'admin123'){
+    if (uname === 'admin' && pwd === 'admin123') {
       localStorage.setItem('username', 'admin');
       return true;
-    }
-    else{
+    } else {
       return false;
     }
+  }
+
+  saveFavorites(cars): void {
+    localStorage.setItem('favorites', cars);
   }
 }

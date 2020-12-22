@@ -37,4 +37,8 @@ export class CarListComponent implements OnInit, OnDestroy {
   watchCarDetails(index): void {
     this.router.navigate(['/car-details/' + index]);
   }
+
+  addFavorite(car): void {
+    this.service.addFavorite(car);
+  }
 }

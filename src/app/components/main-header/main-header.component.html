@@ -9,6 +9,10 @@
       Car details
     </button>
     <button (click)="addNewCar()">Add new</button>
+    <button>
+      <img src="assets/img/star.svg" alt="">
+      <span>{{ (favCars$| async).length }}</span>
+    </button>
     <button class="navs-logout" (click)="logOut()">Log out</button>
   </div>
 </header>

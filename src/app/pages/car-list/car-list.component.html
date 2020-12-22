@@ -6,10 +6,12 @@
         <span>Carroll Shelby</span></h5>
     </div>
     <div class="car-list" *ngIf="(cars$ | async) as cars">
-      <mat-card (click)="watchCarDetails(car?.id)" *ngFor="let car of cars">
-        <div>
-          <img
-            [src]="car?.photoURL">
+      <mat-card *ngFor="let car of cars">
+        <div (click)="watchCarDetails(car?.id)">
+          <img [src]="car?.photoURL">
+        </div>
+        <div class="star" (click)="addFavorite(car)">
+          <img src="assets/img/star.svg">
         </div>
       </mat-card>
     </div>

@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import { Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 
 import {AuthGuardService} from '../../guards/auth-guard.service';
 import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {ServerEmulatorService} from '../../services/server-emulator.service';
 import {switchMap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {Car} from '../../models/car';
 
 @Component({
   selector: 'app-main-header',
@@ -21,8 +23,10 @@ export class MainHeaderComponent implements OnInit {
               private service: ServerEmulatorService) {
   }
 
-  ngOnInit(): void {
+  favCars$: Observable<Car[]>;
 
+  ngOnInit(): void {
+    this.favCars$ = this.service.getFavoritesList();
   }
 
   addNewCar(): void {

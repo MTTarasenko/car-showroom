@@ -46,11 +46,17 @@ export class ServerEmulatorService {
     }
   ];
 
+  favoriteCars: Car[] = [];
+
   constructor() {
   }
 
   getCarList(): Observable<Car[]> {
     return of(this.carListArray);
+  }
+
+  getFavoritesList(): Observable<Car[]> {
+    return of(this.favoriteCars);
   }
 
   getCarById(carID: number): Observable<Car> {
@@ -70,6 +76,16 @@ export class ServerEmulatorService {
         return observer.next(false);
       }
     });
+  }
+
+  addFavorite(car: Car): void {
+    if (this.favoriteCars.includes(car)) {
+      console.log(car.id + ' is duplicate');
+    } else {
+      console.log(car.id + ' unique');
+      this.favoriteCars.push(car);
+    }
+    console.log(this.favoriteCars);
   }
 }
 

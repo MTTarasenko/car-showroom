@@ -39,6 +39,10 @@ header {
       &.active-link {
         border-top: 3px solid green;
       }
+
+      img {
+        max-height: 25px;
+      }
     }
 
     &-logout {
