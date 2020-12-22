@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavigationEnd, Router, ActivatedRoute} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {filter, switchMap} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
@@ -18,7 +18,6 @@ export class MainHeaderComponent implements OnInit {
   public isOnCarDetails$: Observable<boolean>;
 
   constructor(public readonly router: Router,
-              private activatedRoute: ActivatedRoute,
               private authService: AuthGuardService,
               public dialog: MatDialog,
               private service: ServerEmulatorService) {
