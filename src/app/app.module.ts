@@ -16,6 +16,8 @@ import {LoginComponent} from './pages/login/login.component';
 import {CarListComponent} from './pages/car-list/car-list.component';
 import {CarDetailsComponent} from './pages/car-details/car-details.component';
 import {AddCarModalComponent} from './components/add-car-modal/add-car-modal.component';
+import {MainHeaderModule} from './components/main-header/main-header.module';
+import {BasicLayoutModule} from "./layout/basic-layout/basic-layout.module";
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import {AddCarModalComponent} from './components/add-car-modal/add-car-modal.com
     MatDialogModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MainHeaderModule,
+    BasicLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

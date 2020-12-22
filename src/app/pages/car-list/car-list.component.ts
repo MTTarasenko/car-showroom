@@ -55,8 +55,4 @@ export class CarListComponent implements OnInit, OnDestroy {
     ).subscribe());
   }
 
-  logOut(): void {
-    localStorage.clear();
-    this.router.navigate(['']);
-  }
 }
