@@ -40,19 +40,19 @@ export class CarListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/car-details/' + index]);
   }
 
-  addNewCar(): void {
-    const dialogRef = this.dialog.open(AddCarModalComponent, {
-      width: '500px'
-    });
-
-
-    this.subscriptions.push(dialogRef.afterClosed().pipe(
-      switchMap(result => {
-        if (result.length > 0) {
-          return this.service.addNewCar(result);
-        }
-      })
-    ).subscribe());
-  }
+  // addNewCar(): void {
+  //   const dialogRef = this.dialog.open(AddCarModalComponent, {
+  //     width: '500px'
+  //   });
+  //
+  //
+  //   this.subscriptions.push(dialogRef.afterClosed().pipe(
+  //     switchMap(result => {
+  //       if (result.length > 0) {
+  //         return this.service.addNewCar(result);
+  //       }
+  //     })
+  //   ).subscribe());
+  // }
 
 }

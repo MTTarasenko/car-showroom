@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthGuardService} from '../../guards/auth-guard.service';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-basic-layout',
