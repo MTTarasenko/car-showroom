@@ -26,7 +26,9 @@ export class MainHeaderComponent implements OnInit {
   favCars$: Observable<Car[]>;
 
   ngOnInit(): void {
-    this.favCars$ = this.service.getFavoritesList();
+    if (this.service.getFavoritesList()) {
+      this.favCars$ = this.service.getFavoritesList();
+    }
   }
 
   addNewCar(): void {

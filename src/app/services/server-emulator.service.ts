@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Car} from '../models/car';
+import {SessionService} from './session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,7 @@ export class ServerEmulatorService {
 
   favoriteCars: Car[] = [];
 
-  constructor() {
+  constructor(private sessionService: SessionService) {
   }
 
   getCarList(): Observable<Car[]> {
@@ -56,7 +57,7 @@ export class ServerEmulatorService {
   }
 
   getFavoritesList(): Observable<Car[]> {
-    return of(this.favoriteCars);
+    return of(this.sessionService.getFavorites());
   }
 
   getCarById(carID: number): Observable<Car> {
@@ -79,11 +80,16 @@ export class ServerEmulatorService {
   }
 
   addFavorite(car: Car): void {
+    if (this.getFavoritesList().pipe(
+      map(data => data.length !== 0)
+    )) {
+    }
     if (this.favoriteCars.includes(car)) {
       console.log(car.id + ' is duplicate');
     } else {
       console.log(car.id + ' unique');
       this.favoriteCars.push(car);
+      this.sessionService.saveFavorites(this.favoriteCars);
     }
     console.log(this.favoriteCars);
   }
