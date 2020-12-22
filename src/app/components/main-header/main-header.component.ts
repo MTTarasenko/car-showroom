@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {Router} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
@@ -12,15 +12,12 @@ import {ServerEmulatorService} from '../../services/server-emulator.service';
   templateUrl: './main-header.component.html',
   styleUrls: ['./main-header.component.scss']
 })
-export class MainHeaderComponent implements OnInit {
+export class MainHeaderComponent {
 
   constructor(private readonly router: Router,
               private authService: AuthGuardService,
               public dialog: MatDialog,
               private service: ServerEmulatorService) { }
-
-  ngOnInit(): void {
-  }
 
   addNewCar(): void {
     const dialogRef = this.dialog.open(AddCarModalComponent, {

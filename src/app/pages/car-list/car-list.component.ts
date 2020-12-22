@@ -1,13 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {map, switchMap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {Observable, Subscription} from 'rxjs';
 
 import {ServerEmulatorService} from '../../services/server-emulator.service';
-import {AddCarModalComponent} from '../../components/add-car-modal/add-car-modal.component';
 import {Car} from '../../models/car';
-import {CarListResolverService} from '../../services/car-list-resolver.service';
 
 @Component({
   selector: 'app-car-list',
@@ -39,20 +37,4 @@ export class CarListComponent implements OnInit, OnDestroy {
   watchCarDetails(index): void {
     this.router.navigate(['/car-details/' + index]);
   }
-
-  // addNewCar(): void {
-  //   const dialogRef = this.dialog.open(AddCarModalComponent, {
-  //     width: '500px'
-  //   });
-  //
-  //
-  //   this.subscriptions.push(dialogRef.afterClosed().pipe(
-  //     switchMap(result => {
-  //       if (result.length > 0) {
-  //         return this.service.addNewCar(result);
-  //       }
-  //     })
-  //   ).subscribe());
-  // }
-
 }
