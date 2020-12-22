@@ -1,9 +1,10 @@
 <header>
-  <div class="logo">
+  <div class="logo" routerLink="/car-list">
     <img src="assets/img/logo.png" alt="logo">
   </div>
   <div class="navs">
-    <button>Catalog</button>
+    <a routerLink="/car-list" routerLinkActive="active-link">Catalog</a>
+    <button *ngIf="(isOnCarDetails$ | async)" class="active-link">Car details</button>
     <button (click)="addNewCar()">Add new</button>
     <button class="navs-logout" (click)="logOut()">Log out</button>
   </div>

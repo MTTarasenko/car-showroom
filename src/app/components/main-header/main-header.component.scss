@@ -11,6 +11,7 @@ header {
   .logo {
     display: flex;
     align-items: center;
+    cursor: pointer;
 
     img {
       max-height: 65px;
@@ -21,8 +22,7 @@ header {
     display: flex;
     width: 100%;
 
-    button {
-      outline: none;
+    button, a {
       border: none;
       background: none;
       text-decoration: none;
@@ -34,6 +34,10 @@ header {
 
       &:hover {
         border-top: 3px solid red;
+      }
+
+      &.active-link {
+        border-top: 3px solid green;
       }
     }
 
