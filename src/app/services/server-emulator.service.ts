@@ -59,10 +59,8 @@ export class ServerEmulatorService {
   getLocalCarList(): Observable<Car[]> {
     this.getCarList().pipe(
       map(data => {
-        data.filter(item => {
-          item.favorite = false;
-        });
-        this.localCarList = data;
+        data.filter(item => item.favorite = false);
+        return this.localCarList = data;
       })
     ).subscribe();
     console.log('getting local car list...');
