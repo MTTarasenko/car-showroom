@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {map} from 'rxjs/operators';
-import {Observable, Subscription} from 'rxjs';
+import {concat, forkJoin, merge, Observable, Subscription, zip} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
@@ -23,13 +23,30 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   cars$: Observable<Car[]>;
+  cars: Car[];
+  favCars$: Observable<Car[]>;
+  favCars: Car[];
+  carsWithFavorites$: Observable<Car[]>;
+  carsWithFavorites: Car[];
 
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
     this.cars$ = this.activatedRoute.data.pipe(
-      map((data: { cars: Car[] }) => data.cars )
+      map((data: { cars: Car[] }) => data.cars)
     );
+
+    this.favCars$ = this.favoriteService.getFavoriteCars();
+
+    this.cars$.pipe(map(data => this.cars = data)).subscribe();
+    this.favCars$.pipe(map(data => this.favCars = data)).subscribe();
+    this.cars.forEach(itemC => {
+      this.favCars.forEach(itemF => {
+       if (itemC.id === itemF.id) {
+         itemC.favorite = itemF.favorite;
+       }
+      });
+    });
   }
 
   ngOnDestroy(): void {
