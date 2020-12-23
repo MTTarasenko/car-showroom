@@ -3,18 +3,18 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/rou
 
 import {Car} from '../models/car';
 import {Observable} from 'rxjs';
-import {ServerEmulatorService} from './server-emulator.service';
+import {CarService} from './car.service';
 
 @Injectable()
 export class CarListResolverService implements Resolve<Car[]> {
 
   cars: Car[];
 
-  constructor(private service: ServerEmulatorService) {
+  constructor(private service: CarService) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<Car[]> | Promise<Car[]> | Car[] {
-    return this.service.getLocalCarList();
+    return this.service.getCarList();
   }
 }

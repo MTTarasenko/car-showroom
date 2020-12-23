@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {distinct, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {Car} from '../models/car';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ServerEmulatorService {
+export class CarService {
 
   carListArray: Car[] = [
     {
@@ -46,8 +46,6 @@ export class ServerEmulatorService {
     }
   ];
 
-  localCarList: Car[] = [];
-
   constructor() {
   }
 
@@ -56,18 +54,6 @@ export class ServerEmulatorService {
     return of(this.carListArray);
   }
 
-  getLocalCarList(): Observable<Car[]> {
-    this.getCarList().pipe(
-      map(data => {
-        data.filter(item => item.favorite = false);
-        return this.localCarList = data;
-      })
-    ).subscribe();
-    console.log('getting local car list...');
-    return of(this.localCarList).pipe(
-      distinct()
-    );
-  }
 
 
   getCarById(carID: number): Observable<Car> {
@@ -89,13 +75,5 @@ export class ServerEmulatorService {
     });
   }
 
-  addFavorite(car: Car): Observable<Car[]> {
-    this.localCarList.forEach(item => {
-      if (item.id === car.id) {
-        item.favorite = !item.favorite;
-      }
-    });
-    return of(this.localCarList);
-  }
 }
 

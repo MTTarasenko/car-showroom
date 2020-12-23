@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 
-import {ServerEmulatorService} from '../../services/server-emulator.service';
+import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
 
 @Component({
@@ -14,7 +14,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
 
   car: Car;
 
-  constructor(private service: ServerEmulatorService,
+  constructor(private service: CarService,
               private route: ActivatedRoute) {
   }
 

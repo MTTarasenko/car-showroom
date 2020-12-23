@@ -4,8 +4,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {map} from 'rxjs/operators';
 import {Observable, Subscription} from 'rxjs';
 
-import {ServerEmulatorService} from '../../services/server-emulator.service';
+import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
+import {FavoritesService} from '../../services/favorites.service';
 
 @Component({
   selector: 'app-car-list',
@@ -16,7 +17,8 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   constructor(private readonly router: Router,
               public dialog: MatDialog,
-              private service: ServerEmulatorService,
+              private service: CarService,
+              private favoriteService: FavoritesService,
               private activatedRoute: ActivatedRoute) {
   }
 
@@ -39,6 +41,6 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   addFavorite(car): void {
-    this.service.addFavorite(car).subscribe();
+    this.favoriteService.addFavorite(car).subscribe();
   }
 }
