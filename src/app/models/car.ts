@@ -4,4 +4,5 @@ export class Car {
   photoURL: string;
   description: string;
   year: string;
+  favorite?: boolean;
 }

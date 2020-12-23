@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {distinct, map} from 'rxjs/operators';
 import {Car} from '../models/car';
-import {SessionService} from './session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -47,17 +46,31 @@ export class ServerEmulatorService {
     }
   ];
 
+  localCarList: Car[] = [];
+
   favoriteCars: Car[] = [];
 
-  constructor(private sessionService: SessionService) {
+  constructor() {
   }
 
   getCarList(): Observable<Car[]> {
+    console.log('getting car list...');
     return of(this.carListArray);
   }
 
-  getFavoritesList(): Observable<Car[]> {
-    return of(this.sessionService.getFavorites());
+  getLocalCarList(): Observable<Car[]> {
+    this.getCarList().pipe(
+      map(data => {
+        data.filter(item => {
+          item.favorite = false;
+        });
+        this.localCarList = data;
+      })
+    ).subscribe();
+    console.log('getting local car list...');
+    return of(this.localCarList).pipe(
+      distinct()
+    );
   }
 
   getCarById(carID: number): Observable<Car> {
@@ -80,18 +93,11 @@ export class ServerEmulatorService {
   }
 
   addFavorite(car: Car): void {
-    if (this.getFavoritesList().pipe(
-      map(data => data.length !== 0)
-    )) {
-    }
-    if (this.favoriteCars.includes(car)) {
-      console.log(car.id + ' is duplicate');
-    } else {
-      console.log(car.id + ' unique');
-      this.favoriteCars.push(car);
-      this.sessionService.saveFavorites(this.favoriteCars);
-    }
-    console.log(this.favoriteCars);
+    this.localCarList.forEach(item => {
+      if (item.id === car.id) {
+        item.favorite = !item.favorite;
+      }
+    });
   }
 }
 

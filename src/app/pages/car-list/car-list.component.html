@@ -11,7 +11,8 @@
           <img [src]="car?.photoURL">
         </div>
         <div class="star" (click)="addFavorite(car)">
-          <img src="assets/img/star.svg">
+          <img *ngIf="!car.favorite" src="assets/img/star.svg">
+          <img *ngIf="car.favorite" src="assets/img/star-yellow.svg">
         </div>
       </mat-card>
     </div>

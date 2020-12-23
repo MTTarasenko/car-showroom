@@ -15,6 +15,6 @@ export class CarListResolverService implements Resolve<Car[]> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<Car[]> | Promise<Car[]> | Car[] {
-    return this.service.getCarList();
+    return this.service.getLocalCarList();
   }
 }

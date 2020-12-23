@@ -1,34 +1,45 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 
 import {AuthGuardService} from '../../guards/auth-guard.service';
 import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {ServerEmulatorService} from '../../services/server-emulator.service';
-import {switchMap} from 'rxjs/operators';
+import {count, map, switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Car} from '../../models/car';
 
 @Component({
   selector: 'app-main-header',
   templateUrl: './main-header.component.html',
-  styleUrls: ['./main-header.component.scss']
+  styleUrls: ['./main-header.component.scss'],
 })
 export class MainHeaderComponent implements OnInit {
+
+  cars$: Observable<Car[]>;
 
 
   constructor(public readonly router: Router,
               private authService: AuthGuardService,
               public dialog: MatDialog,
-              private service: ServerEmulatorService) {
+              private service: ServerEmulatorService,
+              private activatedRoute: ActivatedRoute) {
   }
 
-  favCars$: Observable<Car[]>;
+  favCarsCounter = 0;
 
   ngOnInit(): void {
-    if (this.service.getFavoritesList()) {
-      this.favCars$ = this.service.getFavoritesList();
-    }
+    this.cars$ = this.service.getLocalCarList();
+    this.cars$.pipe(
+      map(data => {
+        data.filter(item => {
+          if (item.favorite) {
+            this.favCarsCounter++;
+          }
+        });
+        console.log(data, this.favCarsCounter);
+      })
+    ).subscribe(c => console.log(c));
   }
 
   addNewCar(): void {
