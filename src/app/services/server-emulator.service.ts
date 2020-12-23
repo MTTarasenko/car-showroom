@@ -48,8 +48,6 @@ export class ServerEmulatorService {
 
   localCarList: Car[] = [];
 
-  favoriteCars: Car[] = [];
-
   constructor() {
   }
 
@@ -72,6 +70,7 @@ export class ServerEmulatorService {
       distinct()
     );
   }
+
 
   getCarById(carID: number): Observable<Car> {
     return this.getCarList()

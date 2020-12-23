@@ -11,8 +11,9 @@
     <button (click)="addNewCar()">Add new</button>
     <button>
       <img src="assets/img/star.svg" alt="">
-      <span>{{ 'favs are: ' + favCars.length }}</span>
+      <span>{{ 'favs are: ' + cars$.length }}</span>
     </button>
+    <button *ngFor="let car of cars$">{{car.favorite}}</button>
     <button class="navs-logout" (click)="logOut()">Log out</button>
   </div>
 </header>

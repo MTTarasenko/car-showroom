@@ -7,7 +7,7 @@ import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {ServerEmulatorService} from '../../services/server-emulator.service';
 import {map, switchMap} from 'rxjs/operators';
 import {Car} from '../../models/car';
-import {Observable, of} from "rxjs";
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-main-header',
@@ -30,16 +30,12 @@ export class MainHeaderComponent implements OnInit {
   favCarsCounter = 0;
 
   ngOnInit(): void {
+
     this.service.getLocalCarList().pipe(
       map(data => {
-        this.favCarsObs = of(data.filter(item => item.favorite === true));
+        this.cars$ = data;
+        // this.favCarsObs = of(data.filter(item => item.favorite === true));
       })
-    ).subscribe();
-
-    // this.favCarsObs = of(this.cars$);
-
-    this.favCarsObs.pipe(
-      map(data => this.favCars = data)
     ).subscribe();
   }
 
