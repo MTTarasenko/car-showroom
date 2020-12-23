@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 
 import {AuthGuardService} from '../../guards/auth-guard.service';
 import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {ServerEmulatorService} from '../../services/server-emulator.service';
-import {count, map, switchMap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
 import {Car} from '../../models/car';
+import {Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-main-header',
@@ -16,30 +16,31 @@ import {Car} from '../../models/car';
 })
 export class MainHeaderComponent implements OnInit {
 
-  cars$: Observable<Car[]>;
+  cars$: Car[];
+  favCars: Car[] = [];
+  favCarsObs: Observable<Car[]>;
 
 
   constructor(public readonly router: Router,
               private authService: AuthGuardService,
               public dialog: MatDialog,
-              private service: ServerEmulatorService,
-              private activatedRoute: ActivatedRoute) {
+              private service: ServerEmulatorService) {
   }
 
   favCarsCounter = 0;
 
   ngOnInit(): void {
-    this.cars$ = this.service.getLocalCarList();
-    this.cars$.pipe(
+    this.service.getLocalCarList().pipe(
       map(data => {
-        data.filter(item => {
-          if (item.favorite) {
-            this.favCarsCounter++;
-          }
-        });
-        console.log(data, this.favCarsCounter);
+        this.favCarsObs = of(data.filter(item => item.favorite === true));
       })
-    ).subscribe(c => console.log(c));
+    ).subscribe();
+
+    // this.favCarsObs = of(this.cars$);
+
+    this.favCarsObs.pipe(
+      map(data => this.favCars = data)
+    ).subscribe();
   }
 
   addNewCar(): void {

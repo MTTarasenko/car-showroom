@@ -39,6 +39,6 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   addFavorite(car): void {
-    this.service.addFavorite(car);
+    this.service.addFavorite(car).subscribe();
   }
 }

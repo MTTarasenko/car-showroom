@@ -11,7 +11,7 @@
     <button (click)="addNewCar()">Add new</button>
     <button>
       <img src="assets/img/star.svg" alt="">
-      <span>{{ favCarsCounter  }}</span>
+      <span>{{ 'favs are: ' + favCars.length }}</span>
     </button>
     <button class="navs-logout" (click)="logOut()">Log out</button>
   </div>

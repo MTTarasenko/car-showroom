@@ -92,12 +92,13 @@ export class ServerEmulatorService {
     });
   }
 
-  addFavorite(car: Car): void {
+  addFavorite(car: Car): Observable<Car[]> {
     this.localCarList.forEach(item => {
       if (item.id === car.id) {
         item.favorite = !item.favorite;
       }
     });
+    return of(this.localCarList);
   }
 }
 
