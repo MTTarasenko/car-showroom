@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {distinct, map} from 'rxjs/operators';
 import {Car} from '../models/car';
 
 @Injectable({
@@ -45,16 +45,18 @@ export class CarService {
       year: '2018'
     }
   ];
+  carListArrayCopy: Car[] = [];
 
   constructor() {
   }
 
   getCarList(): Observable<Car[]> {
     console.log('getting car list...');
-    return of(this.carListArray);
+    if (this.carListArrayCopy.length === 0) {
+      this.carListArrayCopy = JSON.parse(JSON.stringify(this.carListArray));
+    }
+    return of(this.carListArrayCopy).pipe(distinct());
   }
-
-
 
   getCarById(carID: number): Observable<Car> {
     return this.getCarList()
@@ -66,14 +68,13 @@ export class CarService {
   addNewCar(newCar: Car): Observable<boolean> {
     return new Observable(observer => {
       if (newCar.photoURL) {
-        newCar.id = this.carListArray[this.carListArray.length - 1].id + 1;
-        this.carListArray.push(newCar);
+        newCar.id = this.carListArrayCopy[this.carListArrayCopy.length - 1].id + 1;
+        this.carListArrayCopy.push(newCar);
         return observer.next(true);
       } else {
         return observer.next(false);
       }
     });
   }
-
 }
 

@@ -48,7 +48,9 @@ export class MainHeaderComponent implements OnInit {
           return of();
         }
       })
-    ).subscribe();
+    ).subscribe(result => {
+      console.log(result);
+    });
   }
 
 
