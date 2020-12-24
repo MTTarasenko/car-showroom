@@ -37,12 +37,17 @@ export class MainHeaderComponent implements OnInit {
 
   addNewCar(): void {
     const dialogRef = this.dialog.open(AddCarModalComponent, {
-      width: '500px'
+      width: '500px',
     });
 
-
+    dialogRef.backdropClick().subscribe(result => {
+      console.log('Backdrop clicked, ' + result);
+    });
+    console.log('state is ' + dialogRef.backdropClick());
     dialogRef.afterClosed().pipe(
       switchMap(result => {
+        console.log(dialogRef);
+        console.log(result);
         if (result) {
           return this.service.addNewCar(result);
         }

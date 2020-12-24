@@ -38,10 +38,11 @@ export class AddCarModalComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({});
   }
 
   onAddClick(): void {
+    console.log(this.newCarForm.value);
     this.dialogRef.close(this.newCarForm.value);
   }
 }
