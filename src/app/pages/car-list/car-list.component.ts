@@ -24,6 +24,7 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   cars$: Observable<Car[]>;
   favCars$: Observable<Car[]>;
+  addingFavoriteSub: Subscription;
 
   subscriptions: Subscription[] = [];
 
@@ -54,6 +55,7 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   addFavorite(car): void {
-    this.favoriteService.addFavorite(car).subscribe();
+    this.addingFavoriteSub = this.favoriteService.addFavorite(car).subscribe();
+    this.subscriptions.push(this.addingFavoriteSub);
   }
 }
