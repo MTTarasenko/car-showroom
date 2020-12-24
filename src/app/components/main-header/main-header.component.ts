@@ -8,6 +8,7 @@ import {AuthGuardService} from '../../guards/auth-guard.service';
 import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-main-header',
@@ -16,7 +17,8 @@ import {FavoritesService} from '../../services/favorites.service';
 })
 export class MainHeaderComponent implements OnInit {
 
-  favCars: Car[];
+
+  favCars$: Observable<Car[]>;
 
 
   constructor(public readonly router: Router,
@@ -28,9 +30,7 @@ export class MainHeaderComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.favoriteService.getFavoriteCars().pipe(
-      map(data => this.favCars = data)
-    ).subscribe();
+    this.favCars$ = this.favoriteService.getFavoriteCars();
   }
 
   addNewCar(): void {

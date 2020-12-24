@@ -33,29 +33,12 @@ export class CarListComponent implements OnInit, OnDestroy {
       map((data: { cars: Car[] }) => data.cars)
     );
 
-    this.favCars$ = this.favoriteService.getFavoriteCars();
+    this.favoriteService.getFavoriteCars().subscribe();
 
-    // this.cars$.pipe(map(dataC => dataC.filter(itemC => {
-    //   this.favCars$.pipe(map(dataF => dataF.filter(itemF => {
-    //     if (itemC.id === itemF.id) {
-    //       itemC.favorite = true;
-    //     } else {
-    //       itemC.favorite = false;
-    //     }
-    //   } )));
-    // })));
+    this.favCars$ = this.favoriteService.getFavoriteCars();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-  }
-
-  watchCarDetails(index): void {
-    this.router.navigate(['/car-details/' + index]);
-  }
-
-  addFavorite(car): void {
-    this.addingFavoriteSub = this.favoriteService.addFavorite(car).subscribe();
-    this.subscriptions.push(this.addingFavoriteSub);
   }
 }

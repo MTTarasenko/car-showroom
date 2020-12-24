@@ -7,12 +7,7 @@
     </div>
     <div class="car-list" *ngIf="(cars$ | async) as cars">
       <mat-card *ngFor="let car of cars">
-        <div (click)="watchCarDetails(car?.id)">
-          <img [src]="car?.photoURL">
-        </div>
-        <div class="star" (click)="addFavorite(car)">
-          <img [src]="car.favorite ? 'assets/img/star-yellow.svg' : 'assets/img/star.svg'">
-        </div>
+        <app-car [car]="car"></app-car>
       </mat-card>
     </div>
   </section>

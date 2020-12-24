@@ -18,6 +18,7 @@ import {CarDetailsComponent} from './pages/car-details/car-details.component';
 import {AddCarModalComponent} from './components/add-car-modal/add-car-modal.component';
 import {MainHeaderModule} from './components/main-header/main-header.module';
 import {BasicLayoutModule} from './layout/basic-layout/basic-layout.module';
+import {CarModule} from "./components/car/car.module";
 
 @NgModule({
   declarations: [
@@ -27,21 +28,22 @@ import {BasicLayoutModule} from './layout/basic-layout/basic-layout.module';
     CarDetailsComponent,
     AddCarModalComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MainHeaderModule,
-    BasicLayoutModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MainHeaderModule,
+        BasicLayoutModule,
+        CarModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

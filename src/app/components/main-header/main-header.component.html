@@ -11,7 +11,7 @@
     <button (click)="addNewCar()">Add new</button>
     <button>
       <img src="assets/img/star.svg" alt="">
-      <span *ngIf="favCars.length > 0">{{favCars.length}}</span>
+      <span *ngIf="(favCars$ | async).length > 0">{{(favCars$ | async).length}}</span>
     </button>
     <button class="navs-logout" (click)="logOut()">Log out</button>
   </div>

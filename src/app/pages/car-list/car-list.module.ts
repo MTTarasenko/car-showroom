@@ -4,14 +4,14 @@ import {RouterModule} from '@angular/router';
 
 import { CarListComponent } from './car-list.component';
 import {CarListResolverService} from '../../services/car-list-resolver.service';
-import {MainHeaderModule} from '../../components/main-header/main-header.module';
+import {CarModule} from '../../components/car/car.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    MainHeaderModule,
+    CarModule,
     RouterModule.forChild([{
       path: '',
       resolve: {cars: CarListResolverService},

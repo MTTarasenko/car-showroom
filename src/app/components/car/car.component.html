@@ -1,0 +1,8 @@
+<div class="car" (click)="watchCarDetails(car?.id)">
+  <div class="car-photo">
+    <img [src]="car.photoURL">
+  </div>
+  <div class="car-star" (click)="addFavorite(car)">
+    <img [src]="car.favorite ? 'assets/img/star-yellow.svg' : 'assets/img/star.svg'">
+  </div>
+</div>
