@@ -6,7 +6,6 @@ import {Observable, Subscription} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
-import {FavoritesService} from '../../services/favorites.service';
 
 @Component({
   selector: 'app-car-list',
@@ -18,12 +17,10 @@ export class CarListComponent implements OnInit, OnDestroy {
   constructor(private readonly router: Router,
               public dialog: MatDialog,
               private service: CarService,
-              private favoriteService: FavoritesService,
               private activatedRoute: ActivatedRoute) {
   }
 
   cars$: Observable<Car[]>;
-  favCars$: Observable<Car[]>;
   addingFavoriteSub: Subscription;
 
   subscriptions: Subscription[] = [];
@@ -32,10 +29,6 @@ export class CarListComponent implements OnInit, OnDestroy {
     this.cars$ = this.activatedRoute.data.pipe(
       map((data: { cars: Car[] }) => data.cars)
     );
-
-    this.favoriteService.getFavoriteCars().subscribe();
-
-    this.favCars$ = this.favoriteService.getFavoriteCars();
   }
 
   ngOnDestroy(): void {

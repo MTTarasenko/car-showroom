@@ -1,10 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {Car} from '../../models/car';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {FavoritesService} from '../../services/favorites.service';
 import {faStar as solidStar} from '@fortawesome/free-solid-svg-icons';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
+
+import {FavoritesService} from '../../services/favorites.service';
+import {Car} from '../../models/car';
 
 @Component({
   selector: 'app-car',
