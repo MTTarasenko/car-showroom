@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarComponent } from './car.component';
-import {MatCardModule} from "@angular/material/card";
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 
 
@@ -12,7 +12,7 @@ import {MatCardModule} from "@angular/material/card";
   ],
   imports: [
     CommonModule,
-    MatCardModule
+    FontAwesomeModule
   ]
 })
 export class CarModule { }

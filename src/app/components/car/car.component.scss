@@ -1,13 +1,14 @@
 .car {
-  padding: 10px;
 
   &-photo {
+    padding: 10px;
     text-align: center;
 
     img {
       width: 75%;
       object-fit: cover;
       max-height: 200px;
+      min-height: 200px;
       user-select: none;
       border-radius: 4px;
     }
@@ -18,7 +19,8 @@
     right: 10px;
     top: 10px;
     cursor: pointer;
-
+    font-size: 30px;
+    color: #da3c18;
 
     img {
       max-height: 40px;

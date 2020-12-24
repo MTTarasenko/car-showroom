@@ -18,7 +18,8 @@ import {CarDetailsComponent} from './pages/car-details/car-details.component';
 import {AddCarModalComponent} from './components/add-car-modal/add-car-modal.component';
 import {MainHeaderModule} from './components/main-header/main-header.module';
 import {BasicLayoutModule} from './layout/basic-layout/basic-layout.module';
-import {CarModule} from "./components/car/car.module";
+import {CarModule} from './components/car/car.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {CarModule} from "./components/car/car.module";
         MainHeaderModule,
         BasicLayoutModule,
         CarModule,
+        FontAwesomeModule,
     ],
   providers: [],
   bootstrap: [AppComponent]
