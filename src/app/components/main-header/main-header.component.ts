@@ -9,7 +9,7 @@ import {AuthGuardService} from '../../guards/auth-guard.service';
 import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-main-header',
@@ -40,16 +40,12 @@ export class MainHeaderComponent implements OnInit {
       width: '500px',
     });
 
-    dialogRef.backdropClick().subscribe(result => {
-      console.log('Backdrop clicked, ' + result);
-    });
-    console.log('state is ' + dialogRef.backdropClick());
     dialogRef.afterClosed().pipe(
       switchMap(result => {
-        console.log(dialogRef);
-        console.log(result);
         if (result) {
           return this.service.addNewCar(result);
+        } else {
+          return of();
         }
       })
     ).subscribe();
