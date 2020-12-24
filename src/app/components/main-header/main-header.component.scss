@@ -23,6 +23,7 @@ header {
     width: 100%;
 
     button, a {
+      position: relative;
       border: none;
       background: none;
       text-decoration: none;
@@ -42,6 +43,20 @@ header {
 
       img {
         max-height: 25px;
+      }
+      span {
+        position: absolute;
+        top: 0;
+        right: 0;
+        text-align: center;
+        line-height: 20px;
+        min-width: 20px;
+        max-width: 20px;
+        min-height: 20px;
+        max-height: 20px;
+        border-radius: 50%;
+        background-color: red;
+        color: #ffffff;
       }
     }
 

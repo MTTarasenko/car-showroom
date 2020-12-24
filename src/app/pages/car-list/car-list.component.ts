@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {map} from 'rxjs/operators';
-import {concat, forkJoin, merge, Observable, Subscription, zip} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
@@ -23,11 +23,7 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   cars$: Observable<Car[]>;
-  cars: Car[];
   favCars$: Observable<Car[]>;
-  favCars: Car[];
-  carsWithFavorites$: Observable<Car[]>;
-  carsWithFavorites: Car[];
 
   subscriptions: Subscription[] = [];
 
@@ -38,15 +34,15 @@ export class CarListComponent implements OnInit, OnDestroy {
 
     this.favCars$ = this.favoriteService.getFavoriteCars();
 
-    this.cars$.pipe(map(data => this.cars = data)).subscribe();
-    this.favCars$.pipe(map(data => this.favCars = data)).subscribe();
-    this.cars.forEach(itemC => {
-      this.favCars.forEach(itemF => {
-       if (itemC.id === itemF.id) {
-         itemC.favorite = itemF.favorite;
-       }
-      });
-    });
+    // this.cars$.pipe(map(dataC => dataC.filter(itemC => {
+    //   this.favCars$.pipe(map(dataF => dataF.filter(itemF => {
+    //     if (itemC.id === itemF.id) {
+    //       itemC.favorite = true;
+    //     } else {
+    //       itemC.favorite = false;
+    //     }
+    //   } )));
+    // })));
   }
 
   ngOnDestroy(): void {

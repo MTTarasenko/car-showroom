@@ -19,8 +19,10 @@ export class FavoritesService {
 
   addFavorite(car: Car): Observable<Car[]> {
     if (!this.favoriteCarsList.includes(car)) {
+      car.favorite = true;
       this.favoriteCarsList.push(car);
     } else {
+      car.favorite = false;
       this.favoriteCarsList.forEach((item, index) => {
         if (item.id === car.id) {
           this.favoriteCarsList.splice(index, 1);
