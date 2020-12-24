@@ -44,6 +44,19 @@ header {
       img {
         max-height: 25px;
       }
+    }
+
+    .fav-counter {
+      position: relative;
+      padding: 10px 10px;
+      box-sizing: border-box;
+      user-select: none;
+
+      fa-icon {
+        font-size: 30px;
+        color: #da3c18;
+      }
+
       span {
         position: absolute;
         top: 0;

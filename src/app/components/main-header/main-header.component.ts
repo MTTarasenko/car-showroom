@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {map, switchMap} from 'rxjs/operators';
-import {Car} from '../../models/car';
+import {switchMap} from 'rxjs/operators';
+import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
 
+import {Car} from '../../models/car';
 import {AuthGuardService} from '../../guards/auth-guard.service';
 import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-main-header',
@@ -19,6 +20,7 @@ export class MainHeaderComponent implements OnInit {
 
 
   favCars$: Observable<Car[]>;
+  faStarRegular = regularStar;
 
 
   constructor(public readonly router: Router,

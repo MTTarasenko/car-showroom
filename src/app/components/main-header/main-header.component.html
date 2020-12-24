@@ -9,10 +9,10 @@
       Car details
     </button>
     <button (click)="addNewCar()">Add new</button>
-    <button>
-      <img src="assets/img/star.svg" alt="">
+    <div class="fav-counter">
+      <fa-icon [icon]="faStarRegular"></fa-icon>
       <span *ngIf="(favCars$ | async).length > 0">{{(favCars$ | async).length}}</span>
-    </button>
+    </div>
     <button class="navs-logout" (click)="logOut()">Log out</button>
   </div>
 </header>
