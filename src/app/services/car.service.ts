@@ -52,10 +52,10 @@ export class CarService {
 
   getCarList(): Observable<Car[]> {
     console.log('getting car list...');
-    // if (this.carListArrayCopy.length === 0) {
-    //   this.carListArrayCopy = JSON.parse(JSON.stringify(this.carListArray));
-    // }
-    return of([...this.carListArray]).pipe(distinct());
+    if (this.carListArrayCopy.length === 0) {
+      this.carListArrayCopy = [...this.carListArray];
+    }
+    return of(this.carListArrayCopy).pipe(distinct());
   }
 
   getCarById(carID: number): Observable<Car> {
@@ -68,8 +68,8 @@ export class CarService {
   addNewCar(newCar: Car): Observable<boolean> {
     return new Observable(observer => {
       if (newCar.photoURL) {
-        newCar.id = this.carListArray[this.carListArray.length - 1].id + 1;
-        this.carListArray.push(newCar);
+        newCar.id = this.carListArrayCopy[this.carListArrayCopy.length - 1].id + 1;
+        this.carListArrayCopy.push(newCar);
         return observer.next(true);
       } else {
         return observer.next(false);
