@@ -4,6 +4,6 @@
   </div>
   <div class="car-star" (click)="addFavorite(car)">
     <fa-icon [icon]="car.favorite ? faStarSolid : faStarRegular"></fa-icon>
-    <span *ngIf="car.favorite">fav</span>
+    <span *ngIf="(isFavorite | async)">fav</span>
   </div>
 </div>

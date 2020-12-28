@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {faStar as solidStar} from '@fortawesome/free-solid-svg-icons';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
 
@@ -15,7 +15,7 @@ import {Car} from '../../models/car';
 export class CarComponent {
 
   @Input() car: Car;
-  @Input() isFavorite: boolean;
+  isFavorite: Observable<boolean>;
   faStarSolid = solidStar;
   faStarRegular = regularStar;
 
@@ -29,8 +29,17 @@ export class CarComponent {
     this.router.navigate(['/car-details/' + index]);
   }
 
-  addFavorite(car): void {
-    this.addingFavoriteSub = this.favoriteService.addFavorite(car).subscribe(result => {
+  addFavorite(cCar): void {
+    this.addingFavoriteSub = this.favoriteService.addFavorite(cCar).subscribe(result => {
+      result.map(value => {
+        this.isFavorite = new Observable(observer => {
+          if (cCar.id === value.id) {
+            return observer.next(true);
+          } else {
+            return observer.next(false);
+          }
+        });
+      });
       console.log(result);
     });
   }
