@@ -54,6 +54,7 @@ export class CarService {
     console.log('getting car list...');
     if (this.carListArrayCopy.length === 0) {
       this.carListArrayCopy = [...this.carListArray];
+      this.carListArrayCopy.filter(item => item = {...item});
     }
     return of(this.carListArrayCopy).pipe(distinct());
   }
