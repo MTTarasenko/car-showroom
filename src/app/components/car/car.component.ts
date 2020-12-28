@@ -15,6 +15,7 @@ import {Car} from '../../models/car';
 export class CarComponent {
 
   @Input() car: Car;
+  @Input() isFavorite: boolean;
   faStarSolid = solidStar;
   faStarRegular = regularStar;
 
@@ -29,7 +30,9 @@ export class CarComponent {
   }
 
   addFavorite(car): void {
-    this.addingFavoriteSub = this.favoriteService.addFavorite(car).subscribe();
+    this.addingFavoriteSub = this.favoriteService.addFavorite(car).subscribe(result => {
+      console.log(result);
+    });
   }
 
 }

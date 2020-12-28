@@ -45,18 +45,13 @@ export class CarService {
       year: '2018'
     }
   ];
-  carListArrayCopy: Car[] = [];
 
   constructor() {
   }
 
   getCarList(): Observable<Car[]> {
     console.log('getting car list...');
-    if (this.carListArrayCopy.length === 0) {
-      this.carListArrayCopy = [...this.carListArray];
-      this.carListArrayCopy.filter(item => item = {...item});
-    }
-    return of(this.carListArrayCopy).pipe(distinct());
+    return of(this.carListArray.map(item => ({...item}))).pipe(distinct());
   }
 
   getCarById(carID: number): Observable<Car> {
@@ -69,8 +64,8 @@ export class CarService {
   addNewCar(newCar: Car): Observable<boolean> {
     return new Observable(observer => {
       if (newCar.photoURL) {
-        newCar.id = this.carListArrayCopy[this.carListArrayCopy.length - 1].id + 1;
-        this.carListArrayCopy.push(newCar);
+        newCar.id = this.carListArray[this.carListArray.length - 1].id + 1;
+        this.carListArray.push(newCar);
         return observer.next(true);
       } else {
         return observer.next(false);

@@ -8,7 +8,6 @@ import {CarService} from './car.service';
 @Injectable()
 export class CarListResolverService implements Resolve<Car[]> {
 
-  cars: Car[];
 
   constructor(private service: CarService) {
   }
