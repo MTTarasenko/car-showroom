@@ -18,20 +18,22 @@ export class CarListResolverService implements Resolve<Car[]> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<Car[]> | Promise<Car[]> | Car[] {
 
-    return forkJoin({
-      cars: this.service.getCarList(),
-      favCars: this.favoriteService.getFavoriteCars(),
-    }).pipe(
-      map(response => {
-        response.cars.map(itemC => {
-          response.favCars.map(itemF => {
-            if (itemC.id === itemF.id) {
-              itemC.favorite = true;
-            }
-          });
-        });
-        return response.cars;
-      })
-    );
+    return this.service.getCarList();
+
+    // return forkJoin({
+    //   cars: this.service.getCarList(),
+    //   favCars: this.favoriteService.getFavoriteCars(),
+    // }).pipe(
+    //   map(response => {
+    //     response.cars.map(itemC => {
+    //       response.favCars.map(itemF => {
+    //         if (itemC.id === itemF.id) {
+    //           itemC.favorite = true;
+    //         }
+    //       });
+    //     });
+    //     return response.cars;
+    //   })
+    // );
   }
 }
