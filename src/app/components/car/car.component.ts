@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
 import {faStar as solidStar} from '@fortawesome/free-solid-svg-icons';
@@ -6,16 +6,17 @@ import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
 
 import {FavoritesService} from '../../services/favorites.service';
 import {Car} from '../../models/car';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-car',
   templateUrl: './car.component.html',
   styleUrls: ['./car.component.scss']
 })
-export class CarComponent {
+export class CarComponent implements OnInit, OnDestroy {
 
   @Input() car: Car;
-  isFavorite: Observable<boolean>;
+  isFavorite: boolean;
   faStarSolid = solidStar;
   faStarRegular = regularStar;
 
@@ -24,23 +25,31 @@ export class CarComponent {
   }
 
   addingFavoriteSub: Subscription;
+  checkIfFavoriteSub: Subscription;
+
+  ngOnInit(): void {
+    this.checkFavorite();
+  }
+
+  ngOnDestroy(): void {
+    this.checkIfFavoriteSub.unsubscribe();
+  }
 
   watchCarDetails(index): void {
     this.router.navigate(['/car-details/' + index]);
   }
 
+  checkFavorite(): void {
+    this.checkIfFavoriteSub = this.favoriteService.checkIfFavorite(this.car.id).pipe(
+      map(data => this.isFavorite = data)
+    ).subscribe();
+  }
+
   addFavorite(cCar): void {
     this.addingFavoriteSub = this.favoriteService.addFavorite(cCar).subscribe(result => {
-      result.map(value => {
-        this.isFavorite = new Observable(observer => {
-          if (cCar.id === value.id) {
-            return observer.next(true);
-          } else {
-            return observer.next(false);
-          }
-        });
-      });
-      console.log(result);
+      if (result) {
+        this.checkFavorite();
+      }
     });
   }
 

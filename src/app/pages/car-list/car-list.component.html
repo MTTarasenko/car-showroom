@@ -7,12 +7,12 @@
     </div>
     <div class="car-list" *ngIf="(cars$ | async) as cars">
       <mat-card *ngFor="let car of cars">
-        <app-car [car]="car" [isFavorite]=""></app-car>
+        <app-car [car]="car"></app-car>
       </mat-card>
     </div>
     <div class="car-list" *ngIf="(comparedCars$ | async) as cars">
       <mat-card *ngFor="let fcar of cars">
-        <app-car [car]="fcar" [isFavorite]=""></app-car>
+        <app-car [car]="fcar"></app-car>
       </mat-card>
     </div>
   </section>

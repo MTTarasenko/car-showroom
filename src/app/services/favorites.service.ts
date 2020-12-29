@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
 import {Car} from '../models/car';
-import {distinct} from 'rxjs/operators';
+import {distinct, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +11,20 @@ export class FavoritesService {
 
   favoriteCarsList: Car[] = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   getFavoriteCars(): Observable<Car[]> {
-    this.favoriteCarsList.filter(item => item.favorite = true);
-    return of(this.favoriteCarsList);
+    // this.favoriteCarsList.filter(item => item.favorite = true);
+    return of(this.favoriteCarsList).pipe(distinct());
   }
 
   addFavorite(car?: Car): Observable<Car[]> {
-    if (!this.favoriteCarsList.includes(car)) {
-      // car.favorite = true;
+    if (!this.favoriteCarsList.some(value => {
+      return value.id === car.id;
+    })) {
       this.favoriteCarsList.push(car);
     } else {
-      // car.favorite = false;
       this.favoriteCarsList.forEach((item, index) => {
         if (item.id === car.id) {
           this.favoriteCarsList.splice(index, 1);
@@ -33,4 +34,17 @@ export class FavoritesService {
     return of(this.favoriteCarsList).pipe(distinct());
   }
 
+  checkIfFavorite(carID): Observable<boolean> {
+    return new Observable(observer => {
+      this.getFavoriteCars().pipe(
+        map(data => {
+          if (data.find(item => item.id === carID)) {
+            return observer.next(true);
+          } else {
+            return observer.next(false);
+          }
+        })
+      ).subscribe();
+    });
+  }
 }

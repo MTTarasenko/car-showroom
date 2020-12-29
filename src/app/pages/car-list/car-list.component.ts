@@ -33,10 +33,6 @@ export class CarListComponent implements OnInit, OnDestroy {
     this.cars$ = this.activatedRoute.data.pipe(
       map((data: { cars: Car[] }) => data.cars)
     );
-
-    this.fCars$ = this.favService.getFavoriteCars().pipe(
-      map(data => data)
-    );
   }
 
   ngOnDestroy(): void {
