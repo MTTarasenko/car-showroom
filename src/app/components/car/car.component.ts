@@ -17,7 +17,7 @@ import {CarService} from '../../services/car.service';
 export class CarComponent implements OnInit, OnDestroy {
 
   @Input() car: Car;
-  @Output('addCar') addCar: EventEmitter<any> = new EventEmitter();
+  @Output() addCar: EventEmitter<any> = new EventEmitter();
   isFavorite: boolean;
   faStarSolid = solidStar;
   faStarRegular = regularStar;
@@ -53,14 +53,14 @@ export class CarComponent implements OnInit, OnDestroy {
       this.favoriteService.addFavorite(car).subscribe(result => {
         this.addCar.emit();
         if (result) {
-          this.checkFavorite();
+          // this.checkFavorite();
         }
       });
     } else {
       this.favoriteService.removeFavorite(car).subscribe(result => {
         this.addCar.emit();
         if (result) {
-          this.checkFavorite();
+          // this.checkFavorite();
         }
       });
     }

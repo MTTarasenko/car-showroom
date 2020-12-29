@@ -52,7 +52,6 @@ export class MainHeaderComponent implements OnInit {
         }
       })
     ).subscribe(result => {
-      this.carList.combineCarsLists();
       console.log(result);
     });
   }

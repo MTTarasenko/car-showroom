@@ -52,7 +52,7 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   combineCarsLists(): void {
     console.log('updating cars');
-    combineLatest(
+    this.cars$ = combineLatest(
       this.service.getCarList(),
       this.favService.getFavoriteCars()
     ).pipe(map(([data1, data2]) => {
@@ -64,10 +64,9 @@ export class CarListComponent implements OnInit, OnDestroy {
         });
       });
       return data1;
-    })).subscribe(data => {
-      this.cars$ = of(data);
-    });
+    }));
   }
+
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
