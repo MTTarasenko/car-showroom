@@ -16,35 +16,45 @@ export class FavoritesService {
 
   getFavoriteCars(): Observable<Car[]> {
     // this.favoriteCarsList.filter(item => item.favorite = true);
-    return of(this.favoriteCarsList).pipe(distinct());
+    return of(this.favoriteCarsList);
   }
 
-  addFavorite(car?: Car): Observable<Car[]> {
-    if (!this.favoriteCarsList.some(value => {
-      return value.id === car.id;
-    })) {
-      this.favoriteCarsList.push(car);
-    } else {
-      this.favoriteCarsList.forEach((item, index) => {
-        if (item.id === car.id) {
-          this.favoriteCarsList.splice(index, 1);
-        }
-      });
-    }
-    return of(this.favoriteCarsList).pipe(distinct());
+  addFavorite(car?: Car): Observable<boolean> {
+    return new Observable(observer => {
+      if (!this.favoriteCarsList.some(value => {
+        return value.id === car.id;
+      })) {
+        this.favoriteCarsList.push(car);
+        return observer.next(true);
+      } else {
+        return observer.next(false);
+        // this.favoriteCarsList.forEach((item, index) => {
+        //   if (item.id === car.id) {
+        //     this.favoriteCarsList.splice(index, 1);
+        //     return observer.next(false);
+        //   }
+        // });
+      }
+    });
+  }
+
+  removeFavorite(car: Car): Observable<boolean> {
+    return new Observable(observer => {
+      if (car) {
+        return observer.next(true);
+      } else {
+        return observer.next(false);
+      }
+    });
   }
 
   checkIfFavorite(carID): Observable<boolean> {
     return new Observable(observer => {
       this.getFavoriteCars().pipe(
         map(data => {
-          if (data.find(item => item.id === carID)) {
-            return observer.next(true);
-          } else {
-            return observer.next(false);
-          }
+            return observer.next(!!data.find(item => item.id === carID));
         })
-      ).subscribe();
+      );
     });
   }
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {distinct, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {Car} from '../models/car';
 
 @Injectable({
@@ -51,7 +51,7 @@ export class CarService {
 
   getCarList(): Observable<Car[]> {
     console.log('getting car list...');
-    return of(this.carListArray.map(item => ({...item}))).pipe(distinct());
+    return of(this.carListArray.map(item => ({...item})));
   }
 
   getCarById(carID: number): Observable<Car> {
@@ -60,6 +60,7 @@ export class CarService {
         map(data => data.find(car => car.id === carID))
       );
   }
+
 
   addNewCar(newCar: Car): Observable<boolean> {
     return new Observable(observer => {

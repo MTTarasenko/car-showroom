@@ -1,12 +1,13 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {faStar as solidStar} from '@fortawesome/free-solid-svg-icons';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
 
 import {FavoritesService} from '../../services/favorites.service';
 import {Car} from '../../models/car';
 import {map} from 'rxjs/operators';
+import {CarService} from '../../services/car.service';
 
 @Component({
   selector: 'app-car',
@@ -21,6 +22,7 @@ export class CarComponent implements OnInit, OnDestroy {
   faStarRegular = regularStar;
 
   constructor(private readonly router: Router,
+              private service: CarService,
               private favoriteService: FavoritesService) {
   }
 
@@ -45,8 +47,8 @@ export class CarComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  addFavorite(cCar): void {
-    this.addingFavoriteSub = this.favoriteService.addFavorite(cCar).subscribe(result => {
+  toggleFavorite(car): void {
+    this.addingFavoriteSub = this.favoriteService.addFavorite(car).subscribe(result => {
       if (result) {
         this.checkFavorite();
       }
