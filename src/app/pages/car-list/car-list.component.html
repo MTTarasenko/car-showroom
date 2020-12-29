@@ -10,10 +10,5 @@
         <app-car [car]="car"></app-car>
       </mat-card>
     </div>
-    <div class="car-list" *ngIf="(comparedCars$ | async) as cars">
-      <mat-card *ngFor="let fcar of cars">
-        <app-car [car]="fcar"></app-car>
-      </mat-card>
-    </div>
   </section>
 </div>

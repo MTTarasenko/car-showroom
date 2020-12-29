@@ -23,9 +23,6 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   cars$: Observable<Car[]>;
-  fCars$: Observable<Car[]>;
-  comparedCars$: Observable<Car[]>;
-  addingFavoriteSub: Subscription;
 
   subscriptions: Subscription[] = [];
 
