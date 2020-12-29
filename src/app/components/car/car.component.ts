@@ -48,11 +48,19 @@ export class CarComponent implements OnInit, OnDestroy {
   }
 
   toggleFavorite(car): void {
-    this.addingFavoriteSub = this.favoriteService.addFavorite(car).subscribe(result => {
-      if (result) {
-        this.checkFavorite();
-      }
-    });
+    if (!car.favorite) {
+      this.favoriteService.addFavorite(car).subscribe(result => {
+        if (result) {
+          this.checkFavorite();
+        }
+      });
+    } else {
+      this.favoriteService.removeFavorite(car).subscribe(result => {
+        if (result) {
+          this.checkFavorite();
+        }
+      });
+    }
   }
 
 }

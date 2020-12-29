@@ -28,23 +28,20 @@ export class FavoritesService {
         return observer.next(true);
       } else {
         return observer.next(false);
-        // this.favoriteCarsList.forEach((item, index) => {
-        //   if (item.id === car.id) {
-        //     this.favoriteCarsList.splice(index, 1);
-        //     return observer.next(false);
-        //   }
-        // });
       }
     });
   }
 
   removeFavorite(car: Car): Observable<boolean> {
     return new Observable(observer => {
-      if (car) {
-        return observer.next(true);
-      } else {
-        return observer.next(false);
-      }
+      this.favoriteCarsList.forEach((item, index) => {
+        if (item.id === car.id) {
+          this.favoriteCarsList.splice(index, 1);
+          return observer.next(true);
+        } else {
+          return observer.next(false);
+        }
+      });
     });
   }
 
@@ -52,7 +49,7 @@ export class FavoritesService {
     return new Observable(observer => {
       this.getFavoriteCars().pipe(
         map(data => {
-            return observer.next(!!data.find(item => item.id === carID));
+          return observer.next(!!data.find(item => item.id === carID));
         })
       );
     });
