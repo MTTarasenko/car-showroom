@@ -20,19 +20,19 @@ export class CarListResolverService implements Resolve<Car[]> {
 
     return this.service.getCarList();
 
-    // return forkJoin({
-    //   cars: this.service.getCarList(),
-    //   favCars: this.favoriteService.getFavoriteCars(),
-    // }).pipe(
-    //   map(response => {
-    //     response.cars.map(itemC => {
-    //       response.favCars.map(itemF => {
+    // return forkJoin([
+    //   this.service.getCarList(),
+    //  this.favoriteService.getFavoriteCars()]
+    // ).pipe(
+    //   map(([resp1, resp2]) => {
+    //     resp1.map(itemC => {
+    //       resp2.map(itemF => {
     //         if (itemC.id === itemF.id) {
     //           itemC.favorite = true;
     //         }
     //       });
     //     });
-    //     return response.cars;
+    //     return resp1;
     //   })
     // );
   }

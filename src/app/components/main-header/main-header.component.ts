@@ -10,11 +10,13 @@ import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
 import {Observable, of} from 'rxjs';
+import {CarListComponent} from '../../pages/car-list/car-list.component';
 
 @Component({
   selector: 'app-main-header',
   templateUrl: './main-header.component.html',
   styleUrls: ['./main-header.component.scss'],
+  providers: [CarListComponent]
 })
 export class MainHeaderComponent implements OnInit {
 
@@ -27,7 +29,8 @@ export class MainHeaderComponent implements OnInit {
               private authService: AuthGuardService,
               public dialog: MatDialog,
               private favoriteService: FavoritesService,
-              private service: CarService) {
+              private service: CarService,
+              private carList: CarListComponent) {
   }
 
 
@@ -49,6 +52,7 @@ export class MainHeaderComponent implements OnInit {
         }
       })
     ).subscribe(result => {
+      this.carList.combineCarsLists();
       console.log(result);
     });
   }

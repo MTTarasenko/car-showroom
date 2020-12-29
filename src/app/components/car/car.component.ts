@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {faStar as solidStar} from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +17,7 @@ import {CarService} from '../../services/car.service';
 export class CarComponent implements OnInit, OnDestroy {
 
   @Input() car: Car;
+  @Output('addCar') addCar: EventEmitter<any> = new EventEmitter();
   isFavorite: boolean;
   faStarSolid = solidStar;
   faStarRegular = regularStar;
@@ -50,12 +51,14 @@ export class CarComponent implements OnInit, OnDestroy {
   toggleFavorite(car): void {
     if (!car.favorite) {
       this.favoriteService.addFavorite(car).subscribe(result => {
+        this.addCar.emit();
         if (result) {
           this.checkFavorite();
         }
       });
     } else {
       this.favoriteService.removeFavorite(car).subscribe(result => {
+        this.addCar.emit();
         if (result) {
           this.checkFavorite();
         }

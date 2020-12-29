@@ -15,7 +15,6 @@ export class FavoritesService {
   }
 
   getFavoriteCars(): Observable<Car[]> {
-    // this.favoriteCarsList.filter(item => item.favorite = true);
     return of(this.favoriteCarsList);
   }
 

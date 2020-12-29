@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {map} from 'rxjs/operators';
-import {Observable, Subscription} from 'rxjs';
+import {combineLatest, forkJoin, merge, Observable, of, Subscription} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
@@ -27,9 +27,46 @@ export class CarListComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    this.cars$ = this.activatedRoute.data.pipe(
-      map((data: { cars: Car[] }) => data.cars)
-    );
+
+    this.combineCarsLists();
+    // this.cars$ = forkJoin([
+    //   this.service.getCarList(),
+    //   this.favService.getFavoriteCars()]
+    // ).pipe(
+    //   map(([resp1, resp2]) => {
+    //     resp1.map(itemC => {
+    //       resp2.map(itemF => {
+    //         if (itemC.id === itemF.id) {
+    //           itemC.favorite = true;
+    //         }
+    //       });
+    //     });
+    //     return resp1;
+    //   })
+    // );
+
+    // this.cars$ = this.activatedRoute.data.pipe(
+    //   map((data: { cars: Car[] }) => data.cars)
+    // );
+  }
+
+  combineCarsLists(): void {
+    console.log('updating cars');
+    combineLatest(
+      this.service.getCarList(),
+      this.favService.getFavoriteCars()
+    ).pipe(map(([data1, data2]) => {
+      data1.map(itemC => {
+        data2.map(itemF => {
+          if (itemC.id === itemF.id) {
+            itemC.favorite = true;
+          }
+        });
+      });
+      return data1;
+    })).subscribe(data => {
+      this.cars$ = of(data);
+    });
   }
 
   ngOnDestroy(): void {

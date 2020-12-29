@@ -7,7 +7,7 @@
     </div>
     <div class="car-list" *ngIf="(cars$ | async) as cars">
       <mat-card *ngFor="let car of cars">
-        <app-car [car]="car"></app-car>
+        <app-car [car]="car" (addCar)="combineCarsLists()"></app-car>
       </mat-card>
     </div>
   </section>
