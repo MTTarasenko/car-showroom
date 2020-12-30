@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {map} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {Observable, Subscription, zip} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
@@ -38,6 +38,7 @@ export class CarListComponent implements OnInit, OnDestroy {
         this.combineCarsLists();
       }
     });
+
     this.subscriptions.push(this.helperSub);
 
     // data from resolver
