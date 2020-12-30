@@ -29,22 +29,8 @@ export class CarListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.combineCarsLists();
-    // this.cars$ = forkJoin([
-    //   this.service.getCarList(),
-    //   this.favService.getFavoriteCars()]
-    // ).pipe(
-    //   map(([resp1, resp2]) => {
-    //     resp1.map(itemC => {
-    //       resp2.map(itemF => {
-    //         if (itemC.id === itemF.id) {
-    //           itemC.favorite = true;
-    //         }
-    //       });
-    //     });
-    //     return resp1;
-    //   })
-    // );
 
+    // data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
     // );

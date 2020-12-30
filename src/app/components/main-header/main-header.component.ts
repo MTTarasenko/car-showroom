@@ -3,13 +3,13 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {switchMap} from 'rxjs/operators';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
+import {Observable, of} from 'rxjs';
 
 import {Car} from '../../models/car';
 import {AuthGuardService} from '../../guards/auth-guard.service';
 import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
-import {Observable, of} from 'rxjs';
 import {CarListComponent} from '../../pages/car-list/car-list.component';
 
 @Component({

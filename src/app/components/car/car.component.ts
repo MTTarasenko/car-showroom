@@ -31,11 +31,11 @@ export class CarComponent implements OnInit, OnDestroy {
   checkIfFavoriteSub: Subscription;
 
   ngOnInit(): void {
-    this.checkFavorite();
+    // this.checkFavorite();
   }
 
   ngOnDestroy(): void {
-    this.checkIfFavoriteSub.unsubscribe();
+    // this.checkIfFavoriteSub.unsubscribe();
   }
 
   watchCarDetails(index): void {
