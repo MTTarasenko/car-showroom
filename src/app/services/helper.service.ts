@@ -11,10 +11,11 @@ export class HelperService {
   constructor() {
   }
 
-  updateCarsList(value?): Observable<any> {
-    if (value) {
-      this.subject.next(value);
-    }
+  updateCarsList(): void {
+    this.subject.next(null);
+  }
+
+  onCarsListUpdate(): Observable<any> {
     return this.subject.asObservable();
   }
 }

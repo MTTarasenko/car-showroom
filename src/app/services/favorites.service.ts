@@ -44,13 +44,4 @@ export class FavoritesService {
     });
   }
 
-  checkIfFavorite(carID): Observable<boolean> {
-    return new Observable(observer => {
-      this.getFavoriteCars().pipe(
-        map(data => {
-          return observer.next(!!data.find(item => item.id === carID));
-        })
-      );
-    });
-  }
 }

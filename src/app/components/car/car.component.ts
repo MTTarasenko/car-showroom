@@ -18,7 +18,6 @@ export class CarComponent implements OnInit, OnDestroy {
 
   @Input() car: Car;
   @Output() addCar: EventEmitter<any> = new EventEmitter();
-  isFavorite: boolean;
   faStarSolid = solidStar;
   faStarRegular = regularStar;
 
@@ -31,37 +30,24 @@ export class CarComponent implements OnInit, OnDestroy {
   checkIfFavoriteSub: Subscription;
 
   ngOnInit(): void {
-    // this.checkFavorite();
   }
 
   ngOnDestroy(): void {
-    // this.checkIfFavoriteSub.unsubscribe();
   }
 
   watchCarDetails(index): void {
     this.router.navigate(['/car-details/' + index]);
   }
 
-  checkFavorite(): void {
-    this.checkIfFavoriteSub = this.favoriteService.checkIfFavorite(this.car.id).pipe(
-      map(data => this.isFavorite = data)
-    ).subscribe();
-  }
 
   toggleFavorite(car): void {
     if (!car.favorite) {
-      this.favoriteService.addFavorite(car).subscribe(result => {
+      this.favoriteService.addFavorite(car).subscribe(() => {
         this.addCar.emit();
-        if (result) {
-          // this.checkFavorite();
-        }
       });
     } else {
-      this.favoriteService.removeFavorite(car).subscribe(result => {
+      this.favoriteService.removeFavorite(car).subscribe(() => {
         this.addCar.emit();
-        if (result) {
-          // this.checkFavorite();
-        }
       });
     }
   }

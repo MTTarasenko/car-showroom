@@ -52,7 +52,6 @@ export class CarService {
   getCarList(): Observable<Car[]> {
     console.log('getting car list...');
     return of(this.carListArray.map(item => ({...item})));
-    // return of(this.carListArray);
   }
 
   getCarById(carID: number): Observable<Car> {

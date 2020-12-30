@@ -45,16 +45,14 @@ export class MainHeaderComponent implements OnInit {
     dialogRef.afterClosed().pipe(
       switchMap(result => {
         if (result) {
-          this.service.getCarList().pipe(map(data => data));
+          // this.service.getCarList().pipe(map(data => data));
           return this.service.addNewCar(result);
         } else {
           return of();
         }
       })
-    ).subscribe(result => {
-      this.helperService.updateCarsList(true);
-      // this.carList.combineCarsLists();
-      // console.log(result);
+    ).subscribe(() => {
+      this.helperService.updateCarsList();
     });
   }
 
