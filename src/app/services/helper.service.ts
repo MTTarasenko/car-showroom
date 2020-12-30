@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 
 @Injectable({
@@ -8,13 +8,13 @@ export class HelperService {
 
   private subject = new Subject<any>();
 
-  constructor() { }
-
-  setSubj(value): void {
-    this.subject.next(value);
+  constructor() {
   }
 
-  updateCarsList(): Observable<any>{
+  updateCarsList(value?): Observable<any> {
+    if (value) {
+      this.subject.next(value);
+    }
     return this.subject.asObservable();
   }
 }

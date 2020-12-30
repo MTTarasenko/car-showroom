@@ -52,7 +52,7 @@ export class MainHeaderComponent implements OnInit {
         }
       })
     ).subscribe(result => {
-      this.helperService.setSubj(true);
+      this.helperService.updateCarsList(true);
       // this.carList.combineCarsLists();
       // console.log(result);
     });

@@ -26,17 +26,20 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   cars$: Observable<Car[]>;
 
+  helperSub: Subscription;
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
 
     this.combineCarsLists();
 
-    this.helperService.updateCarsList().subscribe(result => {
+    this.helperSub = this.helperService.updateCarsList().subscribe(result => {
       if (result) {
         this.combineCarsLists();
       }
     });
+    this.subscriptions.push(this.helperSub);
+
     // data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
