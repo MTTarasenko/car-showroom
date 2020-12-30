@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {switchMap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
 import {Observable, of} from 'rxjs';
 
@@ -10,13 +10,12 @@ import {AuthGuardService} from '../../guards/auth-guard.service';
 import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
-import {CarListComponent} from '../../pages/car-list/car-list.component';
+import {HelperService} from '../../services/helper.service';
 
 @Component({
   selector: 'app-main-header',
   templateUrl: './main-header.component.html',
   styleUrls: ['./main-header.component.scss'],
-  providers: [CarListComponent]
 })
 export class MainHeaderComponent implements OnInit {
 
@@ -30,7 +29,7 @@ export class MainHeaderComponent implements OnInit {
               public dialog: MatDialog,
               private favoriteService: FavoritesService,
               private service: CarService,
-              private carList: CarListComponent) {
+              private helperService: HelperService) {
   }
 
 
@@ -46,13 +45,16 @@ export class MainHeaderComponent implements OnInit {
     dialogRef.afterClosed().pipe(
       switchMap(result => {
         if (result) {
+          this.service.getCarList().pipe(map(data => data));
           return this.service.addNewCar(result);
         } else {
           return of();
         }
       })
     ).subscribe(result => {
-      console.log(result);
+      this.helperService.setSubj(true);
+      // this.carList.combineCarsLists();
+      // console.log(result);
     });
   }
 

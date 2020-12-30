@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {concat, Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Car} from '../models/car';
 
@@ -52,6 +52,7 @@ export class CarService {
   getCarList(): Observable<Car[]> {
     console.log('getting car list...');
     return of(this.carListArray.map(item => ({...item})));
+    // return of(this.carListArray);
   }
 
   getCarById(carID: number): Observable<Car> {

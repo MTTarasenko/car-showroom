@@ -2,11 +2,12 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {map} from 'rxjs/operators';
-import {combineLatest, forkJoin, merge, Observable, of, Subscription} from 'rxjs';
+import {Observable, Subscription, zip} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
 import {FavoritesService} from '../../services/favorites.service';
+import {HelperService} from '../../services/helper.service';
 
 @Component({
   selector: 'app-car-list',
@@ -19,6 +20,7 @@ export class CarListComponent implements OnInit, OnDestroy {
               public dialog: MatDialog,
               private service: CarService,
               private favService: FavoritesService,
+              private helperService: HelperService,
               private activatedRoute: ActivatedRoute) {
   }
 
@@ -30,6 +32,11 @@ export class CarListComponent implements OnInit, OnDestroy {
 
     this.combineCarsLists();
 
+    this.helperService.updateCarsList().subscribe(result => {
+      if (result) {
+        this.combineCarsLists();
+      }
+    });
     // data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
@@ -38,7 +45,7 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   combineCarsLists(): void {
     console.log('updating cars');
-    this.cars$ = combineLatest(
+    this.cars$ = zip(
       this.service.getCarList(),
       this.favService.getFavoriteCars()
     ).pipe(map(([data1, data2]) => {
