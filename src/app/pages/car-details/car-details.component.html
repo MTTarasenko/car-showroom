@@ -5,7 +5,7 @@
     </div>
     <div class="car-item-info">
       <h4>{{car?.name}}</h4>
-      <p [innerHTML]="car?.description | highlightSearch: 'pickup'"></p>
+      <p [innerHTML]="car?.description | highlightText: 'pickup'"></p>
       <p>{{car?.year}}</p>
     </div>
   </div>
