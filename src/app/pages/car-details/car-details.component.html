@@ -5,9 +5,8 @@
     </div>
     <div class="car-item-info">
       <h4>{{car?.name}}</h4>
-      <p appHighlightText
-         [highLightColor]="'red'"
-         [innerHTML]="car?.description | highlightText: 'pickup'"></p>
+      <p [appHighlightText]="'Toyota'">{{car?.description}}</p>
+<!--      [innerHTML]="car?.description | highlightText: 'pickup'"-->
       <p>{{car?.year}}</p>
     </div>
   </div>
