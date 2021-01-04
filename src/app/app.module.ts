@@ -20,6 +20,7 @@ import {MainHeaderModule} from './components/main-header/main-header.module';
 import {BasicLayoutModule} from './layout/basic-layout/basic-layout.module';
 import {CarModule} from './components/car/car.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HighlightTextPipe } from './pipes/highlight-text.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     LoginComponent,
     CarListComponent,
     CarDetailsComponent,
-    AddCarModalComponent
+    AddCarModalComponent,
+    HighlightTextPipe
   ],
     imports: [
         BrowserModule,

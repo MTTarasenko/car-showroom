@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Directive, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 
@@ -10,6 +10,7 @@ import {Car} from '../../models/car';
   templateUrl: './car-details.component.html',
   styleUrls: ['./car-details.component.scss']
 })
+
 export class CarDetailsComponent implements OnInit, OnDestroy {
 
   car: Car;

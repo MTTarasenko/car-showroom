@@ -5,9 +5,7 @@
     </div>
     <div class="car-item-info">
       <h4>{{car?.name}}</h4>
-      <p>
-        {{car?.description}}
-      </p>
+      <p [innerHTML]="car?.description | highlightSearch: 'pickup'"></p>
       <p>{{car?.year}}</p>
     </div>
   </div>
