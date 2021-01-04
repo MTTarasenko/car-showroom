@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CarService} from '../../services/car.service';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -11,12 +14,19 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class AddCarModalComponent implements OnInit {
 
   newCarForm: FormGroup;
+  carYears$: Observable<number[]>;
 
   constructor(public dialogRef: MatDialogRef<AddCarModalComponent>,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private service: CarService) {
   }
 
   ngOnInit(): void {
+
+    this.carYears$ = this.service.getCarYears().pipe(map(data => {
+      return data;
+    }));
+
     this.newCarForm = this.fb.group({
       name: ['', [
         Validators.required,

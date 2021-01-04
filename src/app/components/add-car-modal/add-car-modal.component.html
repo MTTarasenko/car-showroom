@@ -13,17 +13,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Year</mat-label>
       <mat-select formControlName="year">
-        <mat-option value="2000">2000</mat-option>
-        <mat-option value="2001">2001</mat-option>
-        <mat-option value="2002">2002</mat-option>
-        <mat-option value="2003">2003</mat-option>
-        <mat-option value="2004">2004</mat-option>
-        <mat-option value="2005">2005</mat-option>
-        <mat-option value="2006">2006</mat-option>
-        <mat-option value="2007">2007</mat-option>
-        <mat-option value="2008">2008</mat-option>
-        <mat-option value="2009">2009</mat-option>
-        <mat-option value="2010">2010</mat-option>
+        <mat-option *ngFor="let year of (carYears$ | async)" [value]="year">{{year}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
