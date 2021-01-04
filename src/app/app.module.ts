@@ -21,6 +21,7 @@ import {BasicLayoutModule} from './layout/basic-layout/basic-layout.module';
 import {CarModule} from './components/car/car.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HighlightTextPipe } from './pipes/highlight-text.pipe';
+import { HighlightTextDirective } from './directives/highlight-text.directive';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { HighlightTextPipe } from './pipes/highlight-text.pipe';
     CarListComponent,
     CarDetailsComponent,
     AddCarModalComponent,
-    HighlightTextPipe
+    HighlightTextPipe,
+    HighlightTextDirective
   ],
     imports: [
         BrowserModule,
