@@ -52,15 +52,15 @@ export class CarListComponent implements OnInit, OnDestroy {
     this.cars$ = zip(
       this.service.getCarList(),
       this.favService.getFavoriteCars()
-    ).pipe(map(([data1, data2]) => {
-      data1.map(itemC => {
-        data2.map(itemF => {
-          if (itemC.id === itemF.id) {
-            itemC.favorite = true;
+    ).pipe(map(([cars, favoriteCars]) => {
+      cars.map(car => {
+        favoriteCars.map(favoriteCar => {
+          if (car.id === favoriteCar.id) {
+            car.favorite = true;
           }
         });
       });
-      return data1;
+      return cars;
     }));
 
   }
