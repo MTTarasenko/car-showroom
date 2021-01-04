@@ -5,18 +5,22 @@ import {AfterViewInit, Directive, ElementRef, Input} from '@angular/core';
 })
 export class HighlightTextDirective implements AfterViewInit {
 
-  @Input('appHighlightText') highLightText: string;
+  @Input('appHighlightText') highLightText: string[];
 
   constructor(private el: ElementRef) {
   }
 
   ngAfterViewInit(): void {
-    const regex = new RegExp(this.highLightText, 'gi');
-    const match = this.el.nativeElement.innerText.match(regex);
+    this.highLightText.map(item => {
+      const regex = new RegExp(item, 'gi');
+      const match = this.el.nativeElement.innerText.match(regex);
 
-    if (match) {
-      this.el.nativeElement.innerHTML = this.el.nativeElement.innerText
-        .replace(regex, `<span class='highlightText'>${match}</span>`);
-    }
+      if (match) {
+        console.log(match);
+        this.el.nativeElement.innerHTML = this.el.nativeElement.innerHTML
+          .replace(regex, `<span class='highlightText'>${match[0]}</span>`);
+      }
+    });
+
   }
 }
