@@ -28,16 +28,11 @@ export class CarListComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
+    this.helperService.updateCarsList();
 
     this.combineCarsLists();
 
-    this.helperSub = this.cars$.pipe(switchMap(data => {
-      if (data) {
-        return this.helperService.onCarsListUpdate();
-      } else {
-        return of();
-      }
-    })).subscribe(() => {
+    this.helperSub = this.helperService.onCarsListUpdate().subscribe(() => {
       this.combineCarsLists();
     });
 
