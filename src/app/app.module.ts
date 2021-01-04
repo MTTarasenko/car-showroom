@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
@@ -19,9 +19,8 @@ import {AddCarModalComponent} from './components/add-car-modal/add-car-modal.com
 import {MainHeaderModule} from './components/main-header/main-header.module';
 import {BasicLayoutModule} from './layout/basic-layout/basic-layout.module';
 import {CarModule} from './components/car/car.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { HighlightTextPipe } from './pipes/highlight-text.pipe';
-import { HighlightTextDirective } from './directives/highlight-text.directive';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {HighlightTextDirective} from './directives/highlight-text.directive';
 
 @NgModule({
   declarations: [
@@ -30,26 +29,25 @@ import { HighlightTextDirective } from './directives/highlight-text.directive';
     CarListComponent,
     CarDetailsComponent,
     AddCarModalComponent,
-    HighlightTextPipe,
     HighlightTextDirective
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MainHeaderModule,
-        BasicLayoutModule,
-        CarModule,
-        FontAwesomeModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MainHeaderModule,
+    BasicLayoutModule,
+    CarModule,
+    FontAwesomeModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
