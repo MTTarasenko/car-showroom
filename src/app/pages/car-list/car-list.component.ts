@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {map} from 'rxjs/operators';
+import {map, merge, switchMap} from 'rxjs/operators';
 import {Observable, Subscription, zip} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
@@ -32,12 +32,17 @@ export class CarListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.combineCarsLists();
-    this.helperService.updateCarsList();
+    // this.helperService.updateCarsList();
     this.helperSub = this.helperService.onCarsListUpdate().subscribe(() => {
       this.combineCarsLists();
     });
 
-    // this.subscriptions.push(this.helperSub);
+    this.subscriptions.push(this.helperSub);
+
+    this.cars$.pipe(switchMap(data => {
+      this.helperService.onCarsListUpdate();
+      return data;
+    })).subscribe();
 
     // data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
@@ -52,7 +57,7 @@ export class CarListComponent implements OnInit, OnDestroy {
     // this.helperSub = this.helperService.onCarsListUpdate().subscribe(() => {
     this.cars$ = zip(
       this.service.getCarList(),
-      this.favService.getFavoriteCars(),
+      this.favService.getFavoriteCars()
     ).pipe(map(([data1, data2]) => {
       data1.map(itemC => {
         data2.map(itemF => {
@@ -65,11 +70,10 @@ export class CarListComponent implements OnInit, OnDestroy {
     }));
     // });
 
-    // this.subscriptions.push(this.helperSub);
   }
 
   onAddFavCar(): void {
-    this.combineCarsLists();
+    // this.combineCarsLists();
     this.helperService.updateCarsList();
   }
 
