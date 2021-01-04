@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
-import {map, merge, switchMap} from 'rxjs/operators';
-import {Observable, Subscription, zip} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+import {Observable, of, Subscription, zip} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
@@ -17,7 +16,6 @@ import {HelperService} from '../../services/helper.service';
 export class CarListComponent implements OnInit, OnDestroy {
 
   constructor(private readonly router: Router,
-              public dialog: MatDialog,
               private service: CarService,
               private favService: FavoritesService,
               private helperService: HelperService,
@@ -32,19 +30,21 @@ export class CarListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.combineCarsLists();
-    // this.helperService.updateCarsList();
-    this.helperSub = this.helperService.onCarsListUpdate().subscribe(() => {
+
+    this.helperSub = this.cars$.pipe(switchMap(data => {
+      if (data) {
+        return this.helperService.onCarsListUpdate();
+      } else {
+        return of();
+      }
+    })).subscribe(() => {
       this.combineCarsLists();
     });
 
     this.subscriptions.push(this.helperSub);
 
-    this.cars$.pipe(switchMap(data => {
-      this.helperService.onCarsListUpdate();
-      return data;
-    })).subscribe();
 
-    // data from resolver
+    // TODO data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
     // );
@@ -54,7 +54,6 @@ export class CarListComponent implements OnInit, OnDestroy {
 
     console.log('updating cars');
 
-    // this.helperSub = this.helperService.onCarsListUpdate().subscribe(() => {
     this.cars$ = zip(
       this.service.getCarList(),
       this.favService.getFavoriteCars()
@@ -68,12 +67,10 @@ export class CarListComponent implements OnInit, OnDestroy {
       });
       return data1;
     }));
-    // });
 
   }
 
   onAddFavCar(): void {
-    // this.combineCarsLists();
     this.helperService.updateCarsList();
   }
 
