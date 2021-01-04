@@ -11,7 +11,6 @@ export class HighlightTextDirective implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('string is: ' + this.el.nativeElement.innerText);
     const regex = new RegExp(this.highLightText, 'gi');
     const match = this.el.nativeElement.innerText.match(regex);
 
