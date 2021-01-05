@@ -16,7 +16,6 @@ export class HighlightTextDirective implements AfterViewInit {
       const match = this.el.nativeElement.innerText.match(regex);
 
       if (match) {
-        console.log(match);
         this.el.nativeElement.innerHTML = this.el.nativeElement.innerHTML
           .replace(regex, `<span class='highlightText'>${match[0]}</span>`);
       }

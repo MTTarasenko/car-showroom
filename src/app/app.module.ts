@@ -9,6 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -21,6 +22,7 @@ import {BasicLayoutModule} from './layout/basic-layout/basic-layout.module';
 import {CarModule} from './components/car/car.module';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {HighlightTextDirective} from './directives/highlight-text.directive';
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import {HighlightTextDirective} from './directives/highlight-text.directive';
     BasicLayoutModule,
     CarModule,
     FontAwesomeModule,
+    MatPaginatorModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

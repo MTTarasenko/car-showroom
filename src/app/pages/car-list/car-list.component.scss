@@ -3,6 +3,8 @@
   min-height: 100%;
 
   section {
+    padding-top: 40px;
+
     .sentence {
       color: #ffffff;
       display: flex;
@@ -49,4 +51,9 @@
       transform: scale(1.1);
     }
   }
+}
+
+.paginator {
+  width: max-content;
+  margin: 0 auto;
 }
