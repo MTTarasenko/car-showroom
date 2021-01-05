@@ -22,7 +22,6 @@ import {BasicLayoutModule} from './layout/basic-layout/basic-layout.module';
 import {CarModule} from './components/car/car.module';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {HighlightTextDirective} from './directives/highlight-text.directive';
-import {MatTableModule} from "@angular/material/table";
 import { PaginationPipe } from './pipes/pagination.pipe';
 
 @NgModule({
@@ -51,8 +50,7 @@ import { PaginationPipe } from './pipes/pagination.pipe';
     BasicLayoutModule,
     CarModule,
     FontAwesomeModule,
-    MatPaginatorModule,
-    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
