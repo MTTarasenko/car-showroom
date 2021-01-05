@@ -200,9 +200,17 @@ export class CarService {
   constructor() {
   }
 
-  getCarList(): Observable<Car[]> {
+  // getCarList(): Observable<Car[]> {
+  //   console.log('getting car list...');
+  //   return of(this.carListArray.map(item => ({...item})));
+  // }
+
+  getFourCarsAndLength(from: number, to: number): Observable<{ totalCount: number, cars: Car[] }> {
     console.log('getting car list...');
-    return of(this.carListArray.map(item => ({...item})));
+    const cars = this.carListArray
+      .slice(from, to)
+      .map(item => ({...item}));
+    return of({totalCount: this.carListArray.length, cars});
   }
 
   getCarYears(): Observable<number[]> {
@@ -210,10 +218,7 @@ export class CarService {
   }
 
   getCarById(carID: number): Observable<Car> {
-    return this.getCarList()
-      .pipe(
-        map(data => data.find(car => car.id === carID))
-      );
+    return of(this.carListArray.find(car => car.id === carID));
   }
 
 

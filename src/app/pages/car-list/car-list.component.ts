@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {map, switchMap} from 'rxjs/operators';
 import {Observable, of, Subscription, zip} from 'rxjs';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {MatPaginator} from '@angular/material/paginator';
 
 import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
@@ -26,10 +26,19 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   cars$: Observable<Car[]>;
+  carsAmount: number;
+  range: {
+    from: number,
+    to: number
+  };
   helperSub: Subscription;
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
+    this.range = {
+      from: 0,
+      to: 4
+    };
     this.helperService.updateCarsList();
 
     this.combineCarsLists();
@@ -37,7 +46,6 @@ export class CarListComponent implements OnInit, OnDestroy {
     this.helperSub = this.helperService.onCarsListUpdate().subscribe(() => {
       this.combineCarsLists();
     });
-
 
     // TODO data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
@@ -52,7 +60,11 @@ export class CarListComponent implements OnInit, OnDestroy {
 
 
     this.cars$ = zip(
-      this.service.getCarList(),
+      this.service.getFourCarsAndLength(this.range.from, this.range.to)
+        .pipe(map(data => {
+          this.carsAmount = data.totalCount;
+          return data.cars;
+        })),
       this.favService.getFavoriteCars()
     ).pipe(map(([cars, favoriteCars]) => {
       cars.map(car => {
@@ -64,6 +76,15 @@ export class CarListComponent implements OnInit, OnDestroy {
       });
       return cars;
     }));
+  }
+
+  onPageEvent($event): void {
+    this.range = {
+      from: (4 * $event.pageIndex),
+      to: 4 * ($event.pageIndex + 1)
+    };
+    this.helperService.updateCarsList();
+
   }
 
   onAddFavCar(): void {

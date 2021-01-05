@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {RouterModule} from '@angular/router';
 
 import { CarListComponent } from './car-list.component';
-import {CarListResolverService} from '../../services/car-list-resolver.service';
+// import {CarListResolverService} from '../../services/car-list-resolver.service';
 import {CarModule} from '../../components/car/car.module';
 
 
@@ -14,12 +14,12 @@ import {CarModule} from '../../components/car/car.module';
     CarModule,
     RouterModule.forChild([{
       path: '',
-      resolve: {cars: CarListResolverService},
+      // resolve: {cars: CarListResolverService},
       component: CarListComponent
     }])
   ],
-  providers: [
-    CarListResolverService
-  ]
+  // providers: [
+  //   CarListResolverService
+  // ]
 })
 export class CarListModule { }
