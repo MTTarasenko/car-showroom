@@ -1,13 +1,12 @@
 <div class="content">
   <section>
-    <div class="car-list" *ngIf="(pagedList$ | async) as cars">
-      <mat-card *ngFor="let car of cars">
+    <div class="car-list" *ngIf="(cars$ | async) as cars">
+      <mat-card *ngFor="let car of (cars | pagination:paginator.pageIndex)">
         <app-car [car]="car" (addCar)="onAddFavCar()"></app-car>
       </mat-card>
     </div>
     <div class="paginator">
       <mat-paginator #paginator
-                     (page)="OnPageChange($event)"
                      [length]="(cars$ | async).length"
                      [pageSize]="4">
       </mat-paginator>

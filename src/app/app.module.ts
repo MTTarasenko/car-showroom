@@ -23,6 +23,7 @@ import {CarModule} from './components/car/car.module';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {HighlightTextDirective} from './directives/highlight-text.directive';
 import {MatTableModule} from "@angular/material/table";
+import { PaginationPipe } from './pipes/pagination.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatTableModule} from "@angular/material/table";
     CarListComponent,
     CarDetailsComponent,
     AddCarModalComponent,
-    HighlightTextDirective
+    HighlightTextDirective,
+    PaginationPipe
   ],
   imports: [
     BrowserModule,
