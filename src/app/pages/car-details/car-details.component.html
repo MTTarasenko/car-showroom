@@ -1,12 +1,12 @@
 <div class="content">
   <div class="car-item">
     <div class="car-item-photo">
-      <img [src]="car?.photoURL">
+      <img [src]="(car$ | async)?.photoURL">
     </div>
     <div class="car-item-info">
-      <h4>{{car?.name}}</h4>
-      <p [appHighlightText]="['toyota']">{{car?.description}}</p>
-      <p>{{car?.year}}</p>
+      <h4>{{(car$ | async)?.name}}</h4>
+      <p [appHighlightText]="['toyota']">{{(car$ | async)?.description}}</p>
+      <p>{{(car$ | async)?.year}}</p>
     </div>
   </div>
 </div>

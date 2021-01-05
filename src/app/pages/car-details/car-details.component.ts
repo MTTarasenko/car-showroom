@@ -1,9 +1,10 @@
-import {Component, Directive, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-car-details',
@@ -11,25 +12,19 @@ import {Car} from '../../models/car';
   styleUrls: ['./car-details.component.scss']
 })
 
-export class CarDetailsComponent implements OnInit, OnDestroy {
+export class CarDetailsComponent implements OnInit {
 
-  car: Car;
+  car$: Observable<Car>;
 
   constructor(private service: CarService,
               private route: ActivatedRoute) {
   }
 
-  selectedID: number;
-  subscription: Subscription;
-
   ngOnInit(): void {
-    this.selectedID = Number(this.route.snapshot.paramMap.get('id'));
-    this.subscription = this.service.getCarById(this.selectedID)
-      .subscribe(data => this.car = data);
+    this.car$ = this.route.data.pipe(
+      map((data: { carById: Car }) => {
+        return data.carById;
+      })
+    );
   }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
 }

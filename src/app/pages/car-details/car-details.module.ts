@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 
 import {CarDetailsComponent} from './car-details.component';
+import {GetCarByIdResolverService} from '../../services/get-car-by-id-resolver.service';
 
 
 @NgModule({
@@ -11,8 +12,14 @@ import {CarDetailsComponent} from './car-details.component';
     CommonModule,
     RouterModule.forChild([{
       path: '',
+      resolve: {
+        carById: GetCarByIdResolverService
+      },
       component: CarDetailsComponent
     }])
+  ],
+  providers: [
+    GetCarByIdResolverService
   ]
 })
 export class CarDetailsModule {
