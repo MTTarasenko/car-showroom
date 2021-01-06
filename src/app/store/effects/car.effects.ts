@@ -5,7 +5,7 @@ import {AppState} from '../state/app.state';
 import {select, Store} from '@ngrx/store';
 import {
   AddCar,
-  AddCarSuccess,
+  AddCarSuccess, AddCarToFav, AddCarToFavSuccess,
   ECarActions,
   GetCar,
   GetCars,
@@ -16,6 +16,7 @@ import {map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {selectCarList} from '../selectors/car.selector';
 import {Car} from '../../models/car';
+import {FavoritesService} from '../../services/favorites.service';
 
 @Injectable()
 export class CarEffects {
@@ -52,11 +53,23 @@ export class CarEffects {
     switchMap((car: Car) => of(new AddCarSuccess(car)))
   );
 
+  @Effect()
+  addCarToFav = this._actions$.pipe(
+    ofType<AddCarToFav>(ECarActions.AddCarToFav),
+    map(action => {
+      console.log(action.payload);
+      this.favService.addFavorite(action.payload).subscribe();
+      return action.payload;
+    }),
+    switchMap((car: Car) => of(new AddCarToFavSuccess(car)))
+  );
+
 
 
   constructor(
     // tslint:disable-next-line:variable-name
     private _carService: CarService,
+    private favService: FavoritesService,
     // tslint:disable-next-line:variable-name
     private _actions$: Actions,
     // tslint:disable-next-line:variable-name

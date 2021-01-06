@@ -25,6 +25,12 @@ export const carReducers = (
         newCar: action.payload
       };
     }
+    case ECarActions.AddCarToFavSuccess: {
+      return {
+        ...state,
+        newCar: action.payload
+      };
+    }
 
     default:
       return state;

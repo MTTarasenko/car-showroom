@@ -2,7 +2,7 @@
   <section>
     <div class="car-list" *ngIf="(sCars$ | async) as cars">
       <mat-card *ngFor="let car of cars">
-        <app-car [car]="car" (addCar)="onAddFavCar()"></app-car>
+        <app-car [car]="car"></app-car>
       </mat-card>
     </div>
     <div class="paginator">

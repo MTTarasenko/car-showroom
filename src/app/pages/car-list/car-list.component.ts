@@ -11,7 +11,7 @@ import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {selectCarList} from '../../store/selectors/car.selector';
-import {GetCars} from '../../store/actions/car.actions';
+import {AddCarToFav, GetCars} from '../../store/actions/car.actions';
 
 @Component({
   selector: 'app-car-list',
@@ -66,7 +66,6 @@ export class CarListComponent implements OnInit, OnDestroy {
   combineCarsLists(): void {
     this.store.dispatch(new GetCars());
 
-
     this.cars$ = zip(
       this.service.getFourCarsAndLength(this.range.from, this.range.to)
         .pipe(map(data => {
@@ -93,10 +92,6 @@ export class CarListComponent implements OnInit, OnDestroy {
     };
     this.helperService.updateCarsList();
 
-  }
-
-  onAddFavCar(): void {
-    this.helperService.updateCarsList();
   }
 
   ngOnDestroy(): void {
