@@ -43,9 +43,6 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(new GetCars());
-    this.sCars$.subscribe(data => {
-      console.log(data);
-    });
     this.range = {
       from: 0,
       to: 4
