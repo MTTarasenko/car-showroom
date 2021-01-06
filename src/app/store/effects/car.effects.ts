@@ -3,10 +3,11 @@ import {Effect, Actions, ofType} from '@ngrx/effects';
 import {CarService} from '../../services/car.service';
 import {AppState} from '../state/app.state';
 import {select, Store} from '@ngrx/store';
-import {ECarActions, GetCar, GetCars, GetCarSuccess} from '../actions/car.actions';
+import {ECarActions, GetCar, GetCars, GetCarsSuccess, GetCarSuccess} from '../actions/car.actions';
 import {map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {selectCarList} from '../selectors/car.selector';
+import {Car} from '../../models/car';
 
 @Injectable()
 export class CarEffects {
@@ -25,6 +26,7 @@ export class CarEffects {
   getCars$ = this._actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
     switchMap(() => this._carService.getCarList()),
+    switchMap((cars: Car[]) => of(new GetCarsSuccess(cars)))
   );
 
 
