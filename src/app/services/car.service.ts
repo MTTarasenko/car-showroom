@@ -200,10 +200,10 @@ export class CarService {
   constructor() {
   }
 
-  // getCarList(): Observable<Car[]> {
-  //   console.log('getting car list...');
-  //   return of(this.carListArray.map(item => ({...item})));
-  // }
+  getCarList(): Observable<Car[]> {
+    console.log('getting car list...');
+    return of(this.carListArray.map(item => ({...item})));
+  }
 
   getFourCarsAndLength(from: number, to: number): Observable<{ totalCount: number, cars: Car[] }> {
     console.log('getting car list...');

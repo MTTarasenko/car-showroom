@@ -8,6 +8,10 @@ import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
 import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '../../store/state/app.state';
+import {selectCarList} from '../../store/selectors/car.selector';
+import {GetCars} from '../../store/actions/car.actions';
 
 @Component({
   selector: 'app-car-list',
@@ -22,9 +26,12 @@ export class CarListComponent implements OnInit, OnDestroy {
               private service: CarService,
               private favService: FavoritesService,
               private helperService: HelperService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private store: Store<AppState>,
+              ) {
   }
 
+  sCars$ = this.store.pipe(select(selectCarList));
   cars$: Observable<Car[]>;
   carsAmount: number;
   range: {
@@ -35,6 +42,10 @@ export class CarListComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
+    this.store.dispatch(new GetCars());
+    this.sCars$.subscribe(data => {
+      console.log(data);
+    });
     this.range = {
       from: 0,
       to: 4

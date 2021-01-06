@@ -22,7 +22,12 @@ import {BasicLayoutModule} from './layout/basic-layout/basic-layout.module';
 import {CarModule} from './components/car/car.module';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {HighlightTextDirective} from './directives/highlight-text.directive';
-import { PaginationPipe } from './pipes/pagination.pipe';
+import {PaginationPipe} from './pipes/pagination.pipe';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {appReducers} from './store/reducers/app.reducers';
+import {CarEffects} from './store/effects/car.effects';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
 
 @NgModule({
   declarations: [
@@ -50,7 +55,10 @@ import { PaginationPipe } from './pipes/pagination.pipe';
     BasicLayoutModule,
     CarModule,
     FontAwesomeModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot([CarEffects]),
+    StoreRouterConnectingModule.forRoot({stateKey: 'router'})
   ],
   providers: [],
   bootstrap: [AppComponent]
