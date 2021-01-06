@@ -3,7 +3,15 @@ import {Effect, Actions, ofType} from '@ngrx/effects';
 import {CarService} from '../../services/car.service';
 import {AppState} from '../state/app.state';
 import {select, Store} from '@ngrx/store';
-import {ECarActions, GetCar, GetCars, GetCarsSuccess, GetCarSuccess} from '../actions/car.actions';
+import {
+  AddCar,
+  AddCarSuccess,
+  ECarActions,
+  GetCar,
+  GetCars,
+  GetCarsSuccess,
+  GetCarSuccess
+} from '../actions/car.actions';
 import {map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {selectCarList} from '../selectors/car.selector';
@@ -26,7 +34,22 @@ export class CarEffects {
   getCars$ = this._actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
     switchMap(() => this._carService.getCarList()),
-    switchMap((cars: Car[]) => of(new GetCarsSuccess(cars)))
+    switchMap((cars: Car[]) => {
+      return of(new GetCarsSuccess(cars));
+    })
+  );
+
+  @Effect()
+  addCar$ = this._actions$.pipe(
+    ofType<AddCar>(ECarActions.AddCar),
+    map(action => {
+      const newCar = {...action.payload};
+      // newCar.id = Math.floor(1000 + Math.random() * 9000);
+      console.log(newCar);
+      this._carService.addNewCar(newCar).subscribe();
+      return newCar;
+    }),
+    switchMap((car: Car) => of(new AddCarSuccess(car)))
   );
 
 

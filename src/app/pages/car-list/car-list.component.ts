@@ -42,7 +42,6 @@ export class CarListComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    this.store.dispatch(new GetCars());
     this.range = {
       from: 0,
       to: 4
@@ -65,6 +64,7 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   combineCarsLists(): void {
+    this.store.dispatch(new GetCars());
 
 
     this.cars$ = zip(

@@ -19,6 +19,12 @@ export const carReducers = (
         selectedCar: action.payload
       };
     }
+    case ECarActions.AddCarSuccess: {
+      return {
+        ...state,
+        newCar: action.payload
+      };
+    }
 
     default:
       return state;

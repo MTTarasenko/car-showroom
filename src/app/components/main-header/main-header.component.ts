@@ -11,6 +11,9 @@ import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../store/state/app.state';
+import {AddCar, GetCars} from '../../store/actions/car.actions';
 
 @Component({
   selector: 'app-main-header',
@@ -29,7 +32,8 @@ export class MainHeaderComponent implements OnInit {
               public dialog: MatDialog,
               private favoriteService: FavoritesService,
               private service: CarService,
-              private helperService: HelperService) {
+              private helperService: HelperService,
+              private store: Store<AppState>) {
   }
 
 
@@ -45,15 +49,13 @@ export class MainHeaderComponent implements OnInit {
     dialogRef.afterClosed().pipe(
       switchMap(result => {
         if (result) {
-          // this.service.getCarList().pipe(map(data => data));
-          return this.service.addNewCar(result);
-        } else {
-          return of();
+           this.store.dispatch(new AddCar(result));
+           this.helperService.updateCarsList();
+           return of();
+          // return this.service.addNewCar(result);
         }
       })
-    ).subscribe(() => {
-      this.helperService.updateCarsList();
-    });
+    ).subscribe();
   }
 
 
