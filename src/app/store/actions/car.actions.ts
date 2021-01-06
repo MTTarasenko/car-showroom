@@ -15,11 +15,13 @@ export enum ECarActions {
 
 export class GetCars implements Action{
   public readonly type = ECarActions.GetCars;
+  constructor(public payload: number[]) {}
 }
 
 export class GetCarsSuccess implements Action{
   public readonly type = ECarActions.GetCarsSuccess;
-  constructor(public payload: Car[]) {}
+
+  constructor(public payload: { totalCount: number; cars: Car[] }) {}
 }
 
 export class GetCar implements Action{

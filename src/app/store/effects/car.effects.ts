@@ -20,23 +20,28 @@ import {FavoritesService} from '../../services/favorites.service';
 
 @Injectable()
 export class CarEffects {
-  @Effect()
-  getCar$ = this._actions$.pipe(
-    ofType<GetCar>(ECarActions.GetCar),
-    map(action => action.payload),
-    withLatestFrom(this._store.pipe(select(selectCarList))),
-    switchMap(([id, cars]) => {
-      const selectCar = cars.filter(car => car.id === +id)[0];
-      return of(new GetCarSuccess(selectCar));
-    })
-  );
+  // @Effect()
+  // getCar$ = this._actions$.pipe(
+  //   ofType<GetCar>(ECarActions.GetCar),
+  //   map(action => action.payload),
+  //   withLatestFrom(this._store.pipe(select(selectCarList))),
+  //   switchMap(([id, cars]) => {
+  //     const selectCar = cars.filter(car => car.id === +id)[0];
+  //     return of(new GetCarSuccess(selectCar));
+  //   })
+  // );
 
   @Effect()
   getCars$ = this._actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
-    switchMap(() => this._carService.getCarList()),
-    switchMap((cars: Car[]) => {
-      return of(new GetCarsSuccess(cars));
+    // switchMap(() => this._carService.getCarList()),
+    switchMap(action => {
+      return this._carService.getFourCarsAndLength(action.payload[0], action.payload[1]).pipe(map(data => {
+        return data;
+      }));
+    }),
+    switchMap((info: { totalCount: number, cars: Car[] }) => {
+      return of(new GetCarsSuccess(info));
     })
   );
 

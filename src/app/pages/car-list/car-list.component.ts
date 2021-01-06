@@ -33,6 +33,7 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   sCars$ = this.store.pipe(select(selectCarList));
   cars$: Observable<Car[]>;
+  newCars: Car[];
   carsAmount: number;
   range: {
     from: number,
@@ -54,6 +55,12 @@ export class CarListComponent implements OnInit, OnDestroy {
       this.combineCarsLists();
     });
 
+    this.sCars$.subscribe(result => {
+      console.log(result);
+      this.carsAmount = result.totalCount;
+      this.newCars = result.cars;
+    });
+
     // TODO data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
@@ -64,7 +71,7 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   combineCarsLists(): void {
-    this.store.dispatch(new GetCars());
+    this.store.dispatch(new GetCars([this.range.from, this.range.to]));
 
     this.cars$ = zip(
       this.service.getFourCarsAndLength(this.range.from, this.range.to)

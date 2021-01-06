@@ -1,7 +1,7 @@
 import {Car} from '../../models/car';
 
 export interface CarState {
-  cars: Car[];
+  cars: { totalCount: number, cars: Car[] };
   selectedCar: Car;
   newCar: Car;
 }
