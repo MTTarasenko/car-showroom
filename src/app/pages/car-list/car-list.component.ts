@@ -28,7 +28,7 @@ export class CarListComponent implements OnInit, OnDestroy {
               private helperService: HelperService,
               private activatedRoute: ActivatedRoute,
               private store: Store<AppState>,
-              ) {
+  ) {
   }
 
   sCars$ = this.store.pipe(select(selectCarList));
@@ -56,9 +56,8 @@ export class CarListComponent implements OnInit, OnDestroy {
     });
 
     this.sCars$.subscribe(result => {
-      console.log(result);
       this.carsAmount = result.totalCount;
-      this.newCars = result.cars;
+      this.newCars = result.cars.map(item => ({...item}));
     });
 
     // TODO data from resolver
@@ -73,23 +72,33 @@ export class CarListComponent implements OnInit, OnDestroy {
   combineCarsLists(): void {
     this.store.dispatch(new GetCars([this.range.from, this.range.to]));
 
-    this.cars$ = zip(
-      this.service.getFourCarsAndLength(this.range.from, this.range.to)
-        .pipe(map(data => {
-          this.carsAmount = data.totalCount;
-          return data.cars;
-        })),
-      this.favService.getFavoriteCars()
-    ).pipe(map(([cars, favoriteCars]) => {
-      cars.map(car => {
-        favoriteCars.map(favoriteCar => {
-          if (car.id === favoriteCar.id) {
+    this.favService.getFavoriteCars().subscribe(data => {
+      data.map(favCar => {
+        this.newCars.map(car => {
+          if (car.id === favCar.id) {
             car.favorite = true;
           }
+          return car;
         });
       });
-      return cars;
-    }));
+    });
+    // this.cars$ = zip(
+    //   this.service.getFourCarsAndLength(this.range.from, this.range.to)
+    //     .pipe(map(data => {
+    //       this.carsAmount = data.totalCount;
+    //       return data.cars;
+    //     })),
+    //   this.favService.getFavoriteCars()
+    // ).pipe(map(([cars, favoriteCars]) => {
+    //   cars.map(car => {
+    //     favoriteCars.map(favoriteCar => {
+    //       if (car.id === favoriteCar.id) {
+    //         car.favorite = true;
+    //       }
+    //     });
+    //   });
+    //   return cars;
+    // }));
   }
 
   onPageEvent($event): void {

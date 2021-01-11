@@ -11,6 +11,8 @@ export enum ECarActions {
   AddCarSuccess = '[Car] Add Car Success',
   AddCarToFav = '[Car] Add Car To Fav',
   AddCarToFavSuccess = '[Car] Add Car To Fav Success',
+  RemoveCarFromFav = '[Car] Remove Car From Fav',
+  RemoveCarFromFavSuccess = '[Car] Remove Car From Fav Success',
 }
 
 export class GetCars implements Action{
@@ -20,7 +22,6 @@ export class GetCars implements Action{
 
 export class GetCarsSuccess implements Action{
   public readonly type = ECarActions.GetCarsSuccess;
-
   constructor(public payload: { totalCount: number; cars: Car[] }) {}
 }
 
@@ -50,6 +51,14 @@ export class AddCarToFavSuccess implements Action{
   public readonly type = ECarActions.AddCarToFavSuccess;
   constructor(public payload: Car) {}
 }
+export class RemoveCarFromFav implements Action{
+  public readonly type = ECarActions.RemoveCarFromFav;
+  constructor(public payload: Car) {}
+}
+export class RemoveCarFromFavSuccess implements Action{
+  public readonly type = ECarActions.RemoveCarFromFavSuccess;
+  constructor(public payload: Car) {}
+}
 
 export type CarActions = GetCars |
   GetCarsSuccess |
@@ -58,4 +67,6 @@ export type CarActions = GetCars |
   AddCar |
   AddCarSuccess |
   AddCarToFav |
-  AddCarToFavSuccess;
+  AddCarToFavSuccess |
+  RemoveCarFromFav |
+  RemoveCarFromFavSuccess;
