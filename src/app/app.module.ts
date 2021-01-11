@@ -30,6 +30,7 @@ import {appReducers} from './store/reducers/app.reducers';
 import {CarEffects} from './store/effects/car.effects';
 import {RangeEffects} from './store/effects/range.effects';
 import {FavoriteEffects} from './store/effects/favorite.effects';
+import {LoginEffects} from './store/effects/login.effects';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import {FavoriteEffects} from './store/effects/favorite.effects';
     FontAwesomeModule,
     MatPaginatorModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([CarEffects, RangeEffects, FavoriteEffects]),
+    EffectsModule.forRoot([CarEffects, RangeEffects, FavoriteEffects, LoginEffects]),
     StoreRouterConnectingModule.forRoot({stateKey: 'router'})
   ],
   providers: [],

@@ -3,6 +3,9 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {SessionService} from '../../services/session.service';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../store/state/app.state';
+import {GetLogin} from '../../store/actions/login.actions';
 
 
 @Component({
@@ -17,7 +20,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private readonly router: Router,
               private service: SessionService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private store: Store<AppState>) {
   }
 
   ngOnInit(): void {
@@ -34,11 +38,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    const output = this.service.checkUsernameAndPassword(this.loginForm.controls.username.value, this.loginForm.controls.password.value);
-    if (output) {
-      this.router.navigate(['/car-list']);
-    } else {
-
-    }
+    this.store.dispatch(new GetLogin([this.loginForm.controls.username.value, this.loginForm.controls.password.value]));
   }
 }
