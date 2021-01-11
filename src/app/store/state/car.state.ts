@@ -5,8 +5,6 @@ export interface CarState {
   totalCount: number;
   selectedCar: Car;
   newCar: Car;
-  rangeFrom: number;
-  rangeTo: number;
 }
 
 export const initialCarState: CarState = {
@@ -14,6 +12,4 @@ export const initialCarState: CarState = {
   totalCount: null,
   selectedCar: null,
   newCar: null,
-  rangeFrom: 0,
-  rangeTo: 4
 };

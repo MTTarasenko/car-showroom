@@ -10,6 +10,10 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -20,14 +24,12 @@ import {AddCarModalComponent} from './components/add-car-modal/add-car-modal.com
 import {MainHeaderModule} from './components/main-header/main-header.module';
 import {BasicLayoutModule} from './layout/basic-layout/basic-layout.module';
 import {CarModule} from './components/car/car.module';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {HighlightTextDirective} from './directives/highlight-text.directive';
 import {PaginationPipe} from './pipes/pagination.pipe';
-import {StoreModule} from '@ngrx/store';
-import {EffectsModule} from '@ngrx/effects';
 import {appReducers} from './store/reducers/app.reducers';
 import {CarEffects} from './store/effects/car.effects';
-import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import {RangeEffects} from './store/effects/range.effects';
+import {FavoriteEffects} from './store/effects/favorite.effects';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,7 @@ import {StoreRouterConnectingModule} from '@ngrx/router-store';
     FontAwesomeModule,
     MatPaginatorModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([CarEffects]),
+    EffectsModule.forRoot([CarEffects, RangeEffects, FavoriteEffects]),
     StoreRouterConnectingModule.forRoot({stateKey: 'router'})
   ],
   providers: [],

@@ -25,28 +25,10 @@ export const carReducers = (
         newCar: action.payload
       };
     }
-    case ECarActions.AddCarToFavSuccess: {
-      return {
-        ...state,
-        newCar: action.payload
-      };
-    }
     case ECarActions.GetCarsCountSuccess: {
       return {
         ...state,
         totalCount: action.payload
-      };
-    }
-    case ECarActions.GetRangeFromSuccess: {
-      return {
-        ...state,
-        rangeFrom: action.payload
-      };
-    }
-    case ECarActions.GetRangeToSuccess: {
-      return {
-        ...state,
-        rangeTo: action.payload
       };
     }
 

@@ -11,14 +11,6 @@ export enum ECarActions {
   GetCarSuccess = '[Car] Get Car Success',
   AddCar = '[Car] Add Car',
   AddCarSuccess = '[Car] Add Car Success',
-  AddCarToFav = '[Car] Add Car To Fav',
-  AddCarToFavSuccess = '[Car] Add Car To Fav Success',
-  RemoveCarFromFav = '[Car] Remove Car From Fav',
-  RemoveCarFromFavSuccess = '[Car] Remove Car From Fav Success',
-  GetRangeFrom = 'Range From',
-  GetRangeFromSuccess = 'Range From Success',
-  GetRangeTo = 'Range To',
-  GetRangeToSuccess = 'Range To Success',
 }
 
 export class GetCarsCount implements Action{
@@ -57,40 +49,6 @@ export class AddCarSuccess implements Action{
   public readonly type = ECarActions.AddCarSuccess;
   constructor(public payload: Car) {}
 }
-export class AddCarToFav implements Action{
-  public readonly type = ECarActions.AddCarToFav;
-  constructor(public payload: Car) {}
-}
-export class AddCarToFavSuccess implements Action{
-  public readonly type = ECarActions.AddCarToFavSuccess;
-  constructor(public payload: Car) {}
-}
-export class RemoveCarFromFav implements Action{
-  public readonly type = ECarActions.RemoveCarFromFav;
-  constructor(public payload: Car) {}
-}
-export class RemoveCarFromFavSuccess implements Action{
-  public readonly type = ECarActions.RemoveCarFromFavSuccess;
-  constructor(public payload: Car) {}
-}
-export class GetRangeFrom implements Action{
-  public readonly type = ECarActions.GetRangeFrom;
-  constructor(public payload: number) {}
-}
-
-export class GetRangeFromSuccess implements Action{
-  public readonly type = ECarActions.GetRangeFromSuccess;
-  constructor(public payload: number) {}
-}
-export class GetRangeTo implements Action{
-  public readonly type = ECarActions.GetRangeTo;
-  constructor(public payload: number) {}
-}
-
-export class GetRangeToSuccess implements Action{
-  public readonly type = ECarActions.GetRangeToSuccess;
-  constructor(public payload: number) {}
-}
 
 
 export type CarActions = GetCars |
@@ -99,13 +57,5 @@ export type CarActions = GetCars |
   GetCarSuccess |
   AddCar |
   AddCarSuccess |
-  AddCarToFav |
-  AddCarToFavSuccess |
-  RemoveCarFromFav |
-  RemoveCarFromFavSuccess |
   GetCarsCount |
-  GetCarsCountSuccess |
-  GetRangeFrom |
-  GetRangeFromSuccess |
-  GetRangeTo |
-  GetRangeToSuccess;
+  GetCarsCountSuccess;

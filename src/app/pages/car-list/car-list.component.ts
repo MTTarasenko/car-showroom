@@ -11,7 +11,8 @@ import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {selectCarList, selectCarsAmount, selectRangeFrom} from '../../store/selectors/car.selector';
-import {AddCarToFav, GetCars, GetCarsCount, GetRangeFrom, GetRangeTo} from '../../store/actions/car.actions';
+import {GetCars, GetCarsCount} from '../../store/actions/car.actions';
+import {GetRangeFrom, GetRangeTo} from '../../store/actions/range.actions';
 
 @Component({
   selector: 'app-car-list',

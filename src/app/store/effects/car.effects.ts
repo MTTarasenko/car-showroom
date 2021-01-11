@@ -6,8 +6,6 @@ import {select, Store} from '@ngrx/store';
 import {
   AddCar,
   AddCarSuccess,
-  AddCarToFav,
-  AddCarToFavSuccess,
   ECarActions,
   GetCar,
   GetCars,
@@ -15,23 +13,16 @@ import {
   GetCarsCountSuccess,
   GetCarsSuccess,
   GetCarSuccess,
-  GetRangeFrom,
-  GetRangeFromSuccess,
-  GetRangeTo,
-  GetRangeToSuccess,
-  RemoveCarFromFav,
-  RemoveCarFromFavSuccess
 } from '../actions/car.actions';
 import {map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {Car} from '../../models/car';
-import {FavoritesService} from '../../services/favorites.service';
 import {selectCarList, selectRangeFrom, selectRangeTo} from '../selectors/car.selector';
 
 @Injectable()
 export class CarEffects {
   @Effect()
-  getCar$ = this._actions$.pipe(
+  getCar$ = this.actions$.pipe(
     ofType<GetCar>(ECarActions.GetCar),
     map(action => action.payload),
     withLatestFrom(this._store.pipe(select(selectCarList))),
@@ -42,7 +33,7 @@ export class CarEffects {
   );
 
   @Effect()
-  getCars$ = this._actions$.pipe(
+  getCars$ = this.actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
     switchMap(action => {
       let from: number;
@@ -60,25 +51,7 @@ export class CarEffects {
   );
 
   @Effect()
-  getRangeFrom$ = this._actions$.pipe(
-    ofType<GetRangeFrom>(ECarActions.GetRangeFrom),
-    map(action => action.payload),
-    switchMap((from: number) => {
-      return of(new GetRangeFromSuccess(from));
-    })
-  );
-
-  @Effect()
-  getRangeTo$ = this._actions$.pipe(
-    ofType<GetRangeTo>(ECarActions.GetRangeTo),
-    map(action => action.payload),
-    switchMap((to: number) => {
-      return of(new GetRangeToSuccess(to));
-    })
-  );
-
-  @Effect()
-  getCarsCount$ = this._actions$.pipe(
+  getCarsCount$ = this.actions$.pipe(
     ofType<GetCarsCount>(ECarActions.GetCarsCount),
     switchMap(action => {
       return this._carService.getFourCarsAndLength()
@@ -92,7 +65,7 @@ export class CarEffects {
   );
 
   @Effect()
-  addCar$ = this._actions$.pipe(
+  addCar$ = this.actions$.pipe(
     ofType<AddCar>(ECarActions.AddCar),
     map(action => {
       const newCar = {...action.payload};
@@ -102,33 +75,10 @@ export class CarEffects {
     switchMap((car: Car) => of(new AddCarSuccess(car)))
   );
 
-  @Effect()
-  addCarToFav = this._actions$.pipe(
-    ofType<AddCarToFav>(ECarActions.AddCarToFav),
-    map(action => {
-      this.favService.addFavorite(action.payload).subscribe();
-      return action.payload;
-    }),
-    switchMap((car: Car) => of(new AddCarToFavSuccess(car)))
-  );
-
-  @Effect()
-  removeCarFromFav = this._actions$.pipe(
-    ofType<RemoveCarFromFav>(ECarActions.RemoveCarFromFav),
-    map(action => {
-      this.favService.removeFavorite(action.payload).subscribe();
-      return action.payload;
-    }),
-    switchMap((car: Car) => of(new RemoveCarFromFavSuccess(car)))
-  );
-
-
   constructor(
     // tslint:disable-next-line:variable-name
     private _carService: CarService,
-    private favService: FavoritesService,
-    // tslint:disable-next-line:variable-name
-    private _actions$: Actions,
+    private actions$: Actions,
     // tslint:disable-next-line:variable-name
     private _store: Store<AppState>
   ) {

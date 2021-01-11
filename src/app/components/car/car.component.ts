@@ -10,7 +10,7 @@ import {Car} from '../../models/car';
 import {map} from 'rxjs/operators';
 import {CarService} from '../../services/car.service';
 import {AppState} from '../../store/state/app.state';
-import {AddCarToFav, RemoveCarFromFav} from '../../store/actions/car.actions';
+import {AddCarToFav, RemoveCarFromFav} from '../../store/actions/favorite.actions';
 import {HelperService} from '../../services/helper.service';
 
 @Component({
