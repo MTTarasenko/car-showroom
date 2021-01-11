@@ -7,7 +7,7 @@ import {
   AddCar,
   AddCarSuccess,
   ECarActions,
-  GetCar,
+  GetCar, GetCarError,
   GetCars,
   GetCarsCount,
   GetCarsCountSuccess,
@@ -18,6 +18,7 @@ import {map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {Car} from '../../models/car';
 import {selectCarList, selectRangeFrom, selectRangeTo} from '../selectors/car.selector';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class CarEffects {
@@ -28,7 +29,12 @@ export class CarEffects {
     withLatestFrom(this._store.pipe(select(selectCarList))),
     switchMap(([id, cars]) => {
       const selectCar = cars.filter(car => car.id === +id)[0];
-      return of(new GetCarSuccess(selectCar));
+      if (selectCar) {
+        return of(new GetCarSuccess(selectCar));
+      } else {
+        this.router.navigate(['/car-list/']);
+        return of(new GetCarError(selectCar));
+      }
     })
   );
 
@@ -80,7 +86,8 @@ export class CarEffects {
     private _carService: CarService,
     private actions$: Actions,
     // tslint:disable-next-line:variable-name
-    private _store: Store<AppState>
+    private _store: Store<AppState>,
+    private readonly router: Router
   ) {
   }
 }

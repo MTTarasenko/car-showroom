@@ -7,7 +7,7 @@ import {Car} from '../../models/car';
 import {map} from 'rxjs/operators';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {GetCar} from '../../store/actions/car.actions';
+import {GetCar, GetCars} from '../../store/actions/car.actions';
 import {selectSelectedCar} from '../../store/selectors/car.selector';
 
 @Component({
@@ -26,6 +26,7 @@ export class CarDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(new GetCars());
     this.store.dispatch(new GetCar(Number(this.route.snapshot.params.id)));
     // this.car$ = this.route.data.pipe(
     //   map((data: { carById: Car }) => {
