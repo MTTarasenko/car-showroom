@@ -12,15 +12,15 @@ import {GetCarByIdResolverService} from '../../services/get-car-by-id-resolver.s
     CommonModule,
     RouterModule.forChild([{
       path: '',
-      resolve: {
-        carById: GetCarByIdResolverService
-      },
+      // resolve: {
+      //   carById: GetCarByIdResolverService
+      // },
       component: CarDetailsComponent
     }])
   ],
-  providers: [
-    GetCarByIdResolverService
-  ]
+  // providers: [
+  //   GetCarByIdResolverService
+  // ]
 })
 export class CarDetailsModule {
 }

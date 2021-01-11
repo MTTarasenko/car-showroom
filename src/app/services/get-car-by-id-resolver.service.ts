@@ -4,20 +4,30 @@ import {CarService} from './car.service';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Car} from '../models/car';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '../store/state/app.state';
+import {GetCar} from '../store/actions/car.actions';
+import {selectSelectedCar} from '../store/selectors/car.selector';
 
 @Injectable()
 export class GetCarByIdResolverService {
 
   constructor(private service: CarService,
-              private readonly router: Router) {
+              private readonly router: Router,
+              private store: Store<AppState>) {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<Car> {
-    return this.service.getCarById(Number(route.paramMap.get('id'))).pipe(
+    this.store.dispatch(new GetCar(Number(route.paramMap.get('id'))));
+    // this.store.pipe(select(selectSelectedCar));
+    // return this.service.getCarById(Number(route.paramMap.get('id'))).pipe(
+    return this.store.pipe(select(selectSelectedCar)).pipe(
       map(data => {
         if (data) {
+          console.log(data);
           return data;
         } else {
+          console.log('no data');
           this.router.navigate(['/car-list/']);
         }
       })

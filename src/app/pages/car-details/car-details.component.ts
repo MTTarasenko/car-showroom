@@ -5,6 +5,10 @@ import {Observable} from 'rxjs';
 import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
 import {map} from 'rxjs/operators';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '../../store/state/app.state';
+import {GetCar} from '../../store/actions/car.actions';
+import {selectSelectedCar} from '../../store/selectors/car.selector';
 
 @Component({
   selector: 'app-car-details',
@@ -14,17 +18,20 @@ import {map} from 'rxjs/operators';
 
 export class CarDetailsComponent implements OnInit {
 
-  car$: Observable<Car>;
+  car$ = this.store.pipe(select(selectSelectedCar));
 
   constructor(private service: CarService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private store: Store<AppState>) {
   }
 
   ngOnInit(): void {
-    this.car$ = this.route.data.pipe(
-      map((data: { carById: Car }) => {
-        return data.carById;
-      })
-    );
+    this.store.dispatch(new GetCar(Number(this.route.snapshot.params.id)));
+    // this.car$ = this.route.data.pipe(
+    //   map((data: { carById: Car }) => {
+    //     console.log(data);
+    //     return data.carById;
+    //   })
+    // );
   }
 }
