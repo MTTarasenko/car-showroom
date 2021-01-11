@@ -35,20 +35,12 @@ export class CarListComponent implements OnInit, OnDestroy {
   cars$: Observable<Car[]>;
   carsAmount$ = this.store.pipe(select(selectCarsAmount));
   currentPage$: Observable<number>;
-  range: {
-    from: number,
-    to: number
-  };
   helperSub: Subscription;
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
     this.store.dispatch(new GetCarsCount());
     this.currentPage$ = this.store.pipe(select(selectRangeFrom)).pipe(map(data => data / 4));
-    // this.range = {
-    //   from: 0,
-    //   to: 4
-    // };
     this.helperService.updateCarsList();
 
     this.combineCarsLists();
@@ -85,12 +77,11 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   onPageEvent($event): void {
-    this.range = {
-      from: (4 * $event.pageIndex),
-      to: 4 * ($event.pageIndex + 1)
-    };
-    this.store.dispatch(new GetRangeFrom(this.range.from));
-    this.store.dispatch(new GetRangeTo(this.range.to));
+    const from = (4 * $event.pageIndex);
+    const to = 4 * ($event.pageIndex + 1);
+
+    this.store.dispatch(new GetRangeFrom(from));
+    this.store.dispatch(new GetRangeTo(to));
     this.helperService.updateCarsList();
 
   }
