@@ -10,8 +10,8 @@ import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {selectCarList, selectCarsAmount} from '../../store/selectors/car.selector';
-import {AddCarToFav, GetCars, GetCarsCount} from '../../store/actions/car.actions';
+import {selectCarList, selectCarsAmount, selectRangeFrom} from '../../store/selectors/car.selector';
+import {AddCarToFav, GetCars, GetCarsCount, GetRangeFrom, GetRangeTo} from '../../store/actions/car.actions';
 
 @Component({
   selector: 'app-car-list',
@@ -34,6 +34,7 @@ export class CarListComponent implements OnInit, OnDestroy {
   sCars$ = this.store.pipe(select(selectCarList));
   cars$: Observable<Car[]>;
   carsAmount$ = this.store.pipe(select(selectCarsAmount));
+  currentPage$: Observable<number>;
   range: {
     from: number,
     to: number
@@ -43,10 +44,11 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(new GetCarsCount());
-    this.range = {
-      from: 0,
-      to: 4
-    };
+    this.currentPage$ = this.store.pipe(select(selectRangeFrom)).pipe(map(data => data / 4));
+    // this.range = {
+    //   from: 0,
+    //   to: 4
+    // };
     this.helperService.updateCarsList();
 
     this.combineCarsLists();
@@ -65,7 +67,7 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   combineCarsLists(): void {
-    this.store.dispatch(new GetCars([this.range.from, this.range.to]));
+    this.store.dispatch(new GetCars());
 
     this.cars$ = zip(
       this.sCars$.pipe(map(cars => cars.map(car => ({...car})))),
@@ -87,6 +89,8 @@ export class CarListComponent implements OnInit, OnDestroy {
       from: (4 * $event.pageIndex),
       to: 4 * ($event.pageIndex + 1)
     };
+    this.store.dispatch(new GetRangeFrom(this.range.from));
+    this.store.dispatch(new GetRangeTo(this.range.to));
     this.helperService.updateCarsList();
 
   }

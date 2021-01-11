@@ -37,6 +37,18 @@ export const carReducers = (
         totalCount: action.payload
       };
     }
+    case ECarActions.GetRangeFromSuccess: {
+      return {
+        ...state,
+        rangeFrom: action.payload
+      };
+    }
+    case ECarActions.GetRangeToSuccess: {
+      return {
+        ...state,
+        rangeTo: action.payload
+      };
+    }
 
     default:
       return state;

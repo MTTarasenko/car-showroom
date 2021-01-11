@@ -15,6 +15,10 @@ export enum ECarActions {
   AddCarToFavSuccess = '[Car] Add Car To Fav Success',
   RemoveCarFromFav = '[Car] Remove Car From Fav',
   RemoveCarFromFavSuccess = '[Car] Remove Car From Fav Success',
+  GetRangeFrom = 'Range From',
+  GetRangeFromSuccess = 'Range From Success',
+  GetRangeTo = 'Range To',
+  GetRangeToSuccess = 'Range To Success',
 }
 
 export class GetCarsCount implements Action{
@@ -27,7 +31,7 @@ export class GetCarsCountSuccess implements Action{
 }
 export class GetCars implements Action{
   public readonly type = ECarActions.GetCars;
-  constructor(public payload: number[]) {}
+  constructor() {}
 }
 
 export class GetCarsSuccess implements Action{
@@ -69,6 +73,25 @@ export class RemoveCarFromFavSuccess implements Action{
   public readonly type = ECarActions.RemoveCarFromFavSuccess;
   constructor(public payload: Car) {}
 }
+export class GetRangeFrom implements Action{
+  public readonly type = ECarActions.GetRangeFrom;
+  constructor(public payload: number) {}
+}
+
+export class GetRangeFromSuccess implements Action{
+  public readonly type = ECarActions.GetRangeFromSuccess;
+  constructor(public payload: number) {}
+}
+export class GetRangeTo implements Action{
+  public readonly type = ECarActions.GetRangeTo;
+  constructor(public payload: number) {}
+}
+
+export class GetRangeToSuccess implements Action{
+  public readonly type = ECarActions.GetRangeToSuccess;
+  constructor(public payload: number) {}
+}
+
 
 export type CarActions = GetCars |
   GetCarsSuccess |
@@ -81,4 +104,8 @@ export type CarActions = GetCars |
   RemoveCarFromFav |
   RemoveCarFromFavSuccess |
   GetCarsCount |
-  GetCarsCountSuccess;
+  GetCarsCountSuccess |
+  GetRangeFrom |
+  GetRangeFromSuccess |
+  GetRangeTo |
+  GetRangeToSuccess;

@@ -5,42 +5,75 @@ import {AppState} from '../state/app.state';
 import {select, Store} from '@ngrx/store';
 import {
   AddCar,
-  AddCarSuccess, AddCarToFav, AddCarToFavSuccess,
+  AddCarSuccess,
+  AddCarToFav,
+  AddCarToFavSuccess,
   ECarActions,
   GetCar,
-  GetCars, GetCarsCount, GetCarsCountSuccess,
+  GetCars,
+  GetCarsCount,
+  GetCarsCountSuccess,
   GetCarsSuccess,
-  GetCarSuccess, RemoveCarFromFav, RemoveCarFromFavSuccess
+  GetCarSuccess,
+  GetRangeFrom,
+  GetRangeFromSuccess,
+  GetRangeTo,
+  GetRangeToSuccess,
+  RemoveCarFromFav,
+  RemoveCarFromFavSuccess
 } from '../actions/car.actions';
 import {map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {Car} from '../../models/car';
 import {FavoritesService} from '../../services/favorites.service';
+import {selectCarList, selectRangeFrom, selectRangeTo} from '../selectors/car.selector';
 
 @Injectable()
 export class CarEffects {
-  // @Effect()
-  // getCar$ = this._actions$.pipe(
-  //   ofType<GetCar>(ECarActions.GetCar),
-  //   map(action => action.payload),
-  //   withLatestFrom(this._store.pipe(select(selectCarList))),
-  //   switchMap(([id, cars]) => {
-  //     const selectCar = cars.filter(car => car.id === +id)[0];
-  //     return of(new GetCarSuccess(selectCar));
-  //   })
-  // );
+  @Effect()
+  getCar$ = this._actions$.pipe(
+    ofType<GetCar>(ECarActions.GetCar),
+    map(action => action.payload),
+    withLatestFrom(this._store.pipe(select(selectCarList))),
+    switchMap(([id, cars]) => {
+      const selectCar = cars.filter(car => car.id === +id)[0];
+      return of(new GetCarSuccess(selectCar));
+    })
+  );
 
   @Effect()
   getCars$ = this._actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
     switchMap(action => {
-      return this._carService.getFourCarsAndLength(action.payload[0], action.payload[1])
+      let from: number;
+      this._store.pipe(select(selectRangeFrom)).subscribe(result => from = result);
+      let to: number;
+      this._store.pipe(select(selectRangeTo)).subscribe(result => to = result);
+      return this._carService.getFourCarsAndLength(from, to)
         .pipe(map(data => {
           return data.cars;
         }));
     }),
     switchMap((info: Car[]) => {
       return of(new GetCarsSuccess(info));
+    })
+  );
+
+  @Effect()
+  getRangeFrom$ = this._actions$.pipe(
+    ofType<GetRangeFrom>(ECarActions.GetRangeFrom),
+    map(action => action.payload),
+    switchMap((from: number) => {
+      return of(new GetRangeFromSuccess(from));
+    })
+  );
+
+  @Effect()
+  getRangeTo$ = this._actions$.pipe(
+    ofType<GetRangeTo>(ECarActions.GetRangeTo),
+    map(action => action.payload),
+    switchMap((to: number) => {
+      return of(new GetRangeToSuccess(to));
     })
   );
 

@@ -14,6 +14,16 @@ export const selectCarsAmount = createSelector(
   (state: CarState) => state.totalCount
 );
 
+export const selectRangeFrom = createSelector(
+  selectCars,
+  (state: CarState) => state.rangeFrom
+);
+
+export const selectRangeTo = createSelector(
+  selectCars,
+  (state: CarState) => state.rangeTo
+);
+
 export const selectSelectedCar = createSelector(
   selectCars,
   (state: CarState) => state.selectedCar
