@@ -13,7 +13,7 @@ import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {AddCar, GetCars} from '../../store/actions/car.actions';
+import {AddCar, GetCars, GetCarsCount} from '../../store/actions/car.actions';
 
 @Component({
   selector: 'app-main-header',
@@ -49,9 +49,10 @@ export class MainHeaderComponent implements OnInit {
     dialogRef.afterClosed().pipe(
       switchMap(result => {
         if (result) {
-           this.store.dispatch(new AddCar(result));
-           this.helperService.updateCarsList();
-           return of();
+          this.store.dispatch(new AddCar(result));
+          this.store.dispatch(new GetCarsCount());
+          this.helperService.updateCarsList();
+          return of();
           // return this.service.addNewCar(result);
         }
       })

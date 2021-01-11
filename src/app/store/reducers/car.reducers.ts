@@ -31,6 +31,12 @@ export const carReducers = (
         newCar: action.payload
       };
     }
+    case ECarActions.GetCarsCountSuccess: {
+      return {
+        ...state,
+        totalCount: action.payload
+      };
+    }
 
     default:
       return state;

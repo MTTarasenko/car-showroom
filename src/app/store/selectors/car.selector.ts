@@ -9,6 +9,11 @@ export const selectCarList = createSelector(
   (state: CarState) => state.cars
 );
 
+export const selectCarsAmount = createSelector(
+  selectCars,
+  (state: CarState) => state.totalCount
+);
+
 export const selectSelectedCar = createSelector(
   selectCars,
   (state: CarState) => state.selectedCar

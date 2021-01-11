@@ -7,7 +7,7 @@
     </div>
     <div class="paginator">
       <mat-paginator #paginator
-                     [length]="carsAmount"
+                     [length]="(carsAmount$ | async)"
                      [pageSize]="4" (page)="onPageEvent($event)">
       </mat-paginator>
     </div>

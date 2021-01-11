@@ -8,13 +8,12 @@ import {
   AddCarSuccess, AddCarToFav, AddCarToFavSuccess,
   ECarActions,
   GetCar,
-  GetCars,
+  GetCars, GetCarsCount, GetCarsCountSuccess,
   GetCarsSuccess,
   GetCarSuccess, RemoveCarFromFavSuccess
 } from '../actions/car.actions';
 import {map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {of} from 'rxjs';
-import {selectCarList} from '../selectors/car.selector';
 import {Car} from '../../models/car';
 import {FavoritesService} from '../../services/favorites.service';
 
@@ -34,15 +33,28 @@ export class CarEffects {
   @Effect()
   getCars$ = this._actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
-    // switchMap(() => this._carService.getCarList()),
     switchMap(action => {
       return this._carService.getFourCarsAndLength(action.payload[0], action.payload[1])
         .pipe(map(data => {
-        return data;
-      }));
+          return data.cars;
+        }));
     }),
-    switchMap((info: { totalCount: number, cars: Car[] }) => {
+    switchMap((info: Car[]) => {
       return of(new GetCarsSuccess(info));
+    })
+  );
+
+  @Effect()
+  getCarsCount$ = this._actions$.pipe(
+    ofType<GetCarsCount>(ECarActions.GetCarsCount),
+    switchMap(action => {
+      return this._carService.getFourCarsAndLength()
+        .pipe(map(data => {
+          return data.totalCount;
+        }));
+    }),
+    switchMap((info: number) => {
+      return of(new GetCarsCountSuccess(info));
     })
   );
 
@@ -51,8 +63,6 @@ export class CarEffects {
     ofType<AddCar>(ECarActions.AddCar),
     map(action => {
       const newCar = {...action.payload};
-      // newCar.id = Math.floor(1000 + Math.random() * 9000);
-      console.log(newCar);
       this._carService.addNewCar(newCar).subscribe();
       return newCar;
     }),

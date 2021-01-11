@@ -10,8 +10,8 @@ import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {selectCarList} from '../../store/selectors/car.selector';
-import {AddCarToFav, GetCars} from '../../store/actions/car.actions';
+import {selectCarList, selectCarsAmount} from '../../store/selectors/car.selector';
+import {AddCarToFav, GetCars, GetCarsCount} from '../../store/actions/car.actions';
 
 @Component({
   selector: 'app-car-list',
@@ -34,15 +34,18 @@ export class CarListComponent implements OnInit, OnDestroy {
   sCars$ = this.store.pipe(select(selectCarList));
   cars$: Observable<Car[]>;
   newCars: Car[];
-  carsAmount: number;
+  carsAmount$ = this.store.pipe(select(selectCarsAmount));
   range: {
     from: number,
     to: number
   };
   helperSub: Subscription;
+  carsSub: Subscription;
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
+    // this.carsAmount$ = this.store.pipe(select(selectCarsAmount));
+    this.store.dispatch(new GetCarsCount());
     this.range = {
       from: 0,
       to: 4
@@ -55,9 +58,9 @@ export class CarListComponent implements OnInit, OnDestroy {
       this.combineCarsLists();
     });
 
-    this.sCars$.subscribe(result => {
-      this.carsAmount = result.totalCount;
-      this.newCars = result.cars.map(item => ({...item}));
+    this.carsSub = this.sCars$.subscribe(result => {
+      // this.carsAmount = result.totalCount;
+      this.newCars = result.map(item => ({...item}));
     });
 
     // TODO data from resolver
@@ -65,7 +68,7 @@ export class CarListComponent implements OnInit, OnDestroy {
     //   map((data: { cars: Car[] }) => data.cars)
     // );
 
-    this.subscriptions.push(this.helperSub);
+    this.subscriptions.push(this.helperSub, this.carsSub);
 
   }
 
