@@ -1,6 +1,6 @@
 <div class="content">
   <section>
-    <div class="car-list" *ngIf="(newCars) as cars">
+    <div class="car-list" *ngIf="(cars$ | async) as cars">
       <mat-card *ngFor="let car of cars">
         <app-car [car]="car"></app-car>
       </mat-card>

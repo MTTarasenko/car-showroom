@@ -33,18 +33,15 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   sCars$ = this.store.pipe(select(selectCarList));
   cars$: Observable<Car[]>;
-  newCars: Car[];
   carsAmount$ = this.store.pipe(select(selectCarsAmount));
   range: {
     from: number,
     to: number
   };
   helperSub: Subscription;
-  carsSub: Subscription;
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    // this.carsAmount$ = this.store.pipe(select(selectCarsAmount));
     this.store.dispatch(new GetCarsCount());
     this.range = {
       from: 0,
@@ -58,50 +55,31 @@ export class CarListComponent implements OnInit, OnDestroy {
       this.combineCarsLists();
     });
 
-    this.carsSub = this.sCars$.subscribe(result => {
-      // this.carsAmount = result.totalCount;
-      this.newCars = result.map(item => ({...item}));
-    });
-
     // TODO data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
     // );
 
-    this.subscriptions.push(this.helperSub, this.carsSub);
+    this.subscriptions.push(this.helperSub);
 
   }
 
   combineCarsLists(): void {
     this.store.dispatch(new GetCars([this.range.from, this.range.to]));
 
-    this.favService.getFavoriteCars().subscribe(data => {
-      data.map(favCar => {
-        this.newCars.map(car => {
-          if (car.id === favCar.id) {
+    this.cars$ = zip(
+      this.sCars$.pipe(map(cars => cars.map(car => ({...car})))),
+      this.favService.getFavoriteCars()
+    ).pipe(map(([cars, favoriteCars]) => {
+      (cars).map(car => {
+        favoriteCars.map(favoriteCar => {
+          if (car.id === favoriteCar.id) {
             car.favorite = true;
           }
-          return car;
         });
       });
-    });
-    // this.cars$ = zip(
-    //   this.service.getFourCarsAndLength(this.range.from, this.range.to)
-    //     .pipe(map(data => {
-    //       this.carsAmount = data.totalCount;
-    //       return data.cars;
-    //     })),
-    //   this.favService.getFavoriteCars()
-    // ).pipe(map(([cars, favoriteCars]) => {
-    //   cars.map(car => {
-    //     favoriteCars.map(favoriteCar => {
-    //       if (car.id === favoriteCar.id) {
-    //         car.favorite = true;
-    //       }
-    //     });
-    //   });
-    //   return cars;
-    // }));
+      return cars;
+    }));
   }
 
   onPageEvent($event): void {

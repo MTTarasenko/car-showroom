@@ -10,7 +10,7 @@ import {
   GetCar,
   GetCars, GetCarsCount, GetCarsCountSuccess,
   GetCarsSuccess,
-  GetCarSuccess, RemoveCarFromFavSuccess
+  GetCarSuccess, RemoveCarFromFav, RemoveCarFromFavSuccess
 } from '../actions/car.actions';
 import {map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {of} from 'rxjs';
@@ -81,14 +81,13 @@ export class CarEffects {
 
   @Effect()
   removeCarFromFav = this._actions$.pipe(
-    ofType<AddCarToFav>(ECarActions.RemoveCarFromFav),
+    ofType<RemoveCarFromFav>(ECarActions.RemoveCarFromFav),
     map(action => {
       this.favService.removeFavorite(action.payload).subscribe();
       return action.payload;
     }),
     switchMap((car: Car) => of(new RemoveCarFromFavSuccess(car)))
   );
-
 
 
   constructor(
