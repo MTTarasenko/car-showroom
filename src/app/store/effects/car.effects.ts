@@ -14,8 +14,8 @@ import {
   GetCarsSuccess,
   GetCarSuccess,
 } from '../actions/car.actions';
-import {map, switchMap, withLatestFrom} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
+import {of, zip} from 'rxjs';
 import {Car} from '../../models/car';
 import {selectCarList, selectRangeFrom, selectRangeTo} from '../selectors/car.selector';
 import {Router} from '@angular/router';
@@ -41,12 +41,12 @@ export class CarEffects {
   @Effect()
   getCars$ = this.actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
-    switchMap(action => {
-      let from: number;
-      this._store.pipe(select(selectRangeFrom)).subscribe(result => from = result);
-      let to: number;
-      this._store.pipe(select(selectRangeTo)).subscribe(result => to = result);
-      return this._carService.getFourCarsAndLength(from, to)
+    withLatestFrom(zip(
+      this._store.pipe(select(selectRangeFrom)),
+      this._store.pipe(select(selectRangeTo))
+    )),
+    switchMap(([action, range]) => {
+      return this._carService.getFourCarsAndLength(range[0], range[1])
         .pipe(map(data => {
           return data.cars;
         }));
