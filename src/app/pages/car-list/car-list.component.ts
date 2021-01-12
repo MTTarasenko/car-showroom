@@ -23,8 +23,6 @@ import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
 })
 export class CarListComponent implements OnInit, OnDestroy {
 
-  @ViewChild('paginator') paginator: MatPaginator;
-
   constructor(private readonly router: Router,
               private service: CarService,
               private favService: FavoritesService,
@@ -67,7 +65,6 @@ export class CarListComponent implements OnInit, OnDestroy {
     this.cars$ = zip(
       this.sCars$.pipe(map(cars => cars.map(car => ({...car})))),
       this.favCars$,
-      // this.favService.getFavoriteCars()
     ).pipe(map(([cars, favoriteCars]) => {
       (cars).map(car => {
         favoriteCars.map(favoriteCar => {

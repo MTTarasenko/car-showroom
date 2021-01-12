@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
 import {Car} from '../models/car';
 
 @Injectable({
@@ -197,8 +196,7 @@ export class CarService {
     2012,
   ];
 
-  constructor() {
-  }
+  constructor() {}
 
   getCarList(): Observable<Car[]> {
     console.log('getting car list...');
