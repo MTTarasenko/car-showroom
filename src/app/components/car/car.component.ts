@@ -1,18 +1,15 @@
 import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
-import {Subscription} from 'rxjs';
 import {faStar as solidStar} from '@fortawesome/free-solid-svg-icons';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
 import {Store} from '@ngrx/store';
 
 import {FavoritesService} from '../../services/favorites.service';
 import {Car} from '../../models/car';
-import {map} from 'rxjs/operators';
 import {CarService} from '../../services/car.service';
 import {AppState} from '../../store/state/app.state';
 import {AddCarToFav, GetFavCarList, RemoveCarFromFav} from '../../store/actions/favorite.actions';
 import {HelperService} from '../../services/helper.service';
-import {GetCar} from '../../store/actions/car.actions';
 
 @Component({
   selector: 'app-car',

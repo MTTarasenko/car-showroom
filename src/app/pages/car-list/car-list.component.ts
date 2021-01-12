@@ -1,8 +1,7 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {map, switchMap} from 'rxjs/operators';
 import {Observable, of, Subscription, zip} from 'rxjs';
-import {MatPaginator} from '@angular/material/paginator';
 
 import {CarService} from '../../services/car.service';
 import {Car} from '../../models/car';
@@ -29,8 +28,7 @@ export class CarListComponent implements OnInit, OnDestroy {
               private helperService: HelperService,
               private activatedRoute: ActivatedRoute,
               private store: Store<AppState>,
-  ) {
-  }
+  ) {}
 
   sCars$ = this.store.pipe(select(selectCarList));
   favCars$ = this.store.pipe(select(selectFavCarsList));

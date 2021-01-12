@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
@@ -19,7 +19,7 @@ import {LogOut} from '../../store/actions/login.actions';
   templateUrl: './main-header.component.html',
   styleUrls: ['./main-header.component.scss'],
 })
-export class MainHeaderComponent implements OnInit {
+export class MainHeaderComponent {
 
   favCars$ = this.store.pipe(select(selectFavCarsList));
   faStarRegular = regularStar;
@@ -32,11 +32,6 @@ export class MainHeaderComponent implements OnInit {
               private service: CarService,
               private helperService: HelperService,
               private store: Store<AppState>) {
-  }
-
-
-  ngOnInit(): void {
-    // this.favCars$ = this.favoriteService.getFavoriteCars();
   }
 
   addNewCar(): void {

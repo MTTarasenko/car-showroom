@@ -60,7 +60,12 @@ import {LoginEffects} from './store/effects/login.effects';
     FontAwesomeModule,
     MatPaginatorModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([CarEffects, RangeEffects, FavoriteEffects, LoginEffects]),
+    EffectsModule.forRoot([
+      CarEffects,
+      RangeEffects,
+      FavoriteEffects,
+      LoginEffects
+    ]),
     StoreRouterConnectingModule.forRoot({stateKey: 'router'})
   ],
   providers: [],
