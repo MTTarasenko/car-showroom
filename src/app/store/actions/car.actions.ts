@@ -43,7 +43,6 @@ export class GetCarSuccess implements Action{
 }
 export class GetCarError implements Action{
   public readonly type = ECarActions.GetCarError;
-  constructor(public payload: Car) {}
 }
 
 export class AddCar implements Action{

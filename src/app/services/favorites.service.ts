@@ -18,27 +18,25 @@ export class FavoritesService {
     return of(this.favoriteCarsList);
   }
 
-  addFavorite(car?: Car): Observable<boolean> {
+  addFavorite(car?: Car): Observable<Car> {
     return new Observable(observer => {
       if (!this.favoriteCarsList.some(value => {
         return value.id === car.id;
       })) {
         this.favoriteCarsList.push(car);
-        return observer.next(true);
+        return observer.next(car);
       } else {
-        return observer.next(false);
+        return observer.error();
       }
     });
   }
 
-  removeFavorite(car: Car): Observable<boolean> {
+  removeFavorite(car: Car): Observable<Car> {
     return new Observable(observer => {
       this.favoriteCarsList.forEach((item, index) => {
         if (item.id === car.id) {
           this.favoriteCarsList.splice(index, 1);
-          return observer.next(true);
-        } else {
-          return observer.next(false);
+          return observer.next(car);
         }
       });
     });

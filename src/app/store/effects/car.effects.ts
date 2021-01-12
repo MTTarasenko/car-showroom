@@ -33,7 +33,7 @@ export class CarEffects {
         return of(new GetCarSuccess(selectCar));
       } else {
         this.router.navigate(['/car-list/']);
-        return of(new GetCarError(selectCar));
+        return of(new GetCarError());
       }
     })
   );
@@ -47,9 +47,7 @@ export class CarEffects {
     )),
     switchMap(([action, range]) => {
       return this._carService.getFourCarsAndLength(range[0], range[1])
-        .pipe(map(data => {
-          return data.cars;
-        }));
+        .pipe(map(data => data.cars));
     }),
     switchMap((info: Car[]) => {
       return of(new GetCarsSuccess(info));
@@ -61,9 +59,7 @@ export class CarEffects {
     ofType<GetCarsCount>(ECarActions.GetCarsCount),
     switchMap(action => {
       return this._carService.getFourCarsAndLength()
-        .pipe(map(data => {
-          return data.totalCount;
-        }));
+        .pipe(map(data => data.totalCount));
     }),
     switchMap((info: number) => {
       return of(new GetCarsCountSuccess(info));
