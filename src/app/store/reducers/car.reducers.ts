@@ -31,7 +31,12 @@ export const carReducers = (
         totalCount: action.payload
       };
     }
-
+    case ECarActions.GetCarYearsSuccess: {
+      return {
+        ...state,
+        carYears: action.payload
+      };
+    }
     default:
       return state;
   }
@@ -41,6 +46,7 @@ export interface CarState {
   cars: Car[];
   totalCount: number;
   selectedCar: Car;
+  carYears: number[];
   newCar: Car;
 }
 
@@ -48,5 +54,6 @@ export const initialCarState: CarState = {
   cars: null,
   totalCount: null,
   selectedCar: null,
+  carYears: null,
   newCar: null,
 };

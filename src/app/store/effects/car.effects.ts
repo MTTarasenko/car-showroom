@@ -12,7 +12,7 @@ import {
   GetCarsCount,
   GetCarsCountSuccess,
   GetCarsSuccess,
-  GetCarSuccess,
+  GetCarSuccess, GetCarYears, GetCarYearsSuccess,
 } from '../actions/car.actions';
 import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
@@ -75,6 +75,17 @@ export class CarEffects {
       return this._carService.addNewCar(newCar).pipe(map(data => data));
     }),
     switchMap((car: Car) => of(new AddCarSuccess(car)))
+  );
+
+  @Effect()
+  getCarYears$ = this.actions$.pipe(
+    ofType<GetCarYears>(ECarActions.GetCarYears),
+    switchMap(() => {
+      return this._carService.getCarYears().pipe(map(data => data));
+    }),
+    switchMap((years: number[]) => {
+      return of(new GetCarYearsSuccess(years));
+    })
   );
 
   constructor(

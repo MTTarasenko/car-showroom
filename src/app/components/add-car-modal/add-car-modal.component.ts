@@ -4,6 +4,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CarService} from '../../services/car.service';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '../../store/state/app.state';
+import {selectCarYears} from '../../store/selectors/car.selector';
+import {GetCarYears} from '../../store/actions/car.actions';
 
 
 @Component({
@@ -14,18 +18,20 @@ import {Observable} from 'rxjs';
 export class AddCarModalComponent implements OnInit {
 
   newCarForm: FormGroup;
-  carYears$: Observable<number[]>;
+  carYears$ = this.store.pipe(select(selectCarYears));
 
   constructor(public dialogRef: MatDialogRef<AddCarModalComponent>,
               private fb: FormBuilder,
-              private service: CarService) {
+              private service: CarService,
+              private store: Store<AppState>) {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(new GetCarYears());
 
-    this.carYears$ = this.service.getCarYears().pipe(map(data => {
-      return data;
-    }));
+    // this.carYears$ = this.service.getCarYears().pipe(map(data => {
+    //   return data;
+    // }));
 
     this.newCarForm = this.fb.group({
       name: ['', [

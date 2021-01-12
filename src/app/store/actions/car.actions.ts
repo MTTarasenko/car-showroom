@@ -12,6 +12,8 @@ export enum ECarActions {
   GetCarError = '[Car] Get Car Error',
   AddCar = '[Car] Add Car',
   AddCarSuccess = '[Car] Add Car Success',
+  GetCarYears = 'Get Car Years',
+  GetCarYearsSuccess = 'Get Car Years Success',
 }
 
 export class GetCarsCount implements Action{
@@ -45,6 +47,13 @@ export class GetCarError implements Action{
   public readonly type = ECarActions.GetCarError;
 }
 
+export class GetCarYears implements Action{
+  public readonly type = ECarActions.GetCarYears;
+}
+export class GetCarYearsSuccess implements Action{
+  public readonly type = ECarActions.GetCarYearsSuccess;
+  constructor(public payload: number[]) {}
+}
 export class AddCar implements Action{
   public readonly type = ECarActions.AddCar;
   constructor(public payload: Car) {}
@@ -63,4 +72,6 @@ export type CarActions = GetCars |
   AddCarSuccess |
   GetCarError |
   GetCarsCount |
-  GetCarsCountSuccess;
+  GetCarsCountSuccess |
+  GetCarYears |
+  GetCarYearsSuccess;

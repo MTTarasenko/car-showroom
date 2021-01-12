@@ -15,7 +15,6 @@ import {GetCars, GetCarsCount} from '../../store/actions/car.actions';
 import {GetRangeFrom, GetRangeTo} from '../../store/actions/range.actions';
 import {selectRangeFrom} from '../../store/selectors/range.selectors';
 import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
-import {GetFavCarList} from '../../store/actions/favorite.actions';
 
 @Component({
   selector: 'app-car-list',
@@ -45,7 +44,6 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(new GetCarsCount());
-    // this.store.dispatch(new GetFavCarList());
     this.currentPage$ = this.store.pipe(select(selectRangeFrom)).pipe(map(data => data / 4));
     this.helperService.updateCarsList();
 

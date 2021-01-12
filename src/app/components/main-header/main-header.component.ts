@@ -46,16 +46,13 @@ export class MainHeaderComponent implements OnInit {
       width: '500px',
     });
 
-    dialogRef.afterClosed().pipe(
-      switchMap(result => {
-        if (result) {
-          this.store.dispatch(new AddCar(result));
-          this.store.dispatch(new GetCarsCount());
-          this.helperService.updateCarsList();
-          return of();
-        }
-      })
-    ).subscribe();
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(new AddCar(result));
+        this.store.dispatch(new GetCarsCount());
+        this.helperService.updateCarsList();
+      }
+    });
   }
 
 
