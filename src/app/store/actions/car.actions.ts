@@ -5,8 +5,6 @@ import {Car} from '../../models/car';
 export enum ECarActions {
   GetCars = '[Car] Get Cars',
   GetCarsSuccess = '[Car] Get Cars Success',
-  GetCarsCount = '[Car] Get Cars Count',
-  GetCarsCountSuccess = '[Car] Get Cars Count Success',
   GetCar = '[Car] Get Car',
   GetCarSuccess = '[Car] Get Car Success',
   GetCarError = '[Car] Get Car Error',
@@ -16,14 +14,6 @@ export enum ECarActions {
   GetCarYearsSuccess = 'Get Car Years Success',
 }
 
-export class GetCarsCount implements Action{
-  public readonly type = ECarActions.GetCarsCount;
-}
-
-export class GetCarsCountSuccess implements Action{
-  public readonly type = ECarActions.GetCarsCountSuccess;
-  constructor(public payload: number) {}
-}
 export class GetCars implements Action{
   public readonly type = ECarActions.GetCars;
   constructor() {}
@@ -31,7 +21,7 @@ export class GetCars implements Action{
 
 export class GetCarsSuccess implements Action{
   public readonly type = ECarActions.GetCarsSuccess;
-  constructor(public payload: Car[]) {}
+  constructor(public payload: {cars: Car[], totalCount: number}) {}
 }
 
 export class GetCar implements Action{
@@ -71,7 +61,5 @@ export type CarActions = GetCars |
   AddCar |
   AddCarSuccess |
   GetCarError |
-  GetCarsCount |
-  GetCarsCountSuccess |
   GetCarYears |
   GetCarYearsSuccess;

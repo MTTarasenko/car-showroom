@@ -11,7 +11,7 @@ import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {selectCarList, selectCarsAmount} from '../../store/selectors/car.selector';
-import {GetCars, GetCarsCount} from '../../store/actions/car.actions';
+import {GetCars} from '../../store/actions/car.actions';
 import {GetRangeFrom, GetRangeTo} from '../../store/actions/range.actions';
 import {selectRangeFrom} from '../../store/selectors/range.selectors';
 import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
@@ -43,7 +43,6 @@ export class CarListComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    this.store.dispatch(new GetCarsCount());
     this.currentPage$ = this.store.pipe(select(selectRangeFrom)).pipe(map(data => data / 4));
     this.helperService.updateCarsList();
 

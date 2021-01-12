@@ -9,8 +9,6 @@ import {
   ECarActions,
   GetCar, GetCarError,
   GetCars,
-  GetCarsCount,
-  GetCarsCountSuccess,
   GetCarsSuccess,
   GetCarSuccess, GetCarYears, GetCarYearsSuccess,
 } from '../actions/car.actions';
@@ -48,22 +46,10 @@ export class CarEffects {
     )),
     switchMap(([action, range]) => {
       return this._carService.getFourCarsAndLength(range[0], range[1])
-        .pipe(map(data => data.cars));
+        .pipe(map(data => data));
     }),
-    switchMap((info: Car[]) => {
+    switchMap((info: {cars: Car[], totalCount: number }) => {
       return of(new GetCarsSuccess(info));
-    })
-  );
-
-  @Effect()
-  getCarsCount$ = this.actions$.pipe(
-    ofType<GetCarsCount>(ECarActions.GetCarsCount),
-    switchMap(action => {
-      return this._carService.getFourCarsAndLength()
-        .pipe(map(data => data.totalCount));
-    }),
-    switchMap((info: number) => {
-      return of(new GetCarsCountSuccess(info));
     })
   );
 

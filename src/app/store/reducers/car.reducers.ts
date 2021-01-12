@@ -10,7 +10,8 @@ export const carReducers = (
     case ECarActions.GetCarsSuccess: {
       return {
         ...state,
-        cars: action.payload
+        cars: action.payload.cars,
+        totalCount: action.payload.totalCount
       };
     }
     case ECarActions.GetCarSuccess: {
@@ -23,12 +24,6 @@ export const carReducers = (
       return {
         ...state,
         newCar: action.payload
-      };
-    }
-    case ECarActions.GetCarsCountSuccess: {
-      return {
-        ...state,
-        totalCount: action.payload
       };
     }
     case ECarActions.GetCarYearsSuccess: {
