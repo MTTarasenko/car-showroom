@@ -40,9 +40,7 @@ export class CarComponent {
     } else {
       this.store.dispatch(new RemoveCarFromFav(car));
     }
-    this.helperService.updateCarsList();
     this.store.dispatch(new GetFavCarList());
-
   }
 
 }

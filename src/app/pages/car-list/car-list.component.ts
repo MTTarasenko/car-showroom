@@ -28,7 +28,9 @@ export class CarListComponent implements OnInit, OnDestroy {
               private helperService: HelperService,
               private activatedRoute: ActivatedRoute,
               private store: Store<AppState>,
-  ) {}
+  ) {
+  }
+
   carsOnPage$ = this.store.pipe(select(selectPageCount));
   currentPage$ = this.store.pipe(select(selectPageState));
   sCars$ = this.store.pipe(select(selectCarList));
@@ -39,14 +41,9 @@ export class CarListComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    this.store.dispatch(new SetPageCount(5));
-    // this.helperService.updateCarsList();
+    // set amount of cars on one page
+    this.store.dispatch(new SetPageCount(4));
 
-    // this.combineCarsLists();
-    //
-    // this.helperSub = this.helperService.onCarsListUpdate().subscribe(() => {
-    //   this.combineCarsLists();
-    // });
     this.helperSub = this.store.pipe(select(selectPageState)).subscribe(() => {
       this.store.dispatch(new GetCars());
     });
@@ -57,7 +54,6 @@ export class CarListComponent implements OnInit, OnDestroy {
     // );
 
     this.subscriptions.push(this.helperSub);
-
   }
 
   combineCarsLists(): void {

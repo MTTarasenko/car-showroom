@@ -19,6 +19,7 @@ import {selectPageCount, selectPageState} from '../selectors/range.selectors';
 import {Router} from '@angular/router';
 import {selectCarList} from '../selectors/car.selector';
 import {CollectionRespModel} from '../../models/collection-resp.model';
+import {selectFavCarsList} from '../selectors/favorite.selectors';
 
 @Injectable()
 export class CarEffects {
@@ -45,8 +46,35 @@ export class CarEffects {
     switchMap(([action, [state1, state2]]) => {
       const from = (state2 * state1);
       const to = state2 * (state1 + 1);
-      return this._carService.getFourCarsAndLength(from, to)
-        .pipe(map(data => data));
+      return zip(
+        this._carService.getFourCarsAndLength(from, to)
+          .pipe(map(data => data.cars)),
+        this._store.pipe(select(selectFavCarsList))
+      ).pipe(map(data => {
+        data[0].map(car => {
+          console.log(car);
+          data[1].map(favoriteCar => {
+            console.log(favoriteCar);
+          });
+        });
+        return data[0];
+      }));
+      // return this._carService.getFourCarsAndLength(from, to)
+      //   .pipe(map(cars => {
+      //     cars.cars.map(car => {
+      //       this._store.pipe(select(selectFavCarsList))
+      //         .pipe(map(favoriteCars => {
+      //           favoriteCars.map(favoriteCar => {
+      //             if (car.id === favoriteCar.id) {
+      //               console.log(car + 'is fav');
+      //               car.favorite = true;
+      //             }
+      //           });
+      //         }));
+      //       return car;
+      //     });
+      //     return cars;
+      //   }));
     }),
     switchMap((info: CollectionRespModel) => {
       return of(new GetCarsSuccess(info));

@@ -210,7 +210,7 @@ export class CarService {
     const cars = this.carListArray
       .slice(from, to)
       .map(item => ({...item}));
-    return of({totalCount: this.carListArray.length, cars});
+    return of({totalCount: this.carListArray.length, cars}).pipe(delay(2000));
   }
 
   getCarYears(): Observable<number[]> {

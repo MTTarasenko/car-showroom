@@ -33,6 +33,7 @@
 }
 
 .car-list {
+  min-height: 500px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -56,4 +57,11 @@
 .paginator {
   width: max-content;
   margin: 0 auto;
+}
+
+.spinner {
+  min-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

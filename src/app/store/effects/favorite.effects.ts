@@ -9,6 +9,9 @@ import {map, switchMap, throttleTime} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {Car} from '../../models/car';
 import {FavoritesService} from '../../services/favorites.service';
+import {Store} from '@ngrx/store';
+import {AppState} from '../state/app.state';
+import {GetCars} from '../actions/car.actions';
 
 
 @Injectable()
@@ -20,6 +23,7 @@ export class FavoriteEffects {
       return this.favService.getFavoriteCars().pipe(map(data => data));
     }),
     switchMap((cars: Car[]) => {
+      this.store.dispatch(new GetCars());
       return of(new GetFavCarListSuccess(cars));
     })
   );
@@ -48,6 +52,7 @@ export class FavoriteEffects {
   constructor(
     private actions$: Actions,
     private favService: FavoritesService,
+    private store: Store<AppState>
   ) {
   }
 

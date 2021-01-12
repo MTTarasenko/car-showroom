@@ -5,6 +5,9 @@
         <app-car [car]="car"></app-car>
       </mat-card>
     </div>
+    <div *ngIf="!(sCars$ | async)" class="spinner">
+      <mat-spinner></mat-spinner>
+    </div>
     <div class="paginator">
       <mat-paginator [length]="(carsAmount$ | async)"
                      [pageSize]="(carsOnPage$ | async)"

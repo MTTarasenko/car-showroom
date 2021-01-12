@@ -31,6 +31,7 @@ import {CarEffects} from './store/effects/car.effects';
 import {RangeEffects} from './store/effects/range.effects';
 import {FavoriteEffects} from './store/effects/favorite.effects';
 import {LoginEffects} from './store/effects/login.effects';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import {LoginEffects} from './store/effects/login.effects';
       FavoriteEffects,
       LoginEffects
     ]),
-    StoreRouterConnectingModule.forRoot({stateKey: 'router'})
+    StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
