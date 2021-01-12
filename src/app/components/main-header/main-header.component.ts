@@ -11,9 +11,10 @@ import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {AddCar, GetCars, GetCarsCount} from '../../store/actions/car.actions';
+import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
 
 @Component({
   selector: 'app-main-header',
@@ -22,8 +23,7 @@ import {AddCar, GetCars, GetCarsCount} from '../../store/actions/car.actions';
 })
 export class MainHeaderComponent implements OnInit {
 
-
-  favCars$: Observable<Car[]>;
+  favCars$ = this.store.pipe(select(selectFavCarsList));
   faStarRegular = regularStar;
 
 
@@ -38,7 +38,7 @@ export class MainHeaderComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.favCars$ = this.favoriteService.getFavoriteCars();
+    // this.favCars$ = this.favoriteService.getFavoriteCars();
   }
 
   addNewCar(): void {
@@ -53,7 +53,6 @@ export class MainHeaderComponent implements OnInit {
           this.store.dispatch(new GetCarsCount());
           this.helperService.updateCarsList();
           return of();
-          // return this.service.addNewCar(result);
         }
       })
     ).subscribe();

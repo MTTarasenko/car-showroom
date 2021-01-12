@@ -10,7 +10,7 @@ import {Car} from '../../models/car';
 import {map} from 'rxjs/operators';
 import {CarService} from '../../services/car.service';
 import {AppState} from '../../store/state/app.state';
-import {AddCarToFav, RemoveCarFromFav} from '../../store/actions/favorite.actions';
+import {AddCarToFav, GetFavCarList, RemoveCarFromFav} from '../../store/actions/favorite.actions';
 import {HelperService} from '../../services/helper.service';
 import {GetCar} from '../../store/actions/car.actions';
 
@@ -44,6 +44,8 @@ export class CarComponent {
       this.store.dispatch(new RemoveCarFromFav(car));
     }
     this.helperService.updateCarsList();
+    this.store.dispatch(new GetFavCarList());
+
   }
 
 }

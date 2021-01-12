@@ -17,8 +17,9 @@ import {
 import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
 import {Car} from '../../models/car';
-import {selectCarList, selectRangeFrom, selectRangeTo} from '../selectors/car.selector';
+import {selectRangeFrom, selectRangeTo} from '../selectors/range.selectors';
 import {Router} from '@angular/router';
+import {selectCarList} from '../selectors/car.selector';
 
 @Injectable()
 export class CarEffects {
@@ -69,10 +70,9 @@ export class CarEffects {
   @Effect()
   addCar$ = this.actions$.pipe(
     ofType<AddCar>(ECarActions.AddCar),
-    map(action => {
+    switchMap(action => {
       const newCar = {...action.payload};
-      this._carService.addNewCar(newCar).subscribe();
-      return newCar;
+      return this._carService.addNewCar(newCar).pipe(map(data => data));
     }),
     switchMap((car: Car) => of(new AddCarSuccess(car)))
   );

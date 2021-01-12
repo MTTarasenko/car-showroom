@@ -10,9 +10,12 @@ import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {selectCarList, selectCarsAmount, selectRangeFrom} from '../../store/selectors/car.selector';
+import {selectCarList, selectCarsAmount} from '../../store/selectors/car.selector';
 import {GetCars, GetCarsCount} from '../../store/actions/car.actions';
 import {GetRangeFrom, GetRangeTo} from '../../store/actions/range.actions';
+import {selectRangeFrom} from '../../store/selectors/range.selectors';
+import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
+import {GetFavCarList} from '../../store/actions/favorite.actions';
 
 @Component({
   selector: 'app-car-list',
@@ -33,6 +36,7 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   sCars$ = this.store.pipe(select(selectCarList));
+  favCars$ = this.store.pipe(select(selectFavCarsList));
   cars$: Observable<Car[]>;
   carsAmount$ = this.store.pipe(select(selectCarsAmount));
   currentPage$: Observable<number>;
@@ -41,6 +45,7 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(new GetCarsCount());
+    // this.store.dispatch(new GetFavCarList());
     this.currentPage$ = this.store.pipe(select(selectRangeFrom)).pipe(map(data => data / 4));
     this.helperService.updateCarsList();
 
@@ -64,7 +69,8 @@ export class CarListComponent implements OnInit, OnDestroy {
 
     this.cars$ = zip(
       this.sCars$.pipe(map(cars => cars.map(car => ({...car})))),
-      this.favService.getFavoriteCars()
+      this.favCars$,
+      // this.favService.getFavoriteCars()
     ).pipe(map(([cars, favoriteCars]) => {
       (cars).map(car => {
         favoriteCars.map(favoriteCar => {

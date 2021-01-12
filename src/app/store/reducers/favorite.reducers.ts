@@ -13,7 +13,12 @@ export const favoriteReducers = (
         favCar: action.payload
       };
     }
-
+    case EFavoriteActions.GetFavCarListSuccess: {
+      return {
+        ...state,
+        favCarList: action.payload
+      };
+    }
     default:
       return state;
   }

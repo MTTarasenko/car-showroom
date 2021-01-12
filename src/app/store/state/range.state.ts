@@ -8,5 +8,4 @@ export interface RangeState {
 export const initialRangeState: RangeState = {
   rangeFrom: 0,
   rangeTo: 4
-
 };

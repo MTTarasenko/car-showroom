@@ -222,15 +222,15 @@ export class CarService {
   }
 
 
-  addNewCar(newCar: Car): Observable<boolean> {
+  addNewCar(newCar: Car): Observable<Car> {
     return new Observable(observer => {
       if (newCar.photoURL) {
         const car = {...newCar};
         car.id = this.carListArray[this.carListArray.length - 1].id + 1;
         this.carListArray.push(car);
-        return observer.next(true);
+        return observer.next(car);
       } else {
-        return observer.next(false);
+        return observer.error();
       }
     });
   }

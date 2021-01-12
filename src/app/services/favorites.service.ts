@@ -15,7 +15,7 @@ export class FavoritesService {
   }
 
   getFavoriteCars(): Observable<Car[]> {
-    return of(this.favoriteCarsList);
+    return of(this.favoriteCarsList.map(item => ({...item})));
   }
 
   addFavorite(car?: Car): Observable<Car> {
@@ -23,8 +23,9 @@ export class FavoritesService {
       if (!this.favoriteCarsList.some(value => {
         return value.id === car.id;
       })) {
-        this.favoriteCarsList.push(car);
-        return observer.next(car);
+        const newFavCar = {...car};
+        this.favoriteCarsList.push(newFavCar);
+        return observer.next(newFavCar);
       } else {
         return observer.error();
       }
