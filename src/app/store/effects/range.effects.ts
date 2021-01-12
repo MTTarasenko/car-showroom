@@ -7,9 +7,6 @@ import {
 } from '../actions/range.actions';
 import {map, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
-import {GetCars} from '../actions/car.actions';
-import {Store} from '@ngrx/store';
-import {AppState} from '../state/app.state';
 
 
 @Injectable()
@@ -19,7 +16,6 @@ export class RangeEffects {
     ofType<SetPageState>(ERangeActions.SetPageState),
     map(action => action.payload),
     switchMap((index: number) => {
-      this.store.dispatch(new GetCars());
       return of(new SetPageStateSuccess(index));
     })
   );
@@ -35,7 +31,6 @@ export class RangeEffects {
 
 
   constructor(
-    private actions$: Actions,
-    private store: Store<AppState>
+    private actions$: Actions
   ) {}
 }

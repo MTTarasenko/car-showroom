@@ -41,10 +41,6 @@ export class CarEffects {
   @Effect()
   getCars$ = this.actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
-    // withLatestFrom(zip(
-    //   this._store.pipe(select(selectRangeFrom)),
-    //   this._store.pipe(select(selectRangeTo))
-    // )),
     withLatestFrom(this._store.pipe(select(selectPageState))),
     switchMap(([action, [state1, state2]]) => {
       const from = (state2 * state1);
@@ -62,6 +58,7 @@ export class CarEffects {
     ofType<AddCar>(ECarActions.AddCar),
     switchMap(action => {
       const newCar = {...action.payload};
+      this._store.dispatch(new GetCars());
       return this._carService.addNewCar(newCar).pipe(map(data => data));
     }),
     switchMap((car: Car) => of(new AddCarSuccess(car)))
