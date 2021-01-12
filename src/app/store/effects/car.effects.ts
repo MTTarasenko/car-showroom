@@ -48,10 +48,10 @@ export class CarEffects {
       const to = state2 * (state1 + 1);
       return zip(
         this._carService.getFourCarsAndLength(from, to)
-          .pipe(map(data => data.cars)),
+          .pipe(map(data => data)),
         this._store.pipe(select(selectFavCarsList))
       ).pipe(map(data => {
-        data[0].map(car => {
+        data[0].cars.map(car => {
           console.log(car);
           data[1].map(favoriteCar => {
             console.log(favoriteCar);
