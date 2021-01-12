@@ -1,5 +1,5 @@
-import {CarState, initialCarState} from '../state/car.state';
 import {CarActions, ECarActions} from '../actions/car.actions';
+import {Car} from '../../models/car';
 
 
 export const carReducers = (
@@ -35,4 +35,18 @@ export const carReducers = (
     default:
       return state;
   }
+};
+
+export interface CarState {
+  cars: Car[];
+  totalCount: number;
+  selectedCar: Car;
+  newCar: Car;
+}
+
+export const initialCarState: CarState = {
+  cars: null,
+  totalCount: null,
+  selectedCar: null,
+  newCar: null,
 };

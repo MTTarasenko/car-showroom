@@ -1,6 +1,6 @@
 import {AppState} from '../state/app.state';
 import {createSelector} from '@ngrx/store';
-import {RangeState} from '../state/range.state';
+import {RangeState} from '../reducers/range.reducers';
 
 const selectRange = (state: AppState) => state.range;
 

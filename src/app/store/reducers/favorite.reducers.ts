@@ -1,5 +1,5 @@
-import {FavoriteState, initialFavCarState} from '../state/favorite.state';
 import {EFavoriteActions, FavoriteActions} from '../actions/favorite.actions';
+import {Car} from '../../models/car';
 
 
 export const favoriteReducers = (
@@ -22,4 +22,14 @@ export const favoriteReducers = (
     default:
       return state;
   }
+};
+
+export interface FavoriteState {
+  favCarList: Car[];
+  favCar: Car;
+}
+
+export const initialFavCarState = {
+  favCarList: [],
+  favCar: null
 };

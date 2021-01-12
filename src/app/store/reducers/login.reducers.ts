@@ -1,4 +1,4 @@
-import {initialLoginState, LoginState} from '../state/login.state';
+// import {initialLoginState, LoginState} from '../state/login.state';
 import {ELoginActions, LoginActions} from '../actions/login.actions';
 
 
@@ -18,4 +18,12 @@ export const loginReducers = (
       return state;
     }
   }
+};
+
+export interface LoginState {
+  loginData: string[];
+}
+
+export const initialLoginState: LoginState = {
+  loginData: null,
 };

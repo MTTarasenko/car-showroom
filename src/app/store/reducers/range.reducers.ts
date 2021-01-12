@@ -1,5 +1,4 @@
 import {ERangeActions, RangeActions} from '../actions/range.actions';
-import {initialRangeState, RangeState} from '../state/range.state';
 
 
 export const rangeReducers = (
@@ -22,4 +21,14 @@ export const rangeReducers = (
     default:
       return state;
   }
+};
+
+export interface RangeState {
+  rangeFrom: number;
+  rangeTo: number;
+}
+
+export const initialRangeState: RangeState = {
+  rangeFrom: 0,
+  rangeTo: 4
 };

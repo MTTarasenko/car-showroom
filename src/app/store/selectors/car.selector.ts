@@ -1,5 +1,5 @@
 import {createSelector} from '@ngrx/store';
-import {CarState} from '../state/car.state';
+import {CarState} from '../reducers/car.reducers';
 import {AppState} from '../state/app.state';
 
 const selectCars = (state: AppState) => state.cars;
