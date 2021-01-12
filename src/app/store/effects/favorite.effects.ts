@@ -35,7 +35,10 @@ export class FavoriteEffects {
       const newFavCar = {...action.payload};
       return this.favService.addFavorite(newFavCar).pipe(map(data => data));
     }),
-    switchMap((car: Car) => of(new AddCarToFavSuccess(car)))
+    switchMap((car: Car) => {
+      this.store.dispatch(new GetCars());
+      return of(new AddCarToFavSuccess(car));
+    })
   );
 
   @Effect()
@@ -45,7 +48,10 @@ export class FavoriteEffects {
     switchMap(action => {
       return this.favService.removeFavorite(action.payload).pipe(map(data => data));
     }),
-    switchMap((car: Car) => of(new RemoveCarFromFavSuccess(car)))
+    switchMap((car: Car) => {
+      this.store.dispatch(new GetCars());
+      return of(new RemoveCarFromFavSuccess(car));
+    })
   );
 
 

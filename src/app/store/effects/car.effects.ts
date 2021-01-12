@@ -52,29 +52,14 @@ export class CarEffects {
         this._store.pipe(select(selectFavCarsList))
       ).pipe(map(data => {
         data[0].cars.map(car => {
-          console.log(car);
           data[1].map(favoriteCar => {
-            console.log(favoriteCar);
+            if (car.id === favoriteCar.id) {
+              car.favorite = true;
+            }
           });
         });
         return data[0];
       }));
-      // return this._carService.getFourCarsAndLength(from, to)
-      //   .pipe(map(cars => {
-      //     cars.cars.map(car => {
-      //       this._store.pipe(select(selectFavCarsList))
-      //         .pipe(map(favoriteCars => {
-      //           favoriteCars.map(favoriteCar => {
-      //             if (car.id === favoriteCar.id) {
-      //               console.log(car + 'is fav');
-      //               car.favorite = true;
-      //             }
-      //           });
-      //         }));
-      //       return car;
-      //     });
-      //     return cars;
-      //   }));
     }),
     switchMap((info: CollectionRespModel) => {
       return of(new GetCarsSuccess(info));
