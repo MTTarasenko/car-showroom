@@ -1,40 +1,41 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {
-  ERangeActions,
-  GetRangeFrom,
-  GetRangeFromSuccess,
-  GetRangeTo,
-  GetRangeToSuccess
+  ERangeActions, SetPageCount, SetPageCountSuccess,
+  SetPageState,
+  SetPageStateSuccess
 } from '../actions/range.actions';
 import {map, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
+import {GetCars} from '../actions/car.actions';
+import {Store} from '@ngrx/store';
+import {AppState} from '../state/app.state';
 
 
 @Injectable()
 export class RangeEffects {
   @Effect()
-  getRangeFrom$ = this.actions$.pipe(
-    ofType<GetRangeFrom>(ERangeActions.GetRangeFrom),
+  setPageState$ = this.actions$.pipe(
+    ofType<SetPageState>(ERangeActions.SetPageState),
     map(action => action.payload),
-    switchMap((from: number) => {
-      return of(new GetRangeFromSuccess(from));
+    switchMap((index: number) => {
+      this.store.dispatch(new GetCars());
+      return of(new SetPageStateSuccess(index));
     })
   );
 
   @Effect()
-  getRangeTo$ = this.actions$.pipe(
-    ofType<GetRangeTo>(ERangeActions.GetRangeTo),
+  setPageCount$ = this.actions$.pipe(
+    ofType<SetPageCount>(ERangeActions.SetPageCount),
     map(action => action.payload),
-    switchMap((to: number) => {
-      return of(new GetRangeToSuccess(to));
+    switchMap((count: number) => {
+      return of(new SetPageCountSuccess(count));
     })
   );
 
 
   constructor(
     private actions$: Actions,
-  ) {
-  }
-
+    private store: Store<AppState>
+  ) {}
 }

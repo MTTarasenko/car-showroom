@@ -1,5 +1,6 @@
 import {Action} from '@ngrx/store';
 import {Car} from '../../models/car';
+import {CollectionRespModel} from '../../models/collection-resp.model';
 
 
 export enum ECarActions {
@@ -21,7 +22,7 @@ export class GetCars implements Action{
 
 export class GetCarsSuccess implements Action{
   public readonly type = ECarActions.GetCarsSuccess;
-  constructor(public payload: {cars: Car[], totalCount: number}) {}
+  constructor(public payload: CollectionRespModel) {}
 }
 
 export class GetCar implements Action{

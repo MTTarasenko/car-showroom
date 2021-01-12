@@ -1,15 +1,17 @@
 import {AppState} from '../state/app.state';
 import {createSelector} from '@ngrx/store';
-import {RangeState} from '../reducers/range.reducers';
+import {PaginationState} from '../reducers/range.reducers';
 
 const selectRange = (state: AppState) => state.range;
 
-export const selectRangeFrom = createSelector(
+export const selectPageState = createSelector(
   selectRange,
-  (state: RangeState) => state.rangeFrom
+  (state: PaginationState) => {
+    return [state.pageIndex, state.pageSize];
+  }
 );
 
-export const selectRangeTo = createSelector(
+export const selectPageCount = createSelector(
   selectRange,
-  (state: RangeState) => state.rangeTo
+  (state: PaginationState) => state.totalCount
 );

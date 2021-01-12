@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {Car} from '../models/car';
+import {CollectionRespModel} from '../models/collection-resp.model';
+import {delay} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -203,8 +205,9 @@ export class CarService {
     return of(this.carListArray.map(item => ({...item})));
   }
 
-  getFourCarsAndLength(from?: number, to?: number): Observable<{ totalCount: number, cars: Car[] }> {
+  getFourCarsAndLength(from?: number, to?: number): Observable<CollectionRespModel> {
     console.log('getting car list...');
+    console.log(from, to);
     const cars = this.carListArray
       .slice(from, to)
       .map(item => ({...item}));

@@ -1,33 +1,33 @@
 import {Action} from '@ngrx/store';
 
 export enum ERangeActions {
-  GetRangeFrom = 'Range From',
-  GetRangeFromSuccess = 'Range From Success',
-  GetRangeTo = 'Range To',
-  GetRangeToSuccess = 'Range To Success',
+  SetPageState = 'Set Page State',
+  SetPageStateSuccess = 'Set Page State Success',
+  SetPageCount = 'Set Page Count',
+  SetPageCountSuccess = 'Set Page Count Success',
 }
 
-export class GetRangeFrom implements Action{
-  public readonly type = ERangeActions.GetRangeFrom;
+export class SetPageState implements Action{
+  public readonly type = ERangeActions.SetPageState;
+  constructor(public payload: number) {}
+}
+export class SetPageStateSuccess implements Action{
+  public readonly type = ERangeActions.SetPageStateSuccess;
+  constructor(public payload: number) {}
+}
+export class SetPageCount implements Action{
+  public readonly type = ERangeActions.SetPageCount;
+  constructor(public payload: number) {}
+}
+export class SetPageCountSuccess implements Action{
+  public readonly type = ERangeActions.SetPageCountSuccess;
   constructor(public payload: number) {}
 }
 
-export class GetRangeFromSuccess implements Action{
-  public readonly type = ERangeActions.GetRangeFromSuccess;
-  constructor(public payload: number) {}
-}
-export class GetRangeTo implements Action{
-  public readonly type = ERangeActions.GetRangeTo;
-  constructor(public payload: number) {}
-}
 
-export class GetRangeToSuccess implements Action{
-  public readonly type = ERangeActions.GetRangeToSuccess;
-  constructor(public payload: number) {}
-}
 
 export type RangeActions =
-  GetRangeFrom |
-  GetRangeFromSuccess |
-  GetRangeTo |
-  GetRangeToSuccess;
+  SetPageState |
+  SetPageStateSuccess |
+  SetPageCount |
+  SetPageCountSuccess;

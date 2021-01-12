@@ -15,9 +15,10 @@ import {
 import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
 import {Car} from '../../models/car';
-import {selectRangeFrom, selectRangeTo} from '../selectors/range.selectors';
+import {selectPageCount, selectPageState} from '../selectors/range.selectors';
 import {Router} from '@angular/router';
 import {selectCarList} from '../selectors/car.selector';
+import {CollectionRespModel} from '../../models/collection-resp.model';
 
 @Injectable()
 export class CarEffects {
@@ -40,15 +41,18 @@ export class CarEffects {
   @Effect()
   getCars$ = this.actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
-    withLatestFrom(zip(
-      this._store.pipe(select(selectRangeFrom)),
-      this._store.pipe(select(selectRangeTo))
-    )),
-    switchMap(([action, range]) => {
-      return this._carService.getFourCarsAndLength(range[0], range[1])
+    // withLatestFrom(zip(
+    //   this._store.pipe(select(selectRangeFrom)),
+    //   this._store.pipe(select(selectRangeTo))
+    // )),
+    withLatestFrom(this._store.pipe(select(selectPageState))),
+    switchMap(([action, [state1, state2]]) => {
+      const from = (state2 * state1);
+      const to = state2 * (state1 + 1);
+      return this._carService.getFourCarsAndLength(from, to)
         .pipe(map(data => data));
     }),
-    switchMap((info: {cars: Car[], totalCount: number }) => {
+    switchMap((info: CollectionRespModel) => {
       return of(new GetCarsSuccess(info));
     })
   );

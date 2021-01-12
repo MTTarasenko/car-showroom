@@ -11,8 +11,8 @@ import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {selectCarList, selectCarsAmount} from '../../store/selectors/car.selector';
 import {GetCars} from '../../store/actions/car.actions';
-import {GetRangeFrom, GetRangeTo} from '../../store/actions/range.actions';
-import {selectRangeFrom} from '../../store/selectors/range.selectors';
+import {SetPageCount, SetPageState} from '../../store/actions/range.actions';
+import {selectPageCount, selectPageState} from '../../store/selectors/range.selectors';
 import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
 
 @Component({
@@ -29,36 +29,36 @@ export class CarListComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private store: Store<AppState>,
   ) {}
-
+  carsOnPage$ = this.store.pipe(select(selectPageCount));
+  currentPage$ = this.store.pipe(select(selectPageState));
   sCars$ = this.store.pipe(select(selectCarList));
   favCars$ = this.store.pipe(select(selectFavCarsList));
   cars$: Observable<Car[]>;
   carsAmount$ = this.store.pipe(select(selectCarsAmount));
-  currentPage$: Observable<number>;
   helperSub: Subscription;
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    this.currentPage$ = this.store.pipe(select(selectRangeFrom)).pipe(map(data => data / 4));
+    this.store.dispatch(new SetPageCount(4));
+    this.store.dispatch(new GetCars());
     this.helperService.updateCarsList();
 
-    this.combineCarsLists();
-
-    this.helperSub = this.helperService.onCarsListUpdate().subscribe(() => {
-      this.combineCarsLists();
-    });
+    // this.combineCarsLists();
+    //
+    // this.helperSub = this.helperService.onCarsListUpdate().subscribe(() => {
+    //   this.combineCarsLists();
+    // });
 
     // TODO data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
     // );
 
-    this.subscriptions.push(this.helperSub);
+    // this.subscriptions.push(this.helperSub);
 
   }
 
   combineCarsLists(): void {
-    this.store.dispatch(new GetCars());
 
     this.cars$ = zip(
       this.sCars$.pipe(map(cars => cars.map(car => ({...car})))),
@@ -76,12 +76,7 @@ export class CarListComponent implements OnInit, OnDestroy {
   }
 
   onPageEvent($event): void {
-    const from = (4 * $event.pageIndex);
-    const to = 4 * ($event.pageIndex + 1);
-
-    this.store.dispatch(new GetRangeFrom(from));
-    this.store.dispatch(new GetRangeTo(to));
-    this.helperService.updateCarsList();
+    this.store.dispatch(new SetPageState($event.pageIndex));
 
   }
 

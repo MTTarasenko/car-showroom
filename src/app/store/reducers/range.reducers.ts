@@ -4,18 +4,19 @@ import {ERangeActions, RangeActions} from '../actions/range.actions';
 export const rangeReducers = (
   state = initialRangeState,
   action: RangeActions
-): RangeState => {
+): PaginationState => {
   switch (action.type) {
-    case ERangeActions.GetRangeFromSuccess: {
+    case ERangeActions.SetPageStateSuccess: {
       return {
         ...state,
-        rangeFrom: action.payload
+        pageIndex: action.payload,
       };
     }
-    case ERangeActions.GetRangeToSuccess: {
+    case ERangeActions.SetPageCountSuccess: {
       return {
         ...state,
-        rangeTo: action.payload
+        totalCount: action.payload,
+        pageSize: action.payload
       };
     }
     default:
@@ -23,12 +24,14 @@ export const rangeReducers = (
   }
 };
 
-export interface RangeState {
-  rangeFrom: number;
-  rangeTo: number;
+export interface PaginationState {
+  pageIndex: number;
+  pageSize: number;
+  totalCount: number;
 }
 
-export const initialRangeState: RangeState = {
-  rangeFrom: 0,
-  rangeTo: 4
+export const initialRangeState: PaginationState = {
+  pageIndex: 0,
+  pageSize: 4,
+  totalCount: null
 };
