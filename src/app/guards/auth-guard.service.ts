@@ -20,9 +20,4 @@ export class AuthGuardService implements CanActivate {
       return false;
     }
   }
-
-  logOut(): void {
-    localStorage.clear();
-    this.routes.navigate(['']);
-  }
 }

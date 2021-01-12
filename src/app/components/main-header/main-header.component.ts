@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {map, switchMap} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
-import {Observable, of} from 'rxjs';
+import {of} from 'rxjs';
 
-import {Car} from '../../models/car';
 import {AuthGuardService} from '../../guards/auth-guard.service';
 import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {CarService} from '../../services/car.service';
@@ -13,8 +12,9 @@ import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {AddCar, GetCars, GetCarsCount} from '../../store/actions/car.actions';
+import {AddCar, GetCarsCount} from '../../store/actions/car.actions';
 import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
+import {LogOut} from '../../store/actions/login.actions';
 
 @Component({
   selector: 'app-main-header',
@@ -60,7 +60,6 @@ export class MainHeaderComponent implements OnInit {
 
 
   logOut(): void {
-    this.authService.logOut();
+    this.store.dispatch(new LogOut());
   }
-
 }
