@@ -16,14 +16,11 @@ export class RangeEffects {
   @Effect()
   setPageInfo$ = this.actions$.pipe(
     ofType<SetPageInfo>(ERangeActions.SetPageInfo),
-    map(action => {
-      if (action) {
-        this.store.dispatch(new GetCars());
-        return action.payload;
-      }
+    map(() => {
+      this.store.dispatch(new GetCars());
     }),
-    switchMap((info: PageModel) => {
-      return of(new SetPageInfoSuccess(info));
+    switchMap(() => {
+      return of(new SetPageInfoSuccess());
     })
   );
 

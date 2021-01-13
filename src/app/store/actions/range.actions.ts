@@ -14,7 +14,7 @@ export class SetPageInfo implements Action{
 }
 export class SetPageInfoSuccess implements Action{
   public readonly type = ERangeActions.SetPageInfoSuccess;
-  constructor(public payload: PageModel) {}
+  // constructor(public payload: PageModel) {}
 }
 export class SetTotalCount implements Action{
   public readonly type = ERangeActions.SetTotalCount;
