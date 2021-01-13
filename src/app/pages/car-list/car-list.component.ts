@@ -9,8 +9,8 @@ import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {selectCarList, selectCarsAmount} from '../../store/selectors/car.selector';
 import {GetCars} from '../../store/actions/car.actions';
-import {SetPageInfo} from '../../store/actions/range.actions';
-import {selectPageCount, selectPageInfo} from '../../store/selectors/range.selectors';
+import {SetPageInfo, SetTotalCount} from '../../store/actions/range.actions';
+import {selectPageInfo, selectTotalCount} from '../../store/selectors/range.selectors';
 import {Car} from '../../models/car';
 
 @Component({
@@ -31,14 +31,12 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   pageState$ = this.store.pipe(select(selectPageInfo));
   sCars$ = this.store.pipe(select(selectCarList));
-  carsAmount$ = this.store.pipe(select(selectCarsAmount));
+  carsAmount$ = this.store.pipe(select(selectTotalCount));
   helperSub: Subscription;
   subscriptions: Subscription[] = [];
   amountOfCarsOnPage: number[] = [4, 5, 6, 7, 8, 9, 10];
 
   ngOnInit(): void {
-    // set amount of cars on one page
-    // this.store.dispatch(new SetPageCount(4));
 
     this.helperSub = this.store.pipe(select(selectPageInfo)).subscribe(() => {
       this.store.dispatch(new GetCars());

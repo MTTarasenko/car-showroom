@@ -4,7 +4,7 @@ import {PaginationState} from '../reducers/range.reducers';
 
 const selectRange = (state: AppState) => state.range;
 
-export const selectPageCount = createSelector(
+export const selectTotalCount = createSelector(
   selectRange,
   (state: PaginationState) => state.totalCount
 );

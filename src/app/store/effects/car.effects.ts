@@ -15,11 +15,12 @@ import {
 import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
 import {Car} from '../../models/car';
-import {selectPageCount, selectPageInfo} from '../selectors/range.selectors';
+import {selectPageInfo} from '../selectors/range.selectors';
 import {Router} from '@angular/router';
 import {selectCarList} from '../selectors/car.selector';
 import {CollectionRespModel} from '../../models/collection-resp.model';
 import {selectFavCarsList} from '../selectors/favorite.selectors';
+import {SetTotalCount} from '../actions/range.actions';
 
 @Injectable()
 export class CarEffects {
@@ -42,7 +43,6 @@ export class CarEffects {
   @Effect()
   getCars$ = this.actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
-    // withLatestFrom(this._store.pipe(select(selectPageState))),
     withLatestFrom(this._store.pipe(select(selectPageInfo))),
     switchMap(([action, info]) => {
       const from = (info.pageSize * info.pageIndex);
@@ -52,6 +52,7 @@ export class CarEffects {
           .pipe(map(data => data)),
         this._store.pipe(select(selectFavCarsList))
       ).pipe(map(([resp, favCars]) => {
+        this._store.dispatch(new SetTotalCount(resp.totalCount));
         resp.cars.map(car => {
           favCars.map(favoriteCar => {
             if (car.id === favoriteCar.id) {

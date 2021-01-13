@@ -4,8 +4,8 @@ import {PageModel} from '../../models/page.model';
 export enum ERangeActions {
   SetPageInfo = 'Set Page Info',
   SetPageInfoSuccess = 'Set Page Info Success',
-  // SetPageCount = 'Set Page Count',
-  // SetPageCountSuccess = 'Set Page Count Success',
+  SetTotalCount = 'Set Total Count',
+  SetTotalCountSuccess = 'Set Total Count Success',
 }
 
 export class SetPageInfo implements Action{
@@ -16,19 +16,19 @@ export class SetPageInfoSuccess implements Action{
   public readonly type = ERangeActions.SetPageInfoSuccess;
   constructor(public payload: PageModel) {}
 }
-// export class SetPageCount implements Action{
-//   public readonly type = ERangeActions.SetPageCount;
-//   constructor(public payload: number) {}
-// }
-// export class SetPageCountSuccess implements Action{
-//   public readonly type = ERangeActions.SetPageCountSuccess;
-//   constructor(public payload: number) {}
-// }
+export class SetTotalCount implements Action{
+  public readonly type = ERangeActions.SetTotalCount;
+  constructor(public payload: number) {}
+}
+export class SetTotalCountSuccess implements Action{
+  public readonly type = ERangeActions.SetTotalCountSuccess;
+  constructor(public payload: number) {}
+}
 
 
 
 export type RangeActions =
-  // SetPageCount |
-  // SetPageCountSuccess |
+  SetTotalCount |
+  SetTotalCountSuccess |
   SetPageInfo |
   SetPageInfoSuccess;
