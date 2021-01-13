@@ -26,8 +26,8 @@ export class CarEffects {
     map(action => action.payload),
     withLatestFrom(this.store.pipe(select(selectCarList))),
     switchMap(([id, cars]) => {
-      const selectCar = cars.filter(car => car.id === +id)[0];
-      if (selectCar) {
+      if (cars) {
+        const selectCar = cars.filter(car => car.id === +id)[0];
         return of(new GetCarSuccess(selectCar));
       } else {
         this.router.navigate(['/car-list/']);

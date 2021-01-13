@@ -6,6 +6,8 @@ import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {GetCar, GetCars} from '../../store/actions/car.actions';
 import {selectSelectedCar} from '../../store/selectors/car.selector';
+import {Observable} from 'rxjs';
+import {Car} from '../../models/car';
 
 @Component({
   selector: 'app-car-details',
@@ -15,7 +17,7 @@ import {selectSelectedCar} from '../../store/selectors/car.selector';
 
 export class CarDetailsComponent implements OnInit {
 
-  car$ = this.store.pipe(select(selectSelectedCar));
+  car$: Observable<Car>;
 
   constructor(private service: CarService,
               private route: ActivatedRoute,
@@ -23,8 +25,9 @@ export class CarDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new GetCars());
+    // this.store.dispatch(new GetCars());
     this.store.dispatch(new GetCar(Number(this.route.snapshot.params.id)));
+    this.car$ = this.store.pipe(select(selectSelectedCar));
     // this.car$ = this.route.data.pipe(
     //   map((data: { carById: Car }) => {
     //     console.log(data);
