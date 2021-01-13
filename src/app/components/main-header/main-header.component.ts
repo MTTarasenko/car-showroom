@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
@@ -13,16 +13,18 @@ import {AppState} from '../../store/state/app.state';
 import {AddCar, GetCars} from '../../store/actions/car.actions';
 import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
 import {LogOut} from '../../store/actions/login.actions';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-main-header',
   templateUrl: './main-header.component.html',
   styleUrls: ['./main-header.component.scss'],
 })
-export class MainHeaderComponent implements OnInit{
+export class MainHeaderComponent implements OnInit, OnDestroy{
 
   favCars$ = this.store.pipe(select(selectFavCarsList));
   faStarRegular = regularStar;
+  favSub$: Subscription;
 
 
   constructor(public readonly router: Router,
@@ -35,9 +37,12 @@ export class MainHeaderComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.store.pipe(select(selectFavCarsList)).subscribe(() => {
+    this.favSub$ = this.store.pipe(select(selectFavCarsList)).subscribe(() => {
       this.store.dispatch(new GetCars());
     });
+  }
+  ngOnDestroy(): void {
+    this.favSub$.unsubscribe();
   }
 
   addNewCar(): void {

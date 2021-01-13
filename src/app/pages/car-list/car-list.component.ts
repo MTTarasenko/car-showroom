@@ -9,8 +9,8 @@ import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {selectCarList, selectCarsAmount} from '../../store/selectors/car.selector';
 import {GetCars} from '../../store/actions/car.actions';
-import {SetPageCount, SetPageState} from '../../store/actions/range.actions';
-import {selectPageCount, selectPageState} from '../../store/selectors/range.selectors';
+import {SetPageInfo} from '../../store/actions/range.actions';
+import {selectPageCount, selectPageInfo} from '../../store/selectors/range.selectors';
 import {Car} from '../../models/car';
 
 @Component({
@@ -29,18 +29,18 @@ export class CarListComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  carsOnPage$ = this.store.pipe(select(selectPageCount));
-  currentPage$ = this.store.pipe(select(selectPageState));
+  pageState$ = this.store.pipe(select(selectPageInfo));
   sCars$ = this.store.pipe(select(selectCarList));
   carsAmount$ = this.store.pipe(select(selectCarsAmount));
   helperSub: Subscription;
   subscriptions: Subscription[] = [];
+  amountOfCarsOnPage: number[] = [4, 5, 6, 7, 8, 9, 10];
 
   ngOnInit(): void {
     // set amount of cars on one page
-    this.store.dispatch(new SetPageCount(4));
+    // this.store.dispatch(new SetPageCount(4));
 
-    this.helperSub = this.store.pipe(select(selectPageState)).subscribe(() => {
+    this.helperSub = this.store.pipe(select(selectPageInfo)).subscribe(() => {
       this.store.dispatch(new GetCars());
     });
     // TODO data from resolver
@@ -51,25 +51,11 @@ export class CarListComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.helperSub);
   }
 
-  // combineCarsLists(): void {
-  //
-  //   this.cars$ = zip(
-  //     this.sCars$.pipe(map(cars => cars.map(car => ({...car})))),
-  //     this.favCars$,
-  //   ).pipe(map(([cars, favoriteCars]) => {
-  //     (cars).map(car => {
-  //       favoriteCars.map(favoriteCar => {
-  //         if (car.id === favoriteCar.id) {
-  //           car.favorite = true;
-  //         }
-  //       });
-  //     });
-  //     return cars;
-  //   }));
-  // }
-
   onPageEvent($event): void {
-    this.store.dispatch(new SetPageState($event.pageIndex));
+    this.store.dispatch(new SetPageInfo({
+      pageIndex: $event.pageIndex,
+      pageSize: $event.pageSize
+    }));
   }
 
   ngOnDestroy(): void {

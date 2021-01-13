@@ -10,9 +10,10 @@
     </div>
     <div class="paginator">
       <mat-paginator [length]="(carsAmount$ | async)"
-                     [pageSize]="(carsOnPage$ | async)"
+                     [pageSize]="(pageState$ | async).pageSize"
                      (page)="onPageEvent($event)"
-                     [pageIndex]="(currentPage$ | async)[0]">
+                     [pageIndex]="(pageState$ | async).pageIndex"
+                     [pageSizeOptions]="amountOfCarsOnPage">
       </mat-paginator>
     </div>
   </section>

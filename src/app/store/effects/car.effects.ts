@@ -15,7 +15,7 @@ import {
 import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
 import {Car} from '../../models/car';
-import {selectPageCount, selectPageState} from '../selectors/range.selectors';
+import {selectPageCount, selectPageInfo} from '../selectors/range.selectors';
 import {Router} from '@angular/router';
 import {selectCarList} from '../selectors/car.selector';
 import {CollectionRespModel} from '../../models/collection-resp.model';
@@ -42,23 +42,24 @@ export class CarEffects {
   @Effect()
   getCars$ = this.actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
-    withLatestFrom(this._store.pipe(select(selectPageState))),
-    switchMap(([action, [state1, state2]]) => {
-      const from = (state2 * state1);
-      const to = state2 * (state1 + 1);
+    // withLatestFrom(this._store.pipe(select(selectPageState))),
+    withLatestFrom(this._store.pipe(select(selectPageInfo))),
+    switchMap(([action, info]) => {
+      const from = (info.pageSize * info.pageIndex);
+      const to = info.pageSize * (info.pageIndex + 1);
       return zip(
         this._carService.getFourCarsAndLength(from, to)
           .pipe(map(data => data)),
         this._store.pipe(select(selectFavCarsList))
-      ).pipe(map(data => {
-        data[0].cars.map(car => {
-          data[1].map(favoriteCar => {
+      ).pipe(map(([resp, favCars]) => {
+        resp.cars.map(car => {
+          favCars.map(favoriteCar => {
             if (car.id === favoriteCar.id) {
               car.favorite = true;
             }
           });
         });
-        return data[0];
+        return resp;
       }));
     }),
     switchMap((info: CollectionRespModel) => {

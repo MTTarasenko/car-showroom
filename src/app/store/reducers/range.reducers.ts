@@ -1,4 +1,5 @@
 import {ERangeActions, RangeActions} from '../actions/range.actions';
+import {PageModel} from '../../models/page.model';
 
 
 export const rangeReducers = (
@@ -6,17 +7,16 @@ export const rangeReducers = (
   action: RangeActions
 ): PaginationState => {
   switch (action.type) {
-    case ERangeActions.SetPageStateSuccess: {
+    // case ERangeActions.SetPageCountSuccess: {
+    //   return {
+    //     ...state,
+    //     totalCount: action.payload,
+    //   };
+    // }
+    case ERangeActions.SetPageInfoSuccess: {
       return {
         ...state,
-        pageIndex: action.payload,
-      };
-    }
-    case ERangeActions.SetPageCountSuccess: {
-      return {
-        ...state,
-        totalCount: action.payload,
-        pageSize: action.payload
+        pageState: action.payload
       };
     }
     default:
@@ -25,13 +25,14 @@ export const rangeReducers = (
 };
 
 export interface PaginationState {
-  pageIndex: number;
-  pageSize: number;
+  pageState: PageModel;
   totalCount: number;
 }
 
 export const initialRangeState: PaginationState = {
-  pageIndex: 0,
-  pageSize: 4,
-  totalCount: null
+  pageState: {
+    pageIndex: 0,
+    pageSize: 4
+  },
+  totalCount: 4
 };
