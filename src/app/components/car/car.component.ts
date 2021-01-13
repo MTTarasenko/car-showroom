@@ -10,6 +10,7 @@ import {CarService} from '../../services/car.service';
 import {AppState} from '../../store/state/app.state';
 import {AddCarToFav, GetFavCarList, RemoveCarFromFav} from '../../store/actions/favorite.actions';
 import {HelperService} from '../../services/helper.service';
+import {GetCars} from '../../store/actions/car.actions';
 
 @Component({
   selector: 'app-car',
@@ -41,6 +42,7 @@ export class CarComponent {
       this.store.dispatch(new RemoveCarFromFav(car));
     }
     this.store.dispatch(new GetFavCarList());
+    this.store.dispatch(new GetCars());
   }
 
 }

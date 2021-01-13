@@ -7,13 +7,13 @@ export const rangeReducers = (
   action: RangeActions
 ): PaginationState => {
   switch (action.type) {
-    case ERangeActions.SetTotalCountSuccess: {
+    case ERangeActions.SetTotalCount: {
       return {
         ...state,
         totalCount: action.payload,
       };
     }
-    case ERangeActions.SetPageInfoSuccess: {
+    case ERangeActions.SetPageInfo: {
       return {
         ...state,
         pageState: action.payload

@@ -7,13 +7,13 @@ import {AuthGuardService} from '../../guards/auth-guard.service';
 import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
-import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {AddCar, GetCars} from '../../store/actions/car.actions';
 import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
 import {LogOut} from '../../store/actions/login.actions';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
+import {Car} from '../../models/car';
 
 @Component({
   selector: 'app-main-header',
@@ -22,9 +22,8 @@ import {Subscription} from 'rxjs';
 })
 export class MainHeaderComponent implements OnInit, OnDestroy{
 
-  favCars$ = this.store.pipe(select(selectFavCarsList));
+  favCars$: Observable<Car[]>;
   faStarRegular = regularStar;
-  favSub$: Subscription;
 
 
   constructor(public readonly router: Router,
@@ -32,18 +31,13 @@ export class MainHeaderComponent implements OnInit, OnDestroy{
               public dialog: MatDialog,
               private favoriteService: FavoritesService,
               private service: CarService,
-              private helperService: HelperService,
               private store: Store<AppState>) {
   }
 
   ngOnInit(): void {
-    this.favSub$ = this.store.pipe(select(selectFavCarsList)).subscribe(() => {
-      this.store.dispatch(new GetCars());
-    });
+    this.favCars$ = this.store.pipe(select(selectFavCarsList));
   }
-  ngOnDestroy(): void {
-    this.favSub$.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   addNewCar(): void {
     const dialogRef = this.dialog.open(AddCarModalComponent, {
@@ -53,7 +47,6 @@ export class MainHeaderComponent implements OnInit, OnDestroy{
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.store.dispatch(new AddCar(result));
-        this.helperService.updateCarsList();
       }
     });
   }

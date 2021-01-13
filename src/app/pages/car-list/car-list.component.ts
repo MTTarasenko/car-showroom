@@ -7,10 +7,11 @@ import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {selectCarList, selectCarsAmount} from '../../store/selectors/car.selector';
+import {selectCarList} from '../../store/selectors/car.selector';
 import {GetCars} from '../../store/actions/car.actions';
 import {SetPageInfo, SetTotalCount} from '../../store/actions/range.actions';
 import {selectPageInfo, selectTotalCount} from '../../store/selectors/range.selectors';
+import {PageModel} from '../../models/page.model';
 import {Car} from '../../models/car';
 
 @Component({
@@ -29,24 +30,21 @@ export class CarListComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  pageState$ = this.store.pipe(select(selectPageInfo));
-  sCars$ = this.store.pipe(select(selectCarList));
-  carsAmount$ = this.store.pipe(select(selectTotalCount));
-  helperSub: Subscription;
-  subscriptions: Subscription[] = [];
+  pageState$: Observable<PageModel>;
+  sCars$: Observable<Car[]>;
+  carsAmount$: Observable<number>;
   amountOfCarsOnPage: number[] = [4, 5, 6, 7, 8, 9, 10];
 
   ngOnInit(): void {
-
-    this.helperSub = this.store.pipe(select(selectPageInfo)).subscribe(() => {
-      this.store.dispatch(new GetCars());
-    });
+    this.store.dispatch(new GetCars());
+    this.pageState$ = this.store.pipe(select(selectPageInfo));
+    this.sCars$ = this.store.pipe(select(selectCarList));
+    this.carsAmount$ = this.store.pipe(select(selectTotalCount));
     // TODO data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
     // );
 
-    this.subscriptions.push(this.helperSub);
   }
 
   onPageEvent($event): void {
@@ -56,7 +54,5 @@ export class CarListComponent implements OnInit, OnDestroy {
     }));
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-  }
+  ngOnDestroy(): void {}
 }
