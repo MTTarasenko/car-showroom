@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
@@ -10,7 +10,7 @@ import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {AddCar} from '../../store/actions/car.actions';
+import {AddCar, GetCars} from '../../store/actions/car.actions';
 import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
 import {LogOut} from '../../store/actions/login.actions';
 
@@ -19,7 +19,7 @@ import {LogOut} from '../../store/actions/login.actions';
   templateUrl: './main-header.component.html',
   styleUrls: ['./main-header.component.scss'],
 })
-export class MainHeaderComponent {
+export class MainHeaderComponent implements OnInit{
 
   favCars$ = this.store.pipe(select(selectFavCarsList));
   faStarRegular = regularStar;
@@ -32,6 +32,12 @@ export class MainHeaderComponent {
               private service: CarService,
               private helperService: HelperService,
               private store: Store<AppState>) {
+  }
+
+  ngOnInit(): void {
+    this.store.pipe(select(selectFavCarsList)).subscribe(() => {
+      this.store.dispatch(new GetCars());
+    });
   }
 
   addNewCar(): void {

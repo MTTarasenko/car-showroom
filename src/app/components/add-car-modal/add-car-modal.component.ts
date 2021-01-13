@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CarService} from '../../services/car.service';
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {selectCarYears} from '../../store/selectors/car.selector';
@@ -29,9 +27,6 @@ export class AddCarModalComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(new GetCarYears());
 
-    // this.carYears$ = this.service.getCarYears().pipe(map(data => {
-    //   return data;
-    // }));
 
     this.newCarForm = this.fb.group({
       name: ['', [

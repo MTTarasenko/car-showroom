@@ -23,7 +23,7 @@ export class FavoriteEffects {
       return this.favService.getFavoriteCars().pipe(map(data => data));
     }),
     switchMap((cars: Car[]) => {
-      this.store.dispatch(new GetCars());
+      // this.store.dispatch(new GetCars());
       return of(new GetFavCarListSuccess(cars));
     })
   );
@@ -33,10 +33,11 @@ export class FavoriteEffects {
     ofType<AddCarToFav>(EFavoriteActions.AddCarToFav),
     switchMap(action => {
       const newFavCar = {...action.payload};
-      return this.favService.addFavorite(newFavCar).pipe(map(data => data));
+      return this.favService.addFavorite(newFavCar)
+        .pipe(map(data => data));
     }),
     switchMap((car: Car) => {
-      this.store.dispatch(new GetCars());
+      // this.store.dispatch(new GetCars());
       return of(new AddCarToFavSuccess(car));
     })
   );
@@ -49,7 +50,7 @@ export class FavoriteEffects {
       return this.favService.removeFavorite(action.payload).pipe(map(data => data));
     }),
     switchMap((car: Car) => {
-      this.store.dispatch(new GetCars());
+      // this.store.dispatch(new GetCars());
       return of(new RemoveCarFromFavSuccess(car));
     })
   );

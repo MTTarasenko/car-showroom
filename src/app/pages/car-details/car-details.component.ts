@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
-import {Car} from '../../models/car';
-import {map} from 'rxjs/operators';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {GetCar, GetCars} from '../../store/actions/car.actions';
