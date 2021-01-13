@@ -1,5 +1,6 @@
 import {CarActions, ECarActions} from '../actions/car.actions';
 import {Car} from '../../models/car';
+import {PageModel} from '../../models/page.model';
 
 
 export const carReducers = (
@@ -20,16 +21,10 @@ export const carReducers = (
         selectedCar: action.payload
       };
     }
-    case ECarActions.AddCarSuccess: {
+    case ECarActions.SetPageInfo: {
       return {
         ...state,
-        newCar: action.payload
-      };
-    }
-    case ECarActions.GetCarYearsSuccess: {
-      return {
-        ...state,
-        carYears: action.payload
+        pageState: action.payload
       };
     }
     default:
@@ -42,7 +37,7 @@ export interface CarState {
   totalCount: number;
   selectedCar: Car;
   carYears: number[];
-  newCar: Car;
+  pageState: PageModel;
 }
 
 export const initialCarState: CarState = {
@@ -50,5 +45,8 @@ export const initialCarState: CarState = {
   totalCount: null,
   selectedCar: null,
   carYears: null,
-  newCar: null,
+  pageState: {
+    pageIndex: 0,
+    pageSize: 4
+  }
 };

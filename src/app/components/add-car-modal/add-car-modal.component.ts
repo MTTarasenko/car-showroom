@@ -2,10 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CarService} from '../../services/car.service';
-import {select, Store} from '@ngrx/store';
-import {AppState} from '../../store/state/app.state';
-import {selectCarYears} from '../../store/selectors/car.selector';
-import {GetCarYears} from '../../store/actions/car.actions';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -16,16 +13,15 @@ import {GetCarYears} from '../../store/actions/car.actions';
 export class AddCarModalComponent implements OnInit {
 
   newCarForm: FormGroup;
-  carYears$ = this.store.pipe(select(selectCarYears));
+  carYears$: Observable<number[]>;
 
   constructor(public dialogRef: MatDialogRef<AddCarModalComponent>,
               private fb: FormBuilder,
-              private service: CarService,
-              private store: Store<AppState>) {
+              private service: CarService) {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new GetCarYears());
+    this.carYears$ = this.service.getCarYears();
 
 
     this.newCarForm = this.fb.group({

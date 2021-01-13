@@ -23,3 +23,8 @@ export const selectCarYears = createSelector(
   selectCars,
   (state: CarState) => state.carYears
 );
+
+export const selectPageState = createSelector(
+  selectCars,
+  (state: CarState) => state.pageState
+);

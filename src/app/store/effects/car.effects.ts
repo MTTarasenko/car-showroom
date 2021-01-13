@@ -5,22 +5,18 @@ import {AppState} from '../state/app.state';
 import {select, Store} from '@ngrx/store';
 import {
   AddCar,
-  AddCarSuccess,
   ECarActions,
   GetCar, GetCarError,
   GetCars,
   GetCarsSuccess,
-  GetCarSuccess, GetCarYears, GetCarYearsSuccess,
+  GetCarSuccess, SetPageInfo,
 } from '../actions/car.actions';
 import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
-import {Car} from '../../models/car';
-import {selectPageInfo} from '../selectors/range.selectors';
 import {Router} from '@angular/router';
-import {selectCarList} from '../selectors/car.selector';
+import {selectCarList, selectPageState} from '../selectors/car.selector';
 import {CollectionRespModel} from '../../models/collection-resp.model';
 import {selectFavCarsList} from '../selectors/favorite.selectors';
-import {SetTotalCount} from '../actions/range.actions';
 
 @Injectable()
 export class CarEffects {
@@ -28,7 +24,7 @@ export class CarEffects {
   getCar$ = this.actions$.pipe(
     ofType<GetCar>(ECarActions.GetCar),
     map(action => action.payload),
-    withLatestFrom(this._store.pipe(select(selectCarList))),
+    withLatestFrom(this.store.pipe(select(selectCarList))),
     switchMap(([id, cars]) => {
       const selectCar = cars.filter(car => car.id === +id)[0];
       if (selectCar) {
@@ -43,16 +39,15 @@ export class CarEffects {
   @Effect()
   getCars$ = this.actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
-    withLatestFrom(this._store.pipe(select(selectPageInfo))),
+    withLatestFrom(this.store.pipe(select(selectPageState))),
     switchMap(([action, info]) => {
       const from = (info.pageSize * info.pageIndex);
       const to = info.pageSize * (info.pageIndex + 1);
       return zip(
-        this._carService.getFourCarsAndLength(from, to)
+        this.carService.getFourCarsAndLength(from, to)
           .pipe(map(data => data)),
-        this._store.pipe(select(selectFavCarsList))
+        this.store.pipe(select(selectFavCarsList))
       ).pipe(map(([resp, favCars]) => {
-        this._store.dispatch(new SetTotalCount(resp.totalCount));
         resp.cars.map(car => {
           favCars.map(favoriteCar => {
             if (car.id === favoriteCar.id) {
@@ -68,34 +63,28 @@ export class CarEffects {
     })
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   addCar$ = this.actions$.pipe(
     ofType<AddCar>(ECarActions.AddCar),
     switchMap(action => {
       const newCar = {...action.payload};
-      this._store.dispatch(new GetCars());
-      return this._carService.addNewCar(newCar).pipe(map(data => data));
-    }),
-    switchMap((car: Car) => of(new AddCarSuccess(car)))
+      this.store.dispatch(new GetCars());
+      return this.carService.addNewCar(newCar).pipe(map(data => data));
+    })
   );
 
-  @Effect()
-  getCarYears$ = this.actions$.pipe(
-    ofType<GetCarYears>(ECarActions.GetCarYears),
-    switchMap(() => {
-      return this._carService.getCarYears().pipe(map(data => data));
-    }),
-    switchMap((years: number[]) => {
-      return of(new GetCarYearsSuccess(years));
+  @Effect({dispatch: false})
+  setPageInfo$ = this.actions$.pipe(
+    ofType<SetPageInfo>(ECarActions.SetPageInfo),
+    tap(() => {
+      this.store.dispatch(new GetCars());
     })
   );
 
   constructor(
-    // tslint:disable-next-line:variable-name
-    private _carService: CarService,
+    private carService: CarService,
     private actions$: Actions,
-    // tslint:disable-next-line:variable-name
-    private _store: Store<AppState>,
+    private store: Store<AppState>,
     private readonly router: Router
   ) {
   }

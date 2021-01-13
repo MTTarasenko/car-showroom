@@ -1,16 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {selectCarList} from '../../store/selectors/car.selector';
-import {GetCars} from '../../store/actions/car.actions';
-import {SetPageInfo, SetTotalCount} from '../../store/actions/range.actions';
-import {selectPageInfo, selectTotalCount} from '../../store/selectors/range.selectors';
+import {selectCarList, selectCarsAmount, selectPageState} from '../../store/selectors/car.selector';
+import {GetCars, SetPageInfo} from '../../store/actions/car.actions';
 import {PageModel} from '../../models/page.model';
 import {Car} from '../../models/car';
 
@@ -37,9 +35,9 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(new GetCars());
-    this.pageState$ = this.store.pipe(select(selectPageInfo));
+    this.pageState$ = this.store.pipe(select(selectPageState));
     this.sCars$ = this.store.pipe(select(selectCarList));
-    this.carsAmount$ = this.store.pipe(select(selectTotalCount));
+    this.carsAmount$ = this.store.pipe(select(selectCarsAmount));
     // TODO data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)

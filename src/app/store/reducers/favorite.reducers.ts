@@ -7,12 +7,6 @@ export const favoriteReducers = (
   action: FavoriteActions
 ): FavoriteState => {
   switch (action.type) {
-    case EFavoriteActions.AddCarToFavSuccess: {
-      return {
-        ...state,
-        favCar: action.payload
-      };
-    }
     case EFavoriteActions.GetFavCarListSuccess: {
       return {
         ...state,

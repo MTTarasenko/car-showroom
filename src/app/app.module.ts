@@ -28,10 +28,9 @@ import {HighlightTextDirective} from './directives/highlight-text.directive';
 import {PaginationPipe} from './pipes/pagination.pipe';
 import {appReducers} from './store/reducers/app.reducers';
 import {CarEffects} from './store/effects/car.effects';
-import {RangeEffects} from './store/effects/range.effects';
 import {FavoriteEffects} from './store/effects/favorite.effects';
 import {LoginEffects} from './store/effects/login.effects';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -63,7 +62,6 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([
       CarEffects,
-      RangeEffects,
       FavoriteEffects,
       LoginEffects
     ]),

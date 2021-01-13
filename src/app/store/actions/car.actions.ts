@@ -1,6 +1,7 @@
 import {Action} from '@ngrx/store';
 import {Car} from '../../models/car';
 import {CollectionRespModel} from '../../models/collection-resp.model';
+import {PageModel} from '../../models/page.model';
 
 
 export enum ECarActions {
@@ -10,9 +11,7 @@ export enum ECarActions {
   GetCarSuccess = '[Car] Get Car Success',
   GetCarError = '[Car] Get Car Error',
   AddCar = '[Car] Add Car',
-  AddCarSuccess = '[Car] Add Car Success',
-  GetCarYears = 'Get Car Years',
-  GetCarYearsSuccess = 'Get Car Years Success',
+  SetPageInfo = 'Set Page Info',
 }
 
 export class GetCars implements Action{
@@ -37,21 +36,13 @@ export class GetCarSuccess implements Action{
 export class GetCarError implements Action{
   public readonly type = ECarActions.GetCarError;
 }
-
-export class GetCarYears implements Action{
-  public readonly type = ECarActions.GetCarYears;
-}
-export class GetCarYearsSuccess implements Action{
-  public readonly type = ECarActions.GetCarYearsSuccess;
-  constructor(public payload: number[]) {}
-}
 export class AddCar implements Action{
   public readonly type = ECarActions.AddCar;
   constructor(public payload: Car) {}
 }
-export class AddCarSuccess implements Action{
-  public readonly type = ECarActions.AddCarSuccess;
-  constructor(public payload: Car) {}
+export class SetPageInfo implements Action{
+  public readonly type = ECarActions.SetPageInfo;
+  constructor(public payload: PageModel) {}
 }
 
 
@@ -60,7 +51,5 @@ export type CarActions = GetCars |
   GetCar |
   GetCarSuccess |
   AddCar |
-  AddCarSuccess |
   GetCarError |
-  GetCarYears |
-  GetCarYearsSuccess;
+  SetPageInfo;

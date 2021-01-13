@@ -1,17 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {
-  AddCarToFav, AddCarToFavSuccess,
+  AddCarToFav,
   EFavoriteActions, GetFavCarList, GetFavCarListSuccess,
-  RemoveCarFromFav, RemoveCarFromFavSuccess
+  RemoveCarFromFav
 } from '../actions/favorite.actions';
 import {map, switchMap, throttleTime} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {Car} from '../../models/car';
 import {FavoritesService} from '../../services/favorites.service';
-import {Store} from '@ngrx/store';
-import {AppState} from '../state/app.state';
-import {GetCars} from '../actions/car.actions';
 
 
 @Injectable()
@@ -27,28 +24,22 @@ export class FavoriteEffects {
     })
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   addCarToFav = this.actions$.pipe(
     ofType<AddCarToFav>(EFavoriteActions.AddCarToFav),
     switchMap(action => {
-      const newFavCar = {...action.payload};
-      return this.favService.addFavorite(newFavCar)
+      return this.favService.addFavorite(action.payload)
         .pipe(map(data => data));
-    }),
-    switchMap((car: Car) => {
-      return of(new AddCarToFavSuccess(car));
     })
   );
 
-  @Effect()
+  @Effect({dispatch: false})
   removeCarFromFav = this.actions$.pipe(
     ofType<RemoveCarFromFav>(EFavoriteActions.RemoveCarFromFav),
     throttleTime(700),
     switchMap(action => {
-      return this.favService.removeFavorite(action.payload).pipe(map(data => data));
-    }),
-    switchMap((car: Car) => {
-      return of(new RemoveCarFromFavSuccess(car));
+      return this.favService.removeFavorite(action.payload)
+        .pipe(map(data => data));
     })
   );
 
@@ -56,7 +47,6 @@ export class FavoriteEffects {
   constructor(
     private actions$: Actions,
     private favService: FavoritesService,
-    private store: Store<AppState>
   ) {
   }
 

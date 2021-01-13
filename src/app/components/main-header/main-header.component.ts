@@ -9,10 +9,10 @@ import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {AddCar, GetCars} from '../../store/actions/car.actions';
+import {AddCar} from '../../store/actions/car.actions';
 import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
 import {LogOut} from '../../store/actions/login.actions';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Car} from '../../models/car';
 
 @Component({
