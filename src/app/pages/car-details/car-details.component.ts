@@ -8,6 +8,7 @@ import {GetCar} from '../../store/actions/car.actions';
 import {selectSelectedCar} from '../../store/selectors/car.selector';
 import {Observable} from 'rxjs';
 import {Car} from '../../models/car';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-car-details',
@@ -25,13 +26,13 @@ export class CarDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new GetCar(Number(this.route.snapshot.params.id)));
-    this.car$ = this.store.pipe(select(selectSelectedCar));
-    // this.car$ = this.route.data.pipe(
-    //   map((data: { carById: Car }) => {
-    //     console.log(data);
-    //     return data.carById;
-    //   })
-    // );
+    // this.store.dispatch(new GetCar(Number(this.route.snapshot.params.id)));
+    // this.car$ = this.store.pipe(select(selectSelectedCar));
+    this.car$ = this.route.data.pipe(
+      map((data: { carById: Car }) => {
+        console.log(data);
+        return data.carById;
+      })
+    );
   }
 }

@@ -19,8 +19,7 @@ export class GetCarByIdResolverService {
 
   resolve(route: ActivatedRouteSnapshot): Observable<Car> {
     this.store.dispatch(new GetCar(Number(route.paramMap.get('id'))));
-    // this.store.pipe(select(selectSelectedCar));
-    // return this.service.getCarById(Number(route.paramMap.get('id'))).pipe(
+    console.log(Number(route.paramMap.get('id')));
     return this.store.pipe(select(selectSelectedCar)).pipe(
       map(data => {
         if (data) {

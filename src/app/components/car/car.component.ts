@@ -30,7 +30,7 @@ export class CarComponent {
   }
 
   watchCarDetails(index): void {
-    this.router.navigate(['/car-details/' + index]);
+    this.router.navigateByUrl('/car-details/' + index);
   }
 
 
