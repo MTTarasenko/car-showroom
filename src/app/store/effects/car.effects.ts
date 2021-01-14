@@ -4,14 +4,14 @@ import {CarService} from '../../services/car.service';
 import {AppState} from '../state/app.state';
 import {select, Store} from '@ngrx/store';
 import {
-  AddCar,
+  AddCar, ClearStore,
   ECarActions,
   GetCar, GetCarError,
   GetCars,
   GetCarsSuccess,
   GetCarSuccess, SetPageInfo,
 } from '../actions/car.actions';
-import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
+import {delay, map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
 import {Router} from '@angular/router';
 import {selectCarList, selectPageState} from '../selectors/car.selector';
@@ -24,12 +24,15 @@ export class CarEffects {
   getCar$ = this.actions$.pipe(
     ofType<GetCar>(ECarActions.GetCar),
     map(action => action.payload),
+    delay(3000),
     withLatestFrom(this.store.pipe(select(selectCarList))),
     switchMap(([id, cars]) => {
+      console.log(id, cars);
       if (cars) {
         const selectCar = cars.filter(car => car.id === +id)[0];
-        return of(new GetCarSuccess(selectCar));
+        return of(new GetCarSuccess({selectedCar: selectCar, isSelected: true}));
       } else {
+        this.router.navigate(['/car-list/']);
         return of(new GetCarError());
       }
     })
@@ -77,6 +80,15 @@ export class CarEffects {
     ofType<SetPageInfo>(ECarActions.SetPageInfo),
     tap(() => {
       this.store.dispatch(new GetCars());
+    })
+  );
+
+  @Effect({dispatch: false})
+  clearStore$ = this.actions$.pipe(
+    ofType<ClearStore>(ECarActions.ClearStore),
+    tap(() => {
+      console.log('clearing store');
+      this.store.dispatch(new GetCarSuccess({selectedCar: null, isSelected: false}));
     })
   );
 

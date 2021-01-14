@@ -1,5 +1,5 @@
 <div class="content">
-  <div class="car-item">
+  <div class="car-item" *ngIf="(car$ | async)">
     <div class="car-item-photo">
       <img [src]="(car$ | async)?.photoURL">
     </div>
@@ -8,5 +8,8 @@
       <p [appHighlightText]="['toyota']">{{(car$ | async)?.description}}</p>
       <p>{{(car$ | async)?.year}}</p>
     </div>
+  </div>
+  <div class="spinner" *ngIf="!(car$ | async)">
+    <mat-spinner></mat-spinner>
   </div>
 </div>

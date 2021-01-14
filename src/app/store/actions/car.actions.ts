@@ -2,6 +2,7 @@ import {Action} from '@ngrx/store';
 import {Car} from '../../models/car';
 import {CollectionRespModel} from '../../models/collection-resp.model';
 import {PageModel} from '../../models/page.model';
+import {SelectedCarModel} from '../../models/selected-car.model';
 
 
 export enum ECarActions {
@@ -12,6 +13,7 @@ export enum ECarActions {
   GetCarError = '[Car] Get Car Error',
   AddCar = '[Car] Add Car',
   SetPageInfo = 'Set Page Info',
+  ClearStore = 'Clear Store'
 }
 
 export class GetCars implements Action{
@@ -31,7 +33,7 @@ export class GetCar implements Action{
 
 export class GetCarSuccess implements Action{
   public readonly type = ECarActions.GetCarSuccess;
-  constructor(public payload: Car) {}
+  constructor(public payload: SelectedCarModel) {}
 }
 export class GetCarError implements Action{
   public readonly type = ECarActions.GetCarError;
@@ -44,6 +46,10 @@ export class SetPageInfo implements Action{
   public readonly type = ECarActions.SetPageInfo;
   constructor(public payload: PageModel) {}
 }
+export class ClearStore implements Action{
+  public readonly type = ECarActions.ClearStore;
+  constructor(public payload: PageModel) {}
+}
 
 
 export type CarActions = GetCars |
@@ -52,4 +58,5 @@ export type CarActions = GetCars |
   GetCarSuccess |
   AddCar |
   GetCarError |
-  SetPageInfo;
+  SetPageInfo |
+  ClearStore;
