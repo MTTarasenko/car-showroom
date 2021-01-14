@@ -8,10 +8,9 @@ import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {selectCarList, selectCarsAmount, selectLoading, selectPageState} from '../../store/selectors/car.selector';
-import {GetCars, SetLoading, SetPageInfo} from '../../store/actions/car.actions';
+import {GetCars, SetPageInfo} from '../../store/actions/car.actions';
 import {PageModel} from '../../models/page.model';
 import {Car} from '../../models/car';
-import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-car-list',

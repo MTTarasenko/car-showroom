@@ -12,7 +12,8 @@ import {
   ESelectedCarActions,
   GetCar,
   GetCarError,
-  GetCarSuccess
+  GetCarSuccess,
+  SetCarLoading
 } from '../actions/selected-car.actions';
 
 
@@ -23,11 +24,12 @@ export class SelectedCarEffects {
     ofType<GetCar>(ESelectedCarActions.GetCar),
     map(action => action.payload),
     switchMap(id => {
-      // this.store.dispatch(new SetLoading(true));
+      console.log('getting car');
+      this.store.dispatch(new SetCarLoading(true));
       return this.carService.getCarById(id).pipe(map(data => data));
     }),
     switchMap((car: Car) => {
-      // this.store.dispatch(new SetLoading(false));
+      this.store.dispatch(new SetCarLoading(false));
       if (car) {
         return of(new GetCarSuccess({selectedCar: car, isSelected: true}));
       } else {

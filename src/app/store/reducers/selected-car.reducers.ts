@@ -1,5 +1,6 @@
 import {ESelectedCarActions, SelectedCarActions} from '../actions/selected-car.actions';
 import {SelectedCarModel} from '../../models/selected-car.model';
+import {Car} from '../../models/car';
 
 
 export interface SelectedCarState {
@@ -9,7 +10,13 @@ export interface SelectedCarState {
 
 export const initialSelectedCarState: SelectedCarState = {
   selectedCar: {
-    selectedCar: null,
+    selectedCar: {
+      name: '',
+      photoURL: '',
+      year: '',
+      description: '',
+      id: null
+    },
     isSelected: false
   },
   isSelectedCarLoading: false
@@ -24,6 +31,12 @@ export const selectedCarReducers = (
       return {
         ...state,
         selectedCar: action.payload
+      };
+    }
+    case ESelectedCarActions.SetLoading: {
+      return {
+        ...state,
+        isSelectedCarLoading: action.payload
       };
     }
     default: {

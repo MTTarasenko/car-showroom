@@ -11,11 +11,9 @@ import {
 } from '../actions/car.actions';
 import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
-import {Router} from '@angular/router';
 import {selectPageState} from '../selectors/car.selector';
 import {CollectionRespModel} from '../../models/collection-resp.model';
 import {selectFavCarsList} from '../selectors/favorite.selectors';
-import {Car} from '../../models/car';
 
 @Injectable()
 export class CarEffects {
@@ -24,7 +22,7 @@ export class CarEffects {
     ofType<GetCars>(ECarActions.GetCars),
     withLatestFrom(this.store.pipe(select(selectPageState))),
     switchMap(([action, info]) => {
-      // this.store.dispatch(new SetLoading(true));
+      this.store.dispatch(new SetLoading(true));
       const from = (info.pageSize * info.pageIndex);
       const to = info.pageSize * (info.pageIndex + 1);
       return zip(
@@ -32,7 +30,7 @@ export class CarEffects {
           .pipe(map(data => data)),
         this.store.pipe(select(selectFavCarsList))
       ).pipe(map(([resp, favCars]) => {
-        // this.store.dispatch(new SetLoading(false));
+        this.store.dispatch(new SetLoading(false));
         resp.cars.map(car => {
           favCars.map(favoriteCar => {
             if (car.id === favoriteCar.id) {
@@ -71,7 +69,6 @@ export class CarEffects {
     private carService: CarService,
     private actions$: Actions,
     private store: Store<AppState>,
-    private readonly router: Router
   ) {
   }
 }

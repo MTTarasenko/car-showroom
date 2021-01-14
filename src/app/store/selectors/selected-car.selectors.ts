@@ -8,3 +8,10 @@ export const selectSelectedCar = createSelector(
   selectSelCar,
   (state: SelectedCarState) => state.selectedCar
 );
+
+export const selectSelectedCarLoading = createSelector(
+  selectSelCar,
+  (state: SelectedCarState) => state.isSelectedCarLoading
+);
+
+

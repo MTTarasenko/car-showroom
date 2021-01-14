@@ -7,6 +7,7 @@ export enum ESelectedCarActions {
   GetCarSuccess = '[Car] Get Car Success',
   ClearStore = 'Clear Store',
   GetCarError = '[Car] Get Car Error',
+  SetLoading = 'Set Car Loading'
 }
 
 export class GetCar implements Action{
@@ -26,8 +27,13 @@ export class GetCarError implements Action{
   public readonly type = ESelectedCarActions.GetCarError;
 }
 
+export class SetCarLoading implements Action{
+  public readonly type = ESelectedCarActions.SetLoading;
+  constructor(public payload: boolean) {}
+}
 
 export type SelectedCarActions = GetCar |
   GetCarSuccess |
   ClearStore |
-  GetCarError;
+  GetCarError |
+  SetCarLoading;
