@@ -9,7 +9,7 @@ import {
   GetCar, GetCarError,
   GetCars,
   GetCarsSuccess,
-  GetCarSuccess, SetPageInfo,
+  GetCarSuccess, SetLoading, SetPageInfo,
 } from '../actions/car.actions';
 import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
@@ -26,9 +26,11 @@ export class CarEffects {
     ofType<GetCar>(ECarActions.GetCar),
     map(action => action.payload),
     switchMap(id => {
+      this.store.dispatch(new SetLoading(true));
       return this.carService.getCarById(id).pipe(map(data => data));
     }),
     switchMap((car: Car) => {
+      this.store.dispatch(new SetLoading(false));
       if (car) {
         return of (new GetCarSuccess({selectedCar: car, isSelected: true}));
       } else {
@@ -43,6 +45,7 @@ export class CarEffects {
     ofType<GetCars>(ECarActions.GetCars),
     withLatestFrom(this.store.pipe(select(selectPageState))),
     switchMap(([action, info]) => {
+      this.store.dispatch(new SetLoading(true));
       const from = (info.pageSize * info.pageIndex);
       const to = info.pageSize * (info.pageIndex + 1);
       return zip(
@@ -51,6 +54,7 @@ export class CarEffects {
         this.store.pipe(select(selectFavCarsList))
       ).pipe(map(([resp, favCars]) => {
         resp.cars.map(car => {
+          this.store.dispatch(new SetLoading(false));
           favCars.map(favoriteCar => {
             if (car.id === favoriteCar.id) {
               car.favorite = true;

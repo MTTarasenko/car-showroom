@@ -23,3 +23,8 @@ export const selectPageState = createSelector(
   selectCars,
   (state: CarState) => state.pageState
 );
+
+export const selectLoading = createSelector(
+  selectCars,
+  (state: CarState) => state.isLoading
+);

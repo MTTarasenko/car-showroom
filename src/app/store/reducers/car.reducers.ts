@@ -28,6 +28,12 @@ export const carReducers = (
         pageState: action.payload
       };
     }
+    case ECarActions.SetLoading: {
+      return {
+        ...state,
+        isLoading: action.payload
+      };
+    }
     default:
       return state;
   }
@@ -40,6 +46,7 @@ export interface CarState {
   selectedCar: Car;
   carYears: number[];
   pageState: PageModel;
+  isLoading: boolean;
 }
 
 export const initialCarState: CarState = {
@@ -54,5 +61,6 @@ export const initialCarState: CarState = {
   pageState: {
     pageIndex: 0,
     pageSize: 4
-  }
+  },
+  isLoading: false
 };

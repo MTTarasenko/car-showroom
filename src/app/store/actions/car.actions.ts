@@ -13,7 +13,8 @@ export enum ECarActions {
   GetCarError = '[Car] Get Car Error',
   AddCar = '[Car] Add Car',
   SetPageInfo = 'Set Page Info',
-  ClearStore = 'Clear Store'
+  ClearStore = 'Clear Store',
+  SetLoading = 'Set Loading'
 }
 
 export class GetCars implements Action{
@@ -50,6 +51,10 @@ export class ClearStore implements Action{
   public readonly type = ECarActions.ClearStore;
   constructor(public payload: PageModel) {}
 }
+export class SetLoading implements Action{
+  public readonly type = ECarActions.SetLoading;
+  constructor(public payload: boolean) {}
+}
 
 
 export type CarActions = GetCars |
@@ -59,4 +64,5 @@ export type CarActions = GetCars |
   AddCar |
   GetCarError |
   SetPageInfo |
-  ClearStore;
+  ClearStore |
+  SetLoading;

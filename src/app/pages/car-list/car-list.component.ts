@@ -7,10 +7,11 @@ import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {selectCarList, selectCarsAmount, selectPageState} from '../../store/selectors/car.selector';
-import {GetCars, SetPageInfo} from '../../store/actions/car.actions';
+import {selectCarList, selectCarsAmount, selectLoading, selectPageState} from '../../store/selectors/car.selector';
+import {GetCars, SetLoading, SetPageInfo} from '../../store/actions/car.actions';
 import {PageModel} from '../../models/page.model';
 import {Car} from '../../models/car';
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-car-list',
@@ -31,6 +32,7 @@ export class CarListComponent implements OnInit, OnDestroy {
   pageState$: Observable<PageModel>;
   sCars$: Observable<Car[]>;
   carsAmount$: Observable<number>;
+  isLoading$: Observable<boolean>;
   amountOfCarsOnPage: number[] = [4, 5, 6, 7, 8, 9, 10];
 
   ngOnInit(): void {
@@ -38,6 +40,7 @@ export class CarListComponent implements OnInit, OnDestroy {
     this.pageState$ = this.store.pipe(select(selectPageState));
     this.sCars$ = this.store.pipe(select(selectCarList));
     this.carsAmount$ = this.store.pipe(select(selectCarsAmount));
+    this.isLoading$ = this.store.pipe(select(selectLoading));
     // TODO data from resolver
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
