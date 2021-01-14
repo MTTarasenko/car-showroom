@@ -11,12 +11,13 @@ import {
   GetCarsSuccess,
   GetCarSuccess, SetPageInfo,
 } from '../actions/car.actions';
-import {delay, map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
+import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
 import {Router} from '@angular/router';
-import {selectCarList, selectPageState} from '../selectors/car.selector';
+import {selectPageState} from '../selectors/car.selector';
 import {CollectionRespModel} from '../../models/collection-resp.model';
 import {selectFavCarsList} from '../selectors/favorite.selectors';
+import {Car} from '../../models/car';
 
 @Injectable()
 export class CarEffects {
@@ -24,13 +25,12 @@ export class CarEffects {
   getCar$ = this.actions$.pipe(
     ofType<GetCar>(ECarActions.GetCar),
     map(action => action.payload),
-    delay(3000),
-    withLatestFrom(this.store.pipe(select(selectCarList))),
-    switchMap(([id, cars]) => {
-      console.log(id, cars);
-      if (cars) {
-        const selectCar = cars.filter(car => car.id === +id)[0];
-        return of(new GetCarSuccess({selectedCar: selectCar, isSelected: true}));
+    switchMap(id => {
+      return this.carService.getCarById(id).pipe(map(data => data));
+    }),
+    switchMap((car: Car) => {
+      if (car) {
+        return of (new GetCarSuccess({selectedCar: car, isSelected: true}));
       } else {
         this.router.navigate(['/car-list/']);
         return of(new GetCarError());

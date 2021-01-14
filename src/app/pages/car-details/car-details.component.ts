@@ -4,9 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import {CarService} from '../../services/car.service';
 import {Observable} from 'rxjs';
 import {Car} from '../../models/car';
-import {filter, map, skipUntil, take} from 'rxjs/operators';
-import {SelectedCarModel} from '../../models/selected-car.model';
-import {ClearStore, GetCar} from '../../store/actions/car.actions';
+import {map} from 'rxjs/operators';
+import {ClearStore} from '../../store/actions/car.actions';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 
@@ -27,11 +26,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.car$ = this.route.data.pipe(
-      map(data => {
-        console.log('getting car');
-        return data.carById.selectedCar;
-      }),
-      take(1)
+      map(data => data.carById.selectedCar),
     );
   }
 

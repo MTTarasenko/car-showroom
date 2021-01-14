@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Router} from '@angular/router';
 import {CarService} from './car.service';
-import {Observable, of} from 'rxjs';
-import {filter, map, skipUntil, take} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {filter, take} from 'rxjs/operators';
 import {Car} from '../models/car';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../store/state/app.state';
@@ -23,21 +23,8 @@ export class GetCarByIdResolverService {
     return this.store.pipe(
       select(selectSelectedCar),
     ).pipe(
-      filter(details => !!details.isSelected),
+      filter(details => details.isSelected),
       take(1)
     );
-    // return this.store.pipe(select(selectSelectedCar)).pipe(
-    //   map(data => {
-    //     console.log(data);
-    //     if (data.isSelected) {
-    //       console.log('success');
-    //       return data;
-    //     } else {
-    //       console.log('no data');
-    //       // this.router.navigate(['/car-list/']);
-    //     }
-    //   }),
-    //   take(1)
-    // );
   }
 }
