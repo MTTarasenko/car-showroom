@@ -38,7 +38,6 @@ export class FavoriteEffects {
   @Effect({dispatch: false})
   addCarToFav = this.actions$.pipe(
     ofType<AddCarToFav>(EFavoriteActions.AddCarToFav),
-    delay(5000),
     switchMap(action => {
       return this.favService.addFavorite(action.payload)
         .pipe(map(data => data));

@@ -30,7 +30,6 @@ export class CarEffects {
         const selectCar = cars.filter(car => car.id === +id)[0];
         return of(new GetCarSuccess(selectCar));
       } else {
-        this.router.navigate(['/car-list/']);
         return of(new GetCarError());
       }
     })
