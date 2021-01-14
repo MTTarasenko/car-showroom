@@ -5,9 +5,9 @@ import {CarService} from '../../services/car.service';
 import {Observable} from 'rxjs';
 import {Car} from '../../models/car';
 import {map} from 'rxjs/operators';
-import {ClearStore} from '../../store/actions/car.actions';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
+import {ClearStore} from '../../store/actions/selected-car.actions';
 
 @Component({
   selector: 'app-car-details',

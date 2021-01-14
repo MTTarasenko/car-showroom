@@ -1,7 +1,24 @@
 import {CarActions, ECarActions} from '../actions/car.actions';
 import {Car} from '../../models/car';
 import {PageModel} from '../../models/page.model';
-import {SelectedCarModel} from '../../models/selected-car.model';
+
+export interface CarState {
+  cars: Car[];
+  totalCount: number;
+  pageState: PageModel;
+  isLoading: boolean;
+
+}
+
+export const initialCarState: CarState = {
+  cars: null,
+  totalCount: null,
+  pageState: {
+    pageIndex: 0,
+    pageSize: 4
+  },
+  isLoading: false
+};
 
 
 export const carReducers = (
@@ -14,12 +31,6 @@ export const carReducers = (
         ...state,
         cars: action.payload.cars,
         totalCount: action.payload.totalCount
-      };
-    }
-    case ECarActions.GetCarSuccess: {
-      return {
-        ...state,
-        selectedCarState: action.payload
       };
     }
     case ECarActions.SetPageInfo: {
@@ -39,28 +50,3 @@ export const carReducers = (
   }
 };
 
-export interface CarState {
-  cars: Car[];
-  totalCount: number;
-  selectedCarState: SelectedCarModel;
-  selectedCar: Car;
-  carYears: number[];
-  pageState: PageModel;
-  isLoading: boolean;
-}
-
-export const initialCarState: CarState = {
-  cars: null,
-  totalCount: null,
-  selectedCarState: {
-    selectedCar: null,
-    isSelected: false
-  },
-  selectedCar: null,
-  carYears: null,
-  pageState: {
-    pageIndex: 0,
-    pageSize: 4
-  },
-  isLoading: false
-};

@@ -11,7 +11,7 @@ import {selectCarList, selectCarsAmount, selectLoading, selectPageState} from '.
 import {GetCars, SetLoading, SetPageInfo} from '../../store/actions/car.actions';
 import {PageModel} from '../../models/page.model';
 import {Car} from '../../models/car';
-import {map} from "rxjs/operators";
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-car-list',
@@ -45,7 +45,6 @@ export class CarListComponent implements OnInit, OnDestroy {
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
     // );
-
   }
 
   onPageEvent($event): void {

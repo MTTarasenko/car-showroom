@@ -4,12 +4,10 @@ import {CarService} from '../../services/car.service';
 import {AppState} from '../state/app.state';
 import {select, Store} from '@ngrx/store';
 import {
-  AddCar, ClearStore,
+  AddCar,
   ECarActions,
-  GetCar, GetCarError,
   GetCars,
-  GetCarsSuccess,
-  GetCarSuccess, SetLoading, SetPageInfo,
+  GetCarsSuccess, SetLoading, SetPageInfo,
 } from '../actions/car.actions';
 import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
@@ -22,30 +20,11 @@ import {Car} from '../../models/car';
 @Injectable()
 export class CarEffects {
   @Effect()
-  getCar$ = this.actions$.pipe(
-    ofType<GetCar>(ECarActions.GetCar),
-    map(action => action.payload),
-    switchMap(id => {
-      this.store.dispatch(new SetLoading(true));
-      return this.carService.getCarById(id).pipe(map(data => data));
-    }),
-    switchMap((car: Car) => {
-      this.store.dispatch(new SetLoading(false));
-      if (car) {
-        return of (new GetCarSuccess({selectedCar: car, isSelected: true}));
-      } else {
-        this.router.navigate(['/car-list/']);
-        return of(new GetCarError());
-      }
-    })
-  );
-
-  @Effect()
   getCars$ = this.actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
     withLatestFrom(this.store.pipe(select(selectPageState))),
     switchMap(([action, info]) => {
-      this.store.dispatch(new SetLoading(true));
+      // this.store.dispatch(new SetLoading(true));
       const from = (info.pageSize * info.pageIndex);
       const to = info.pageSize * (info.pageIndex + 1);
       return zip(
@@ -53,8 +32,8 @@ export class CarEffects {
           .pipe(map(data => data)),
         this.store.pipe(select(selectFavCarsList))
       ).pipe(map(([resp, favCars]) => {
+        // this.store.dispatch(new SetLoading(false));
         resp.cars.map(car => {
-          this.store.dispatch(new SetLoading(false));
           favCars.map(favoriteCar => {
             if (car.id === favoriteCar.id) {
               car.favorite = true;
@@ -87,14 +66,6 @@ export class CarEffects {
     })
   );
 
-  @Effect({dispatch: false})
-  clearStore$ = this.actions$.pipe(
-    ofType<ClearStore>(ECarActions.ClearStore),
-    tap(() => {
-      console.log('clearing store');
-      this.store.dispatch(new GetCarSuccess({selectedCar: null, isSelected: false}));
-    })
-  );
 
   constructor(
     private carService: CarService,
