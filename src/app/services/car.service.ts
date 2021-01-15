@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, of, pipe} from 'rxjs';
 import {Car} from '../models/car';
 import {CollectionRespModel} from '../models/collection-resp.model';
-import {delay} from 'rxjs/operators';
+import {delay, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -198,7 +198,8 @@ export class CarService {
     2012,
   ];
 
-  constructor() {}
+  constructor() {
+  }
 
   getCarList(): Observable<Car[]> {
     console.log('getting car list...');
@@ -225,17 +226,18 @@ export class CarService {
 
   addNewCar(newCar: Car): Observable<Car> {
     return new Observable(observer => {
-      setTimeout(() => {
-        if (newCar.photoURL) {
-          const car = {...newCar};
-          car.id = this.carListArray[this.carListArray.length - 1].id + 1;
-          this.carListArray.push(car);
-          return observer.next(car);
-        } else {
-          return observer.error();
-        }
-      }, 2000);
-    });
+      if (newCar.photoURL) {
+        const car = {...newCar};
+        car.id = this.carListArray[this.carListArray.length - 1].id + 1;
+        this.carListArray.push(car);
+        return observer.next(car);
+      } else {
+        return observer.error();
+      }
+    }).pipe(
+      delay(1000),
+      map((data: Car) => data)
+    );
   }
 }
 
