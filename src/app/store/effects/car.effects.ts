@@ -4,7 +4,7 @@ import {CarService} from '../../services/car.service';
 import {AppState} from '../state/app.state';
 import {select, Store} from '@ngrx/store';
 import {
-  AddCar,
+  AddCar, ClearCarsStore,
   ECarActions,
   GetCars,
   GetCarsSuccess, SetLoading, SetPageInfo,
@@ -62,6 +62,14 @@ export class CarEffects {
     ofType<SetPageInfo>(ECarActions.SetPageInfo),
     tap(() => {
       this.store.dispatch(new GetCars());
+    })
+  );
+
+  @Effect({dispatch: false})
+  clearCarsSore = this.actions$.pipe(
+    ofType<ClearCarsStore>(ECarActions.ClearCarsStore),
+    tap(() => {
+      this.store.dispatch(new GetCarsSuccess({cars: null, totalCount: null}));
     })
   );
 

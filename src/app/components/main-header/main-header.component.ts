@@ -9,7 +9,7 @@ import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {AddCar} from '../../store/actions/car.actions';
+import {AddCar, ClearCarsStore} from '../../store/actions/car.actions';
 import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
 import {LogOut} from '../../store/actions/login.actions';
 import {Observable} from 'rxjs';
@@ -54,5 +54,6 @@ export class MainHeaderComponent implements OnInit, OnDestroy{
 
   logOut(): void {
     this.store.dispatch(new LogOut());
+    this.store.dispatch(new ClearCarsStore());
   }
 }
