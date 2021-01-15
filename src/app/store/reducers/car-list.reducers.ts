@@ -2,7 +2,7 @@ import {CarActions, ECarActions} from '../actions/car.actions';
 import {Car} from '../../models/car';
 import {PageModel} from '../../models/page.model';
 
-export interface CarState {
+export interface CarListState {
   cars: Car[];
   totalCount: number;
   pageState: PageModel;
@@ -10,7 +10,7 @@ export interface CarState {
 
 }
 
-export const initialCarState: CarState = {
+export const initialCarListState: CarListState = {
   cars: null,
   totalCount: null,
   pageState: {
@@ -21,10 +21,10 @@ export const initialCarState: CarState = {
 };
 
 
-export const carReducers = (
-  state = initialCarState,
+export const carListReducers = (
+  state = initialCarListState,
   action: CarActions
-): CarState => {
+): CarListState => {
   switch (action.type) {
     case ECarActions.GetCarsSuccess: {
       return {
@@ -44,6 +44,9 @@ export const carReducers = (
         ...state,
         isLoading: action.payload
       };
+    }
+    case ECarActions.ClearCarsStore: {
+      return initialCarListState;
     }
     default:
       return state;

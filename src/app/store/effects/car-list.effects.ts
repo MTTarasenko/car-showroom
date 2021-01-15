@@ -11,18 +11,18 @@ import {
 } from '../actions/car.actions';
 import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
-import {selectPageState} from '../selectors/car.selector';
+import {selectPageState} from '../selectors/car-list.selector';
 import {CollectionRespModel} from '../../models/collection-resp.model';
 import {selectFavCarsList} from '../selectors/favorite.selectors';
 
 @Injectable()
-export class CarEffects {
+export class CarListEffects {
   @Effect()
   getCars$ = this.actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
     withLatestFrom(this.store.pipe(select(selectPageState))),
     switchMap(([action, info]) => {
-      // start showing spinner
+      // TODO start showing spinner
       this.store.dispatch(new SetLoading(true));
       const from = (info.pageSize * info.pageIndex);
       const to = info.pageSize * (info.pageIndex + 1);
@@ -64,15 +64,6 @@ export class CarEffects {
       this.store.dispatch(new GetCars());
     })
   );
-
-  @Effect({dispatch: false})
-  clearCarsSore = this.actions$.pipe(
-    ofType<ClearCarsStore>(ECarActions.ClearCarsStore),
-    tap(() => {
-      this.store.dispatch(new GetCarsSuccess({cars: null, totalCount: null}));
-    })
-  );
-
 
   constructor(
     private carService: CarService,

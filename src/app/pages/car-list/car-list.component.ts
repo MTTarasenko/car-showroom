@@ -7,11 +7,11 @@ import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {selectCarList, selectCarsAmount, selectLoading, selectPageState} from '../../store/selectors/car.selector';
+import {selectCarList, selectCarsAmount, selectLoading, selectPageState} from '../../store/selectors/car-list.selector';
 import {GetCars, SetLoading, SetPageInfo} from '../../store/actions/car.actions';
 import {PageModel} from '../../models/page.model';
 import {Car} from '../../models/car';
-import {selectSelectedCarLoading} from '../../store/selectors/selected-car.selectors';
+import {selectSelectedCarLoading} from '../../store/selectors/car-details.selectors';
 import {map} from 'rxjs/operators';
 
 @Component({

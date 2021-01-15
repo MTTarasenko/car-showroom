@@ -8,17 +8,16 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../state/app.state';
 import {Router} from '@angular/router';
 import {
-  ClearStore,
   ESelectedCarActions,
   GetCar,
   GetCarError,
   GetCarSuccess,
   SetCarLoading
-} from '../actions/selected-car.actions';
+} from '../actions/car-details.actions';
 
 
 @Injectable()
-export class SelectedCarEffects {
+export class CarDetailsEffects {
   @Effect()
   getCar$ = this.actions$.pipe(
     ofType<GetCar>(ESelectedCarActions.GetCar),
@@ -31,23 +30,13 @@ export class SelectedCarEffects {
     switchMap((car: Car) => {
       // this.store.dispatch(new SetCarLoading(false));
       if (car) {
-        return of(new GetCarSuccess({selectedCar: car, isSelected: true}));
+        return of(new GetCarSuccess(car));
       } else {
         this.router.navigate(['/car-list/']);
         return of(new GetCarError());
       }
     })
   );
-
-  @Effect({dispatch: false})
-  clearStore$ = this.actions$.pipe(
-    ofType<ClearStore>(ESelectedCarActions.ClearStore),
-    tap(() => {
-      console.log('clearing store');
-      this.store.dispatch(new GetCarSuccess({selectedCar: null, isSelected: false}));
-    })
-  );
-
 
   constructor(
     private carService: CarService,

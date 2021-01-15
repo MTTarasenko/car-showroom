@@ -1,22 +1,22 @@
 import {RouterReducerState } from '@ngrx/router-store';
-import {CarState, initialCarState} from '../reducers/car.reducers';
+import {CarListState, initialCarListState} from '../reducers/car-list.reducers';
 import {FavoriteState, initialFavCarState} from '../reducers/favorite.reducers';
 import {initialLoginState, LoginState} from '../reducers/login.reducers';
-import {initialSelectedCarState, SelectedCarState} from '../reducers/selected-car.reducers';
+import {initialCarDetailsState, CarDetailsState} from '../reducers/car-details.reducers';
 
 export interface AppState {
   router?: RouterReducerState;
-  cars: CarState;
+  cars: CarListState;
   favs: FavoriteState;
   login: LoginState;
-  selectedCar: SelectedCarState;
+  selectedCar: CarDetailsState;
 }
 
 export const initialAppState: AppState = {
-  cars: initialCarState,
+  cars: initialCarListState,
   favs: initialFavCarState,
   login: initialLoginState,
-  selectedCar: initialSelectedCarState
+  selectedCar: initialCarDetailsState
 };
 
 export function getInitialState(): AppState {

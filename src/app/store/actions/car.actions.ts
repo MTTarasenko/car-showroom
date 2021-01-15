@@ -44,4 +44,5 @@ export type CarActions = GetCars |
   GetCarsSuccess |
   AddCar |
   SetPageInfo |
-  SetLoading;
+  SetLoading |
+  ClearCarsStore;

@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
-import {SelectedCarModel} from '../../models/selected-car.model';
 import {PageModel} from '../../models/page.model';
+import {Car} from '../../models/car';
 
 export enum ESelectedCarActions {
   GetCar = '[Car] Get Car',
@@ -17,7 +17,7 @@ export class GetCar implements Action{
 
 export class GetCarSuccess implements Action{
   public readonly type = ESelectedCarActions.GetCarSuccess;
-  constructor(public payload: SelectedCarModel) {}
+  constructor(public payload: Car) {}
 }
 export class ClearStore implements Action{
   public readonly type = ESelectedCarActions.ClearStore;
@@ -32,7 +32,7 @@ export class SetCarLoading implements Action{
   constructor(public payload: boolean) {}
 }
 
-export type SelectedCarActions = GetCar |
+export type CarDetailsActions = GetCar |
   GetCarSuccess |
   ClearStore |
   GetCarError |

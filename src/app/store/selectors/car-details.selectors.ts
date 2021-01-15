@@ -1,17 +1,17 @@
 import {createSelector} from '@ngrx/store';
 import {AppState} from '../state/app.state';
-import {SelectedCarState} from '../reducers/selected-car.reducers';
+import {CarDetailsState} from '../reducers/car-details.reducers';
 
 const selectSelCar = (state: AppState) => state.selectedCar;
 
 export const selectSelectedCar = createSelector(
   selectSelCar,
-  (state: SelectedCarState) => state.selectedCar
+  (state: CarDetailsState) => state.selectedCar
 );
 
 export const selectSelectedCarLoading = createSelector(
   selectSelCar,
-  (state: SelectedCarState) => state.isSelectedCarLoading
+  (state: CarDetailsState) => state.isSelectedCarLoading
 );
 
 

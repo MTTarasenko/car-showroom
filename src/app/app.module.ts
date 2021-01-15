@@ -27,11 +27,11 @@ import {CarModule} from './components/car/car.module';
 import {HighlightTextDirective} from './directives/highlight-text.directive';
 import {PaginationPipe} from './pipes/pagination.pipe';
 import {appReducers} from './store/reducers/app.reducers';
-import {CarEffects} from './store/effects/car.effects';
+import {CarListEffects} from './store/effects/car-list.effects';
 import {FavoriteEffects} from './store/effects/favorite.effects';
 import {LoginEffects} from './store/effects/login.effects';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {SelectedCarEffects} from './store/effects/selected-car.effects';
+import {CarDetailsEffects} from './store/effects/car-details.effects';
 
 @NgModule({
   declarations: [
@@ -62,10 +62,10 @@ import {SelectedCarEffects} from './store/effects/selected-car.effects';
     MatPaginatorModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([
-      CarEffects,
+      CarListEffects,
       FavoriteEffects,
       LoginEffects,
-      SelectedCarEffects
+      CarDetailsEffects
     ]),
     StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
     MatProgressSpinnerModule

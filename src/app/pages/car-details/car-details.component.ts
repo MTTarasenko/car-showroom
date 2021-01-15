@@ -7,8 +7,8 @@ import {Car} from '../../models/car';
 import {map} from 'rxjs/operators';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {ClearStore} from '../../store/actions/selected-car.actions';
-import {selectSelectedCarLoading} from '../../store/selectors/selected-car.selectors';
+import {ClearStore} from '../../store/actions/car-details.actions';
+import {selectSelectedCarLoading} from '../../store/selectors/car-details.selectors';
 
 @Component({
   selector: 'app-car-details',
@@ -28,7 +28,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.car$ = this.route.data.pipe(
-      map(data => data.carById.selectedCar),
+      map(data => data.carById),
     );
     this.isCarLoading$ = this.store.pipe(select(selectSelectedCarLoading));
   }
