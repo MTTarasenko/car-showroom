@@ -54,6 +54,5 @@ export class MainHeaderComponent implements OnInit, OnDestroy{
 
   logOut(): void {
     this.store.dispatch(new LogOut());
-    this.store.dispatch(new ClearCarsStore());
   }
 }

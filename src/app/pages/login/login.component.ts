@@ -38,6 +38,9 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.store.dispatch(new GetLogin([this.loginForm.controls.username.value, this.loginForm.controls.password.value]));
+    this.store.dispatch(new GetLogin({
+      username: this.loginForm.controls.username.value,
+      password: this.loginForm.controls.password.value
+  }));
   }
 }

@@ -1,13 +1,20 @@
-// import {initialLoginState, LoginState} from '../state/login.state';
 import {ELoginActions, LoginActions} from '../actions/login.actions';
+import {LoginDataModel} from '../../models/login-data.model';
 
+export interface LoginState {
+  loginData: LoginDataModel;
+}
+
+export const initialLoginState: LoginState = {
+  loginData: null,
+};
 
 export const loginReducers = (
   state = initialLoginState,
   action: LoginActions
 ): LoginState => {
   switch (action.type) {
-    case ELoginActions.GetLoginSuccess: {
+    case ELoginActions.GetLogin: {
       return {
         ...state,
         loginData: action.payload
@@ -18,12 +25,4 @@ export const loginReducers = (
       return state;
     }
   }
-};
-
-export interface LoginState {
-  loginData: string[];
-}
-
-export const initialLoginState: LoginState = {
-  loginData: null,
 };
