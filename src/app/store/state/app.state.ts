@@ -7,14 +7,14 @@ import {initialCarDetailsState, CarDetailsState} from '../reducers/car-details.r
 export interface AppState {
   router?: RouterReducerState;
   cars: CarListState;
-  favs: FavoriteState;
+  favoriteCarsList: FavoriteState;
   login: LoginState;
   selectedCar: CarDetailsState;
 }
 
 export const initialAppState: AppState = {
   cars: initialCarListState,
-  favs: initialFavCarState,
+  favoriteCarsList: initialFavCarState,
   login: initialLoginState,
   selectedCar: initialCarDetailsState
 };

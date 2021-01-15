@@ -10,7 +10,7 @@ import {carDetailsReducers} from './car-details.reducers';
 export const appReducers: ActionReducerMap<AppState, any> = {
   router: routerReducer,
   cars: carListReducers,
-  favs: favoriteReducers,
+  favoriteCarsList: favoriteReducers,
   login: loginReducers,
   selectedCar: carDetailsReducers
 };
