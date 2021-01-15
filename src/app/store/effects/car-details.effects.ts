@@ -28,11 +28,11 @@ export class CarDetailsEffects {
       return this.carService.getCarById(id).pipe(map(data => data));
     }),
     switchMap((car: Car) => {
-      // this.store.dispatch(new SetCarLoading(false));
       if (car) {
         return of(new GetCarSuccess(car));
       } else {
         this.router.navigate(['/car-list/']);
+        this.store.dispatch(new SetCarLoading(false));
         return of(new GetCarError());
       }
     })
