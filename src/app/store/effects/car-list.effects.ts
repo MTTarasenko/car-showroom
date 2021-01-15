@@ -51,9 +51,13 @@ export class CarListEffects {
   addCar$ = this.actions$.pipe(
     ofType<AddCar>(ECarActions.AddCar),
     switchMap(action => {
+      this.store.dispatch(new SetLoading(true));
       const newCar = {...action.payload};
+      return this.carService.addNewCar(newCar)
+        .pipe(map(data => data));
+    }),
+    tap(() => {
       this.store.dispatch(new GetCars());
-      return this.carService.addNewCar(newCar).pipe(map(data => data));
     })
   );
 

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable, of, pipe} from 'rxjs';
 import {Car} from '../models/car';
 import {CollectionRespModel} from '../models/collection-resp.model';
 import {delay} from 'rxjs/operators';
@@ -225,14 +225,16 @@ export class CarService {
 
   addNewCar(newCar: Car): Observable<Car> {
     return new Observable(observer => {
-      if (newCar.photoURL) {
-        const car = {...newCar};
-        car.id = this.carListArray[this.carListArray.length - 1].id + 1;
-        this.carListArray.push(car);
-        return observer.next(car);
-      } else {
-        return observer.error();
-      }
+      setTimeout(() => {
+        if (newCar.photoURL) {
+          const car = {...newCar};
+          car.id = this.carListArray[this.carListArray.length - 1].id + 1;
+          this.carListArray.push(car);
+          return observer.next(car);
+        } else {
+          return observer.error();
+        }
+      }, 2000);
     });
   }
 }
