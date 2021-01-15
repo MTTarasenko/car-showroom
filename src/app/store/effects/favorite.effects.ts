@@ -9,7 +9,7 @@ import {delay, map, switchMap, tap, throttleTime} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {Car} from '../../models/car';
 import {FavoritesService} from '../../services/favorites.service';
-import {GetCars} from '../actions/car.actions';
+import {GetCars, SetLoading} from '../actions/car.actions';
 import {Store} from '@ngrx/store';
 import {AppState} from '../state/app.state';
 
@@ -20,6 +20,7 @@ export class FavoriteEffects {
   getFavCarList = this.actions$.pipe(
     ofType<GetFavCarList>(EFavoriteActions.GetFavCarList),
     switchMap(() => {
+      // this.store.dispatch(new SetLoading(true));
       return this.favService.getFavoriteCars().pipe(map(data => data));
     }),
     switchMap((cars: Car[]) => {
@@ -39,6 +40,7 @@ export class FavoriteEffects {
   addCarToFav = this.actions$.pipe(
     ofType<AddCarToFav>(EFavoriteActions.AddCarToFav),
     switchMap(action => {
+      this.store.dispatch(new SetLoading(true));
       return this.favService.addFavorite(action.payload)
         .pipe(map(data => data));
     }),
@@ -52,6 +54,7 @@ export class FavoriteEffects {
     ofType<RemoveCarFromFav>(EFavoriteActions.RemoveCarFromFav),
     throttleTime(700),
     switchMap(action => {
+      this.store.dispatch(new SetLoading(true));
       return this.favService.removeFavorite(action.payload)
         .pipe(map(data => data));
     }),

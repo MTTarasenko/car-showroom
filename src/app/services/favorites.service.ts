@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
 import {Car} from '../models/car';
+import {delay, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class FavoritesService {
   }
 
   getFavoriteCars(): Observable<Car[]> {
-    return of(this.favoriteCarsList.map(item => ({...item})));
+    return of(this.favoriteCarsList.map(item => ({...item}))).pipe(delay(2000));
   }
 
   addFavorite(car?: Car): Observable<Car> {
@@ -28,7 +29,10 @@ export class FavoritesService {
       } else {
         return observer.error();
       }
-    });
+    }).pipe(
+      delay(2000),
+      map((data: Car) => data)
+    );
   }
 
   removeFavorite(car: Car): Observable<Car> {
@@ -39,7 +43,10 @@ export class FavoritesService {
           return observer.next(car);
         }
       });
-    });
+    }).pipe(
+      delay(2000),
+      map((data: Car) => data)
+    );
   }
 
 }
