@@ -206,7 +206,7 @@ export class CarService {
     return of(this.carListArray.map(item => ({...item})));
   }
 
-  getFourCarsAndLength(from?: number, to?: number): Observable<CollectionRespModel<Car[]>> {
+  getFourCarsAndLength(from?: number, to?: number): Observable<CollectionRespModel<Car>> {
     console.log('getting car list...');
     const cars = this.carListArray
       .slice(from, to)

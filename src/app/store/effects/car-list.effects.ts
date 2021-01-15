@@ -43,7 +43,7 @@ export class CarListEffects {
         return resp;
       }));
     }),
-    switchMap((info: CollectionRespModel<Car[]>) => {
+    switchMap((info: CollectionRespModel<Car>) => {
       return of(new GetCarsSuccess(info));
     })
   );

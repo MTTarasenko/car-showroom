@@ -20,7 +20,7 @@ export class GetCars implements Action{
 
 export class GetCarsSuccess implements Action{
   public readonly type = ECarActions.GetCarsSuccess;
-  constructor(public payload: CollectionRespModel<Car[]>) {}
+  constructor(public payload: CollectionRespModel<Car>) {}
 }
 export class AddCar implements Action{
   public readonly type = ECarActions.AddCar;
