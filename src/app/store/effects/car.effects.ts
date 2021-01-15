@@ -22,6 +22,7 @@ export class CarEffects {
     ofType<GetCars>(ECarActions.GetCars),
     withLatestFrom(this.store.pipe(select(selectPageState))),
     switchMap(([action, info]) => {
+      // start showing spinner
       this.store.dispatch(new SetLoading(true));
       const from = (info.pageSize * info.pageIndex);
       const to = info.pageSize * (info.pageIndex + 1);
@@ -30,7 +31,7 @@ export class CarEffects {
           .pipe(map(data => data)),
         this.store.pipe(select(selectFavCarsList))
       ).pipe(map(([resp, favCars]) => {
-        this.store.dispatch(new SetLoading(false));
+        // this.store.dispatch(new SetLoading(false));
         resp.cars.map(car => {
           favCars.map(favoriteCar => {
             if (car.id === favoriteCar.id) {

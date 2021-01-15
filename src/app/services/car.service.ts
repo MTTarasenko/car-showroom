@@ -218,6 +218,7 @@ export class CarService {
   }
 
   getCarById(carID: number): Observable<Car> {
+    console.log('getting car...');
     return of(this.carListArray.find(car => car.id === carID)).pipe(delay(3000));
   }
 

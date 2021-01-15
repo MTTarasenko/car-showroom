@@ -7,7 +7,7 @@ import {select, Store} from '@ngrx/store';
 import {AppState} from '../store/state/app.state';
 import {SelectedCarModel} from '../models/selected-car.model';
 import {selectSelectedCar} from '../store/selectors/selected-car.selectors';
-import {GetCar} from '../store/actions/selected-car.actions';
+import {GetCar, SetCarLoading} from '../store/actions/selected-car.actions';
 
 @Injectable()
 export class GetCarByIdResolverService {
@@ -22,7 +22,13 @@ export class GetCarByIdResolverService {
     return this.store.pipe(
       select(selectSelectedCar),
     ).pipe(
-      filter(data => data.isSelected),
+      filter(data => {
+        if (data.isSelected) {
+          // stop showing spinner
+          this.store.dispatch(new SetCarLoading(false));
+          return data.isSelected;
+        }
+      }),
       take(1)
     );
   }

@@ -8,10 +8,11 @@ import {HelperService} from '../../services/helper.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {selectCarList, selectCarsAmount, selectLoading, selectPageState} from '../../store/selectors/car.selector';
-import {GetCars, SetPageInfo} from '../../store/actions/car.actions';
+import {GetCars, SetLoading, SetPageInfo} from '../../store/actions/car.actions';
 import {PageModel} from '../../models/page.model';
 import {Car} from '../../models/car';
 import {selectSelectedCarLoading} from '../../store/selectors/selected-car.selectors';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-car-list',
@@ -39,7 +40,11 @@ export class CarListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(new GetCars());
     this.pageState$ = this.store.pipe(select(selectPageState));
-    this.sCars$ = this.store.pipe(select(selectCarList));
+    this.sCars$ = this.store.pipe(select(selectCarList)).pipe(map(data => {
+      // stop showing spinner
+      this.store.dispatch(new SetLoading(false));
+      return data;
+    }));
     this.carsAmount$ = this.store.pipe(select(selectCarsAmount));
     this.isLoading$ = this.store.pipe(select(selectLoading));
     this.isSelectedCarLoading$ = this.store.pipe(select(selectSelectedCarLoading));
