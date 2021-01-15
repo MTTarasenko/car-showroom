@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {CarService} from '../../services/car.service';
 import {Observable} from 'rxjs';
 import {Car} from '../../models/car';
-import {filter, map, take} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {ClearStore} from '../../store/actions/selected-car.actions';
