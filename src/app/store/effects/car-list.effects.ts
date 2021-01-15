@@ -14,6 +14,7 @@ import {of, zip} from 'rxjs';
 import {selectPageState} from '../selectors/car-list.selector';
 import {CollectionRespModel} from '../../models/collection-resp.model';
 import {selectFavCarsList} from '../selectors/favorite.selectors';
+import {Car} from '../../models/car';
 
 @Injectable()
 export class CarListEffects {
@@ -32,7 +33,7 @@ export class CarListEffects {
         this.store.pipe(select(selectFavCarsList))
       ).pipe(map(([resp, favCars]) => {
         // this.store.dispatch(new SetLoading(false));
-        resp.cars.map(car => {
+        resp.list.map(car => {
           favCars.map(favoriteCar => {
             if (car.id === favoriteCar.id) {
               car.favorite = true;
@@ -42,7 +43,7 @@ export class CarListEffects {
         return resp;
       }));
     }),
-    switchMap((info: CollectionRespModel) => {
+    switchMap((info: CollectionRespModel<Car[]>) => {
       return of(new GetCarsSuccess(info));
     })
   );

@@ -206,12 +206,12 @@ export class CarService {
     return of(this.carListArray.map(item => ({...item})));
   }
 
-  getFourCarsAndLength(from?: number, to?: number): Observable<CollectionRespModel> {
+  getFourCarsAndLength(from?: number, to?: number): Observable<CollectionRespModel<Car[]>> {
     console.log('getting car list...');
     const cars = this.carListArray
       .slice(from, to)
       .map(item => ({...item}));
-    return of({totalCount: this.carListArray.length, cars}).pipe(delay(2000));
+    return of({totalCount: this.carListArray.length, list: cars}).pipe(delay(2000));
   }
 
   getCarYears(): Observable<number[]> {

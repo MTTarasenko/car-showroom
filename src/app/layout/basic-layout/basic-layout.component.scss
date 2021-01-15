@@ -1,7 +1,8 @@
-.container {
+.layout-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
+  background-color: #262626;
 
   .content {
     flex-grow: 1;

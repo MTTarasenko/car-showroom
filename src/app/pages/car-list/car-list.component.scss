@@ -1,9 +1,10 @@
 .content {
   position: relative;
-  background-color: #262626;
   height: 100%;
 
   section {
+    min-height: 500px;
+    min-width: 100%;
     padding: 40px 0;
   }
 
@@ -23,7 +24,6 @@
 }
 
 .car-list {
-  min-height: 500px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;

@@ -29,7 +29,7 @@ export const carListReducers = (
     case ECarActions.GetCarsSuccess: {
       return {
         ...state,
-        cars: action.payload.cars,
+        cars: action.payload.list,
         totalCount: action.payload.totalCount
       };
     }

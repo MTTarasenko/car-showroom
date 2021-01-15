@@ -1,15 +1,17 @@
 <div class="content">
-  <div class="car-item" *ngIf="(car$ | async) as car">
-    <div class="car-item-photo">
-      <img [src]="car.photoURL">
+  <mat-card>
+    <div class="car-item" *ngIf="(car$ | async) as car">
+      <div class="car-item-photo">
+        <img [src]="car.photoURL">
+      </div>
+      <div class="car-item-info">
+        <h4>{{car.name}}</h4>
+        <p [appHighlightText]="['toyota']">{{car.description}}</p>
+        <p>{{car.year}}</p>
+      </div>
     </div>
-    <div class="car-item-info">
-      <h4>{{car.name}}</h4>
-      <p [appHighlightText]="['toyota']">{{car.description}}</p>
-      <p>{{car.year}}</p>
+    <div class="spinner" *ngIf="(isCarLoading$ | async)">
+      <mat-spinner></mat-spinner>
     </div>
-  </div>
-  <div class="spinner" *ngIf="(isCarLoading$ | async)">
-    <mat-spinner></mat-spinner>
-  </div>
+  </mat-card>
 </div>

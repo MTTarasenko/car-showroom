@@ -1,6 +1,6 @@
 import {Car} from './car';
 
-export class CollectionRespModel {
+export class CollectionRespModel<T> {
   totalCount: number;
-  cars: Car[];
+  list: T;
 }
