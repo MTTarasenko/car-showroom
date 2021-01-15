@@ -10,13 +10,7 @@ export interface SelectedCarState {
 
 export const initialSelectedCarState: SelectedCarState = {
   selectedCar: {
-    selectedCar: {
-      name: '',
-      photoURL: '',
-      year: '',
-      description: '',
-      id: null
-    },
+    selectedCar: null,
     isSelected: false
   },
   isSelectedCarLoading: false

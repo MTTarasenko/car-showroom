@@ -42,8 +42,10 @@ export class CarListComponent implements OnInit, OnDestroy {
     this.pageState$ = this.store.pipe(select(selectPageState));
     this.sCars$ = this.store.pipe(select(selectCarList)).pipe(map(data => {
       // stop showing spinner
-      this.store.dispatch(new SetLoading(false));
-      return data;
+      if (data) {
+        this.store.dispatch(new SetLoading(false));
+        return data;
+      }
     }));
     this.carsAmount$ = this.store.pipe(select(selectCarsAmount));
     this.isLoading$ = this.store.pipe(select(selectLoading));
