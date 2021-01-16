@@ -13,6 +13,7 @@ import {PageModel} from '../../models/page.model';
 import {Car} from '../../models/car';
 import {selectSelectedCarLoading} from '../../store/selectors/car-details.selectors';
 import {map} from 'rxjs/operators';
+import {GetFavCarList, GetFavCarListSuccess} from '../../store/actions/favorite.actions';
 
 @Component({
   selector: 'app-car-list',
@@ -36,9 +37,11 @@ export class CarListComponent implements OnInit, OnDestroy {
   isLoading$: Observable<boolean>;
   isSelectedCarLoading$: Observable<boolean>;
   amountOfCarsOnPage: number[] = [4, 5, 6, 7, 8, 9, 10];
+  localFavCars = JSON.parse(localStorage.getItem('favorite cars'));
 
   ngOnInit(): void {
     this.store.dispatch(new GetCars());
+    this.store.dispatch(new GetFavCarList());
     this.pageState$ = this.store.pipe(select(selectPageState));
     this.sCars$ = this.store.pipe(select(selectCarList)).pipe(map(data => {
       // stop showing spinner
@@ -54,6 +57,10 @@ export class CarListComponent implements OnInit, OnDestroy {
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
     // );
+
+    // if (!!this.localFavCars && !!this.localFavCars.length) {
+    //   console.log(!!this.localFavCars.length, this.localFavCars);
+    // }
   }
 
   onPageEvent($event): void {
@@ -63,5 +70,6 @@ export class CarListComponent implements OnInit, OnDestroy {
     }));
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+  }
 }
