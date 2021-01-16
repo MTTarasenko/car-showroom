@@ -2,7 +2,16 @@
   <section>
     <div class="car-list" *ngIf="(sCars$ | async) as cars">
       <mat-card *ngFor="let car of cars">
-        <app-car [car]="car"></app-car>
+        <app-car [car]="car" [newLayout]="customLayout">
+          <ng-template #customLayout>
+            <div class="car-photo">
+              <img [src]="car.photoURL" [alt]="car.name">
+            </div>
+            <div class="car-name">
+              <h3>{{car.name}}</h3>
+            </div>
+          </ng-template>
+        </app-car>
       </mat-card>
     </div>
     <div class="paginator">

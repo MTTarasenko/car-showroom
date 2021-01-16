@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, TemplateRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {faStar as solidStar} from '@fortawesome/free-solid-svg-icons';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
@@ -18,6 +18,7 @@ import {HelperService} from '../../services/helper.service';
 })
 export class CarComponent {
 
+  @Input() newLayout: TemplateRef<any>;
   @Input() car: Car;
   faStarSolid = solidStar;
   faStarRegular = regularStar;

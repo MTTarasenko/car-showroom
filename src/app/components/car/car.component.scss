@@ -1,3 +1,19 @@
+.car-container {
+  position: relative;
+  .star {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 30px;
+    color: #da3c18;
+
+    img {
+      max-height: 40px;
+    }
+  }
+}
+
 .car {
 
   &-photo {
@@ -14,16 +30,8 @@
     }
   }
 
-  &-star {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    cursor: pointer;
-    font-size: 30px;
-    color: #da3c18;
-
-    img {
-      max-height: 40px;
-    }
+  &-name {
+    text-align: center;
   }
+
 }

@@ -1,5 +1,4 @@
 import {Action} from '@ngrx/store';
-import {PageModel} from '../../models/page.model';
 import {Car} from '../../models/car';
 
 export enum ESelectedCarActions {

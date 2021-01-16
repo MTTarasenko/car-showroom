@@ -17,7 +17,7 @@ import {map} from 'rxjs/operators';
 @Component({
   selector: 'app-car-list',
   templateUrl: './car-list.component.html',
-  styleUrls: ['./car-list.component.scss'],
+  styleUrls: ['./car-list.component.scss', '../../components/car/car.component.scss'],
 })
 export class CarListComponent implements OnInit, OnDestroy {
 
