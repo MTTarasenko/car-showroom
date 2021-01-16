@@ -1,13 +1,16 @@
 <div class="car-container">
   <div class="car" (click)="watchCarDetails(car?.id)">
-    <ng-container *ngTemplateOutlet="newLayout ? newLayout : defaultLayout"></ng-container>
-    <ng-template #defaultLayout>
-      <div class="car-photo">
-        <img [src]="car.photoURL">
-      </div>
-    </ng-template>
+    <ng-container [ngTemplateOutlet]="newLayout ? newLayout : defaultLayout"
+                  [ngTemplateOutletContext]="{$implicit: {},item: car}">
+    </ng-container>
   </div>
   <div class="star" (click)="toggleFavorite(car)">
     <fa-icon [icon]="car.favorite ? faStarSolid : faStarRegular"></fa-icon>
   </div>
 </div>
+
+<ng-template #defaultLayout>
+  <div class="car-photo">
+    <img [src]="car.photoURL">
+  </div>
+</ng-template>
