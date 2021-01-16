@@ -1,7 +1,7 @@
 <div class="car-container">
   <div class="car" (click)="watchCarDetails(car?.id)">
     <ng-container [ngTemplateOutlet]="newLayout ? newLayout : defaultLayout"
-                  [ngTemplateOutletContext]="{$implicit: {},item: car}">
+                  [ngTemplateOutletContext]="{item: car}">
     </ng-container>
   </div>
   <div class="star" (click)="toggleFavorite(car)">
@@ -9,8 +9,8 @@
   </div>
 </div>
 
-<ng-template #defaultLayout>
+<ng-template #defaultLayout let-item="item">
   <div class="car-photo">
-    <img [src]="car.photoURL">
+    <img [src]="item.photoURL">
   </div>
 </ng-template>
