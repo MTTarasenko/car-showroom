@@ -35,6 +35,6 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // clear store
-    this.store.dispatch(new ClearStore(null));
+    this.store.dispatch(new ClearStore());
   }
 }

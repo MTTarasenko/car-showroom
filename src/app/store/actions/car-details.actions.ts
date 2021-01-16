@@ -21,7 +21,6 @@ export class GetCarSuccess implements Action{
 }
 export class ClearStore implements Action{
   public readonly type = ESelectedCarActions.ClearStore;
-  constructor(public payload: PageModel) {}
 }
 export class GetCarError implements Action{
   public readonly type = ESelectedCarActions.GetCarError;
