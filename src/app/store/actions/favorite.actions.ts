@@ -1,5 +1,4 @@
 import {Action} from '@ngrx/store';
-import {Car} from '../../models/car';
 
 
 export enum EFavoriteActions {

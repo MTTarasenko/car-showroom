@@ -18,6 +18,8 @@ export class FavoritesService {
     const favCarsFromLS = localStorage.getItem('favorite_cars_ids');
     if (!!favCarsFromLS) {
       this.favoriteCarsIDList = JSON.parse(favCarsFromLS);
+    } else {
+      this.favoriteCarsIDList = [];
     }
     return of(([...this.favoriteCarsIDList])
     ).pipe(delay(1000));

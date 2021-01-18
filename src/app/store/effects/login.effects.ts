@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {ELoginActions, GetLogin, LogOut} from '../actions/login.actions';
-import {map, switchMap, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 import {SessionService} from '../../services/session.service';
-import {of} from 'rxjs';
 import {Router} from '@angular/router';
 import {ClearCarsStore} from '../actions/car.actions';
 import {Store} from '@ngrx/store';
