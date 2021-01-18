@@ -20,7 +20,13 @@ export class FavoriteEffects {
   getFavCarList = this.actions$.pipe(
     ofType<GetFavCarList>(EFavoriteActions.GetFavCarList),
     switchMap(() => {
-      return this.favService.getFavoriteCars().pipe(map(data => data));
+      let favCarsFromLS: number[];
+      if (!!localStorage.getItem('favorite_cars_ids')) {
+        favCarsFromLS = JSON.parse(localStorage.getItem('favorite_cars_ids'));
+      } else {
+        favCarsFromLS = null;
+      }
+      return this.favService.getFavoriteCars(favCarsFromLS).pipe(map(data => data));
     }),
     switchMap((carIDs: number[]) => {
       return of(new GetFavCarListSuccess(carIDs));
@@ -43,7 +49,8 @@ export class FavoriteEffects {
       return this.favService.addFavorite(action.payload)
         .pipe(map(data => data));
     }),
-    tap(() => {
+    tap((data) => {
+      localStorage.setItem('favorite_cars_ids', JSON.stringify(data));
       this.store.dispatch(new GetFavCarList());
     })
   );
@@ -57,7 +64,8 @@ export class FavoriteEffects {
       return this.favService.removeFavorite(action.payload)
         .pipe(map(data => data));
     }),
-    tap(() => {
+    tap((data) => {
+      localStorage.setItem('favorite_cars_ids', JSON.stringify(data));
       this.store.dispatch(new GetFavCarList());
     })
   );

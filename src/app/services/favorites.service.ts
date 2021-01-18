@@ -13,11 +13,10 @@ export class FavoritesService {
   constructor() {
   }
 
-  getFavoriteCars(): Observable<number[]> {
-    console.log('fav cars init');
-    const favCarsFromLS = localStorage.getItem('favorite_cars_ids');
-    if (!!favCarsFromLS) {
-      this.favoriteCarsIDList = JSON.parse(favCarsFromLS);
+  getFavoriteCars(newFavCars?: number[]): Observable<number[]> {
+    // console.log('fav cars init', this.favoriteCarsIDList);
+    if (!!newFavCars && !!newFavCars.length) {
+      this.favoriteCarsIDList = newFavCars;
     } else {
       this.favoriteCarsIDList = [];
     }
@@ -25,33 +24,31 @@ export class FavoritesService {
     ).pipe(delay(1000));
   }
 
-  addFavorite(carID: number): Observable<number> {
+  addFavorite(carID: number): Observable<number[]> {
     return new Observable(observer => {
       if (!this.favoriteCarsIDList.some(value => {
         return value === carID;
       })) {
         this.favoriteCarsIDList.push(carID);
-        localStorage.setItem('favorite_cars_ids', JSON.stringify(this.favoriteCarsIDList));
-        return observer.next(carID);
+        return observer.next(this.favoriteCarsIDList);
       }
     }).pipe(
       delay(1000),
-      map((data: number) => data)
+      map((data: number[]) => data)
     );
   }
 
-  removeFavorite(carID: number): Observable<number> {
+  removeFavorite(carID: number): Observable<number[]> {
     return new Observable(observer => {
       this.favoriteCarsIDList.forEach((item, index) => {
         if (item === carID) {
           this.favoriteCarsIDList.splice(index, 1);
-          localStorage.setItem('favorite_cars_ids', JSON.stringify(this.favoriteCarsIDList));
-          return observer.next(carID);
+          return observer.next(this.favoriteCarsIDList);
         }
       });
     }).pipe(
       delay(1000),
-      map((data: number) => data)
+      map((data: number[]) => data)
     );
   }
 
