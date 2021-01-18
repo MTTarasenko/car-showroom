@@ -27,14 +27,8 @@ export class CarListEffects {
       this.store.dispatch(new SetLoading(true));
       let from: number;
       let to: number;
-      const paginationFromLS = localStorage.getItem('pagination state');
-      if (!!paginationFromLS) {
-        from = JSON.parse(paginationFromLS)[0];
-        to = JSON.parse(paginationFromLS)[1];
-      } else {
-        from = (info.pageSize * info.pageIndex);
-        to = info.pageSize * (info.pageIndex + 1);
-      }
+      from = (info.pageSize * info.pageIndex);
+      to = info.pageSize * (info.pageIndex + 1);
       return zip(
         this.carService.getFourCarsAndLength(from, to)
           .pipe(map(data => data)),
@@ -73,9 +67,9 @@ export class CarListEffects {
   setPageInfo$ = this.actions$.pipe(
     ofType<SetPageInfo>(ECarActions.SetPageInfo),
     tap((action) => {
-      const newFrom = action.payload.pageSize * action.payload.pageIndex;
-      const newTO = action.payload.pageSize * (action.payload.pageIndex + 1);
-      localStorage.setItem('pagination state', JSON.stringify([newFrom, newTO]));
+      const newFrom = action.payload.pageIndex;
+      const newTo = action.payload.pageSize;
+      localStorage.setItem('pagination state', JSON.stringify([newFrom, newTo]));
       this.store.dispatch(new GetCars());
     })
   );
