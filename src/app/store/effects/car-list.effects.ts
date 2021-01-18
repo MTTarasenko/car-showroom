@@ -4,12 +4,12 @@ import {CarService} from '../../services/car.service';
 import {AppState} from '../state/app.state';
 import {select, Store} from '@ngrx/store';
 import {
-  AddCar, ClearCarsStore,
+  AddCar,
   ECarActions,
   GetCars,
-  GetCarsSuccess, SetLoading, SetPageInfo,
+  GetCarsSuccess, GetPageInfo, SetLoading, SetPageInfo,
 } from '../actions/car.actions';
-import {map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
+import {map, switchMap, tap} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
 import {selectPageState} from '../selectors/car-list.selector';
 import {CollectionRespModel} from '../../models/collection-resp.model';
@@ -21,8 +21,10 @@ export class CarListEffects {
   @Effect()
   getCars$ = this.actions$.pipe(
     ofType<GetCars>(ECarActions.GetCars),
-    withLatestFrom(this.store.pipe(select(selectPageState))),
-    switchMap(([action, info]) => {
+    switchMap(() => {
+      return this.store.pipe(select(selectPageState));
+    }),
+    switchMap((info) => {
       // TODO start showing spinner
       this.store.dispatch(new SetLoading(true));
       const from = (info.pageSize * info.pageIndex);
@@ -69,6 +71,20 @@ export class CarListEffects {
       const newTo = action.payload.pageSize;
       localStorage.setItem('pagination_state', JSON.stringify([newFrom, newTo]));
       this.store.dispatch(new GetCars());
+    })
+  );
+
+  @Effect({dispatch: false})
+  getPageInfo = this.actions$.pipe(
+    ofType<GetPageInfo>(ECarActions.GetPageInfo),
+    tap(() => {
+      const paginationFromLS = localStorage.getItem('pagination_state');
+      if (!!paginationFromLS) {
+        this.store.dispatch(new SetPageInfo({
+          pageIndex: JSON.parse(paginationFromLS)[0],
+          pageSize: JSON.parse(paginationFromLS)[1]
+        }));
+      }
     })
   );
 

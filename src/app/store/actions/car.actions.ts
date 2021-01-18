@@ -8,6 +8,7 @@ export enum ECarActions {
   GetCars = '[Car] Get Cars',
   GetCarsSuccess = '[Car] Get Cars Success',
   AddCar = '[Car] Add Car',
+  GetPageInfo = 'Get Page Info',
   SetPageInfo = 'Set Page Info',
   SetLoading = 'Set Loading',
   ClearCarsStore = 'Clear Cars Store'
@@ -30,6 +31,10 @@ export class SetPageInfo implements Action{
   public readonly type = ECarActions.SetPageInfo;
   constructor(public payload: PageModel) {}
 }
+export class GetPageInfo implements Action{
+  public readonly type = ECarActions.GetPageInfo;
+}
+
 export class SetLoading implements Action{
   public readonly type = ECarActions.SetLoading;
   constructor(public payload: boolean) {}
@@ -45,4 +50,5 @@ export type CarActions = GetCars |
   AddCar |
   SetPageInfo |
   SetLoading |
-  ClearCarsStore;
+  ClearCarsStore |
+  GetPageInfo;

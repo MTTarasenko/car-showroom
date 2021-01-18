@@ -16,9 +16,7 @@ export const selectCarsAmount = createSelector(
 
 export const selectPageState = createSelector(
   selectCars,
-  (state: CarListState) => {
-    return state.pageState;
-  }
+  (state: CarListState) => state.pageState
 );
 
 export const selectLoading = createSelector(

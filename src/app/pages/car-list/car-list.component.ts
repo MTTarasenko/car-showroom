@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -9,7 +9,7 @@ import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
 import {AppState} from '../../store/state/app.state';
 import {selectCarList, selectCarsAmount, selectLoading, selectPageState} from '../../store/selectors/car-list.selector';
-import {GetCars, SetLoading, SetPageInfo} from '../../store/actions/car.actions';
+import {GetCars, GetPageInfo, SetLoading, SetPageInfo} from '../../store/actions/car.actions';
 import {PageModel} from '../../models/page.model';
 import {Car} from '../../models/car';
 import {selectSelectedCarLoading} from '../../store/selectors/car-details.selectors';
@@ -20,6 +20,7 @@ import {selectSelectedCarLoading} from '../../store/selectors/car-details.select
   styleUrls: ['./car-list.component.scss', '../../components/car/car.component.scss'],
 })
 export class CarListComponent implements OnInit, OnDestroy {
+
 
   constructor(private readonly router: Router,
               private service: CarService,
@@ -39,14 +40,7 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(new GetCars());
-
-    const paginationFromLS = localStorage.getItem('pagination_state');
-    if (!!paginationFromLS) {
-      this.store.dispatch(new SetPageInfo({
-        pageIndex: JSON.parse(paginationFromLS)[0],
-        pageSize: JSON.parse(paginationFromLS)[1]
-      }));
-    }
+    this.store.dispatch(new GetPageInfo());
 
     this.pageState$ = this.store.pipe(select(selectPageState));
     this.sCars$ = this.store.pipe(select(selectCarList)).pipe(map(data => {
