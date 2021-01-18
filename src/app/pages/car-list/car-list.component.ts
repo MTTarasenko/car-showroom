@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
@@ -56,7 +56,13 @@ export class CarListComponent implements OnInit, OnDestroy {
     // this.cars$ = this.activatedRoute.data.pipe(
     //   map((data: { cars: Car[] }) => data.cars)
     // );
-
+    const paginationFromLS = localStorage.getItem('pagination state');
+    if (!!paginationFromLS) {
+      this.pageState$ = of({
+        pageIndex: (JSON.parse(paginationFromLS)[1] / (JSON.parse(paginationFromLS)[1] - JSON.parse(paginationFromLS)[0])) - 1,
+        pageSize: JSON.parse(paginationFromLS)[1] - JSON.parse(paginationFromLS)[0]
+      });
+    }
   }
 
   onPageEvent($event): void {

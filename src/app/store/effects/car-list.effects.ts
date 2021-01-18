@@ -77,8 +77,6 @@ export class CarListEffects {
       console.log(action.payload);
       const newFrom = action.payload.pageSize * action.payload.pageIndex;
       const newTO = action.payload.pageSize * (action.payload.pageIndex + 1);
-      // const newFrom = action.payload.pageIndex;
-      // const newTO = action.payload.pageSize;
       localStorage.setItem('pagination state', JSON.stringify([newFrom, newTO]));
       this.store.dispatch(new GetCars());
     })
