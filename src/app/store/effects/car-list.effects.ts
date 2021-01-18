@@ -31,7 +31,6 @@ export class CarListEffects {
       if (!!paginationFromLS) {
         from = JSON.parse(paginationFromLS)[0];
         to = JSON.parse(paginationFromLS)[1];
-        // this.store.dispatch(new SetPageInfo({pageIndex: from, pageSize: to}));
       } else {
         from = (info.pageSize * info.pageIndex);
         to = info.pageSize * (info.pageIndex + 1);
@@ -74,7 +73,6 @@ export class CarListEffects {
   setPageInfo$ = this.actions$.pipe(
     ofType<SetPageInfo>(ECarActions.SetPageInfo),
     tap((action) => {
-      console.log(action.payload);
       const newFrom = action.payload.pageSize * action.payload.pageIndex;
       const newTO = action.payload.pageSize * (action.payload.pageIndex + 1);
       localStorage.setItem('pagination state', JSON.stringify([newFrom, newTO]));

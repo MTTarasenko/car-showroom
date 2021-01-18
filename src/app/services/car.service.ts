@@ -208,7 +208,6 @@ export class CarService {
 
   getFourCarsAndLength(from?: number, to?: number): Observable<CollectionRespModel<Car>> {
     console.log('getting car list...');
-    const paginationFromLS = localStorage.getItem('pagination state');
     const cars = this.carListArray.slice(from, to)
       .map(item => ({...item}));
     return of({totalCount: this.carListArray.length, list: cars}).pipe(delay(1000));
