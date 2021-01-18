@@ -20,11 +20,9 @@ export class FavoriteEffects {
   getFavCarList = this.actions$.pipe(
     ofType<GetFavCarList>(EFavoriteActions.GetFavCarList),
     switchMap(() => {
-      // this.store.dispatch(new SetLoading(true));
       return this.favService.getFavoriteCars().pipe(map(data => {
         const localFavCars = JSON.parse(localStorage.getItem('favorite cars'));
         if (!!localFavCars && !!localFavCars.length) {
-          console.log(!!localFavCars.length, localFavCars);
           return localFavCars;
         } else {
           return data;
@@ -39,8 +37,7 @@ export class FavoriteEffects {
   @Effect({dispatch: false})
   updateCarsList$ = this.actions$.pipe(
     ofType<GetFavCarListSuccess>(EFavoriteActions.GetFavCarListSuccess),
-    tap((action) => {
-      // console.log(action.payload);
+    tap(() => {
       this.store.dispatch(new GetCars());
     })
   );

@@ -16,12 +16,9 @@ export class FavoritesService {
 
   getFavoriteCars(): Observable<Car[]> {
     console.log('fav cars init');
-    // localStorage.setItem('favorite cars', JSON.stringify(this.favoriteCarsList));
-    let favCarsFromLS;
-    if (!!localStorage.getItem('favorite cars')) {
-      favCarsFromLS = JSON.parse(localStorage.getItem('favorite cars'));
-    } else {
-      favCarsFromLS = [];
+    const favCarsFromLS = localStorage.getItem('favorite cars');
+    if (!!favCarsFromLS) {
+      this.favoriteCarsList = JSON.parse(favCarsFromLS);
     }
     return of(this.favoriteCarsList
       .map(item => ({...item})))
@@ -38,7 +35,6 @@ export class FavoritesService {
         localStorage.setItem('favorite cars', JSON.stringify(this.favoriteCarsList));
         return observer.next(newFavCar);
       }
-      // localStorage.setItem('favorite cars', JSON.stringify(this.favoriteCarsList));
     }).pipe(
       delay(1000),
       map((data: Car) => data)
@@ -53,7 +49,6 @@ export class FavoritesService {
           localStorage.setItem('favorite cars', JSON.stringify(this.favoriteCarsList));
           return observer.next(car);
         }
-        // localStorage.setItem('favorite cars', JSON.stringify(this.favoriteCarsList));
       });
     }).pipe(
       delay(1000),

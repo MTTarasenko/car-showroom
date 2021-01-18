@@ -32,13 +32,6 @@ export class CarListEffects {
           .pipe(map(data => data)),
         this.store.pipe(select(selectFavCarsList))
       ).pipe(map(([resp, favCars]) => {
-        // this.store.dispatch(new SetLoading(false));
-        // const localStoreFavCars = JSON.parse(localStorage.getItem('favorite cars'));
-        // if (localStoreFavCars && localStoreFavCars.length > 0) {
-        //   console.log('got cars in local store');
-        // } else {
-        //   console.log('no cars in local store');
-        // }
         resp.list.map(car => {
           favCars.map(favoriteCar => {
             if (car.id === favoriteCar.id) {
