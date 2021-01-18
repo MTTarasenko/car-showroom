@@ -5,6 +5,7 @@ import {Car} from '../../models/car';
 export enum EFavoriteActions {
   GetFavCarList = '[Car] Get Car List',
   GetFavCarListSuccess = '[Car] Get Car List Success',
+  ClearFavStore = 'Clear Fav Store',
   AddCarToFav = '[Car] Add Car To Fav',
   RemoveCarFromFav = '[Car] Remove Car From Fav',
 }
@@ -24,9 +25,13 @@ export class RemoveCarFromFav implements Action{
   public readonly type = EFavoriteActions.RemoveCarFromFav;
   constructor(public payload: number) {}
 }
+export class ClearFavStore implements Action{
+  public readonly type = EFavoriteActions.ClearFavStore;
+}
 
 export type FavoriteActions =
   GetFavCarList |
   GetFavCarListSuccess |
   AddCarToFav |
-  RemoveCarFromFav;
+  RemoveCarFromFav |
+  ClearFavStore;

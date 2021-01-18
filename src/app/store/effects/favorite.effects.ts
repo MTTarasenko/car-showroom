@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Store} from '@ngrx/store';
+import {of} from 'rxjs';
+import {map, switchMap, tap, throttleTime} from 'rxjs/operators';
+
 import {
   AddCarToFav,
   EFavoriteActions, GetFavCarList, GetFavCarListSuccess,
   RemoveCarFromFav
 } from '../actions/favorite.actions';
-import {delay, map, switchMap, tap, throttleTime} from 'rxjs/operators';
-import {of} from 'rxjs';
-import {Car} from '../../models/car';
 import {FavoritesService} from '../../services/favorites.service';
 import {GetCars, SetLoading} from '../actions/car.actions';
-import {Store} from '@ngrx/store';
 import {AppState} from '../state/app.state';
 
 

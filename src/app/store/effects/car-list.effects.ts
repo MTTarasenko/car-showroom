@@ -25,10 +25,8 @@ export class CarListEffects {
     switchMap(([action, info]) => {
       // TODO start showing spinner
       this.store.dispatch(new SetLoading(true));
-      let from: number;
-      let to: number;
-      from = (info.pageSize * info.pageIndex);
-      to = info.pageSize * (info.pageIndex + 1);
+      const from = (info.pageSize * info.pageIndex);
+      const to = info.pageSize * (info.pageIndex + 1);
       return zip(
         this.carService.getFourCarsAndLength(from, to)
           .pipe(map(data => data)),

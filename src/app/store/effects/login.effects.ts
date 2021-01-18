@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {ClearCarsStore} from '../actions/car.actions';
 import {Store} from '@ngrx/store';
 import {AppState} from '../state/app.state';
+import {ClearFavStore} from '../actions/favorite.actions';
 
 
 @Injectable()
@@ -30,6 +31,7 @@ export class LoginEffects {
     ofType<LogOut>(ELoginActions.LogOut),
     tap(() => {
       this.store.dispatch(new ClearCarsStore());
+      this.store.dispatch(new ClearFavStore());
       this.service.logOut();
     })
   );

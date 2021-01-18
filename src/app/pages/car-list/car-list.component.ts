@@ -39,7 +39,6 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(new GetCars());
-    // this.store.dispatch(new GetFavCarList());
 
     const paginationFromLS = localStorage.getItem('pagination_state');
     if (!!paginationFromLS) {

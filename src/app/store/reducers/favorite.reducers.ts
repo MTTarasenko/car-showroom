@@ -20,6 +20,9 @@ export const favoriteReducers = (
         favCarList: action.payload
       };
     }
+    case EFavoriteActions.ClearFavStore: {
+      return initialFavCarState;
+    }
     default:
       return state;
   }
