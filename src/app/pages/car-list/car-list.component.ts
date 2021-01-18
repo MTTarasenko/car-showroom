@@ -42,7 +42,7 @@ export class CarListComponent implements OnInit, OnDestroy {
     this.store.dispatch(new GetCars());
     this.store.dispatch(new GetFavCarList());
 
-    const paginationFromLS = localStorage.getItem('pagination state');
+    const paginationFromLS = localStorage.getItem('pagination_state');
     if (!!paginationFromLS) {
       this.store.dispatch(new SetPageInfo({
         pageIndex: JSON.parse(paginationFromLS)[0],

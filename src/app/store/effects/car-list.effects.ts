@@ -69,7 +69,7 @@ export class CarListEffects {
     tap((action) => {
       const newFrom = action.payload.pageIndex;
       const newTo = action.payload.pageSize;
-      localStorage.setItem('pagination state', JSON.stringify([newFrom, newTo]));
+      localStorage.setItem('pagination_state', JSON.stringify([newFrom, newTo]));
       this.store.dispatch(new GetCars());
     })
   );
