@@ -16,7 +16,18 @@ export const selectCarsAmount = createSelector(
 
 export const selectPageState = createSelector(
   selectCars,
-  (state: CarListState) => state.pageState
+  (state: CarListState) => {
+    const paginationFromLS = localStorage.getItem('pagination state');
+    // if (!!paginationFromLS) {
+    //   return {
+    //     pageSize: JSON.parse(paginationFromLS)[0],
+    //     pageIndex: JSON.parse(paginationFromLS)[1]
+    //   };
+    // } else {
+    //   return state.pageState;
+    // }
+    return state.pageState;
+  }
 );
 
 export const selectLoading = createSelector(

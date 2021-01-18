@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of, pipe} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Car} from '../models/car';
 import {CollectionRespModel} from '../models/collection-resp.model';
 import {delay, map} from 'rxjs/operators';
@@ -208,8 +208,8 @@ export class CarService {
 
   getFourCarsAndLength(from?: number, to?: number): Observable<CollectionRespModel<Car>> {
     console.log('getting car list...');
-    const cars = this.carListArray
-      .slice(from, to)
+    const paginationFromLS = localStorage.getItem('pagination state');
+    const cars = this.carListArray.slice(from, to)
       .map(item => ({...item}));
     return of({totalCount: this.carListArray.length, list: cars}).pipe(delay(1000));
   }

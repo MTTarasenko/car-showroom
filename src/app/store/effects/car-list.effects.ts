@@ -25,8 +25,17 @@ export class CarListEffects {
     switchMap(([action, info]) => {
       // TODO start showing spinner
       this.store.dispatch(new SetLoading(true));
-      const from = (info.pageSize * info.pageIndex);
-      const to = info.pageSize * (info.pageIndex + 1);
+      let from: number;
+      let to: number;
+      const paginationFromLS = localStorage.getItem('pagination state');
+      if (!!paginationFromLS) {
+        from = JSON.parse(paginationFromLS)[0];
+        to = JSON.parse(paginationFromLS)[1];
+        // this.store.dispatch(new SetPageInfo({pageIndex: from, pageSize: to}));
+      } else {
+        from = (info.pageSize * info.pageIndex);
+        to = info.pageSize * (info.pageIndex + 1);
+      }
       return zip(
         this.carService.getFourCarsAndLength(from, to)
           .pipe(map(data => data)),
@@ -64,7 +73,13 @@ export class CarListEffects {
   @Effect({dispatch: false})
   setPageInfo$ = this.actions$.pipe(
     ofType<SetPageInfo>(ECarActions.SetPageInfo),
-    tap(() => {
+    tap((action) => {
+      console.log(action.payload);
+      // const newFrom = action.payload.pageSize * action.payload.pageIndex;
+      // const newTO = action.payload.pageSize * (action.payload.pageIndex + 1);
+      const newFrom = action.payload.pageIndex;
+      const newTO = action.payload.pageSize;
+      localStorage.setItem('pagination state', JSON.stringify([newFrom, newTO]));
       this.store.dispatch(new GetCars());
     })
   );
