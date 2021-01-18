@@ -2,7 +2,7 @@ import {EFavoriteActions, FavoriteActions} from '../actions/favorite.actions';
 import {Car} from '../../models/car';
 
 export interface FavoriteState {
-  favCarList: Car[];
+  favCarList: number[];
 }
 
 export const initialFavCarState = {

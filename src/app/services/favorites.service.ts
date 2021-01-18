@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
-import {Car} from '../models/car';
 import {delay, map} from 'rxjs/operators';
 
 @Injectable({
@@ -9,50 +8,48 @@ import {delay, map} from 'rxjs/operators';
 })
 export class FavoritesService {
 
-  favoriteCarsList: Car[] = [];
+  favoriteCarsIDList: number[] = [];
 
   constructor() {
   }
 
-  getFavoriteCars(): Observable<Car[]> {
+  getFavoriteCars(): Observable<number[]> {
     console.log('fav cars init');
-    const favCarsFromLS = localStorage.getItem('favorite cars');
+    const favCarsFromLS = localStorage.getItem('favorite_cars_ids');
     if (!!favCarsFromLS) {
-      this.favoriteCarsList = JSON.parse(favCarsFromLS);
+      this.favoriteCarsIDList = JSON.parse(favCarsFromLS);
     }
-    return of(this.favoriteCarsList
-      .map(item => ({...item})))
-      .pipe(delay(1000));
+    return of(([...this.favoriteCarsIDList])
+    ).pipe(delay(1000));
   }
 
-  addFavorite(car?: Car): Observable<Car> {
+  addFavorite(carID: number): Observable<number> {
     return new Observable(observer => {
-      if (!this.favoriteCarsList.some(value => {
-        return value.id === car.id;
+      if (!this.favoriteCarsIDList.some(value => {
+        return value === carID;
       })) {
-        const newFavCar = {...car};
-        this.favoriteCarsList.push(newFavCar);
-        localStorage.setItem('favorite cars', JSON.stringify(this.favoriteCarsList));
-        return observer.next(newFavCar);
+        this.favoriteCarsIDList.push(carID);
+        localStorage.setItem('favorite_cars_ids', JSON.stringify(this.favoriteCarsIDList));
+        return observer.next(carID);
       }
     }).pipe(
       delay(1000),
-      map((data: Car) => data)
+      map((data: number) => data)
     );
   }
 
-  removeFavorite(car: Car): Observable<Car> {
+  removeFavorite(carID: number): Observable<number> {
     return new Observable(observer => {
-      this.favoriteCarsList.forEach((item, index) => {
-        if (item.id === car.id) {
-          this.favoriteCarsList.splice(index, 1);
-          localStorage.setItem('favorite cars', JSON.stringify(this.favoriteCarsList));
-          return observer.next(car);
+      this.favoriteCarsIDList.forEach((item, index) => {
+        if (item === carID) {
+          this.favoriteCarsIDList.splice(index, 1);
+          localStorage.setItem('favorite_cars_ids', JSON.stringify(this.favoriteCarsIDList));
+          return observer.next(carID);
         }
       });
     }).pipe(
       delay(1000),
-      map((data: Car) => data)
+      map((data: number) => data)
     );
   }
 

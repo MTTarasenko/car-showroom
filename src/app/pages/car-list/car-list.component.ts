@@ -1,19 +1,18 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {select, Store} from '@ngrx/store';
 
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
 import {HelperService} from '../../services/helper.service';
-import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
 import {selectCarList, selectCarsAmount, selectLoading, selectPageState} from '../../store/selectors/car-list.selector';
 import {GetCars, SetLoading, SetPageInfo} from '../../store/actions/car.actions';
 import {PageModel} from '../../models/page.model';
 import {Car} from '../../models/car';
 import {selectSelectedCarLoading} from '../../store/selectors/car-details.selectors';
-import {map} from 'rxjs/operators';
-import {GetFavCarList, GetFavCarListSuccess} from '../../store/actions/favorite.actions';
 
 @Component({
   selector: 'app-car-list',
@@ -40,7 +39,7 @@ export class CarListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(new GetCars());
-    this.store.dispatch(new GetFavCarList());
+    // this.store.dispatch(new GetFavCarList());
 
     const paginationFromLS = localStorage.getItem('pagination_state');
     if (!!paginationFromLS) {

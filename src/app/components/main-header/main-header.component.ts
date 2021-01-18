@@ -2,18 +2,18 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {faStar as regularStar} from '@fortawesome/free-regular-svg-icons';
+import {Observable} from 'rxjs';
+import {select, Store} from '@ngrx/store';
 
 import {AuthGuardService} from '../../guards/auth-guard.service';
 import {AddCarModalComponent} from '../add-car-modal/add-car-modal.component';
 import {CarService} from '../../services/car.service';
 import {FavoritesService} from '../../services/favorites.service';
-import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/state/app.state';
-import {AddCar, ClearCarsStore} from '../../store/actions/car.actions';
+import {AddCar} from '../../store/actions/car.actions';
 import {selectFavCarsList} from '../../store/selectors/favorite.selectors';
 import {LogOut} from '../../store/actions/login.actions';
-import {Observable} from 'rxjs';
-import {Car} from '../../models/car';
+import {GetFavCarList} from '../../store/actions/favorite.actions';
 
 @Component({
   selector: 'app-main-header',
@@ -22,7 +22,7 @@ import {Car} from '../../models/car';
 })
 export class MainHeaderComponent implements OnInit, OnDestroy{
 
-  favCars$: Observable<Car[]>;
+  favCars$: Observable<number[]>;
   faStarRegular = regularStar;
 
 
@@ -35,6 +35,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+    this.store.dispatch(new GetFavCarList());
     this.favCars$ = this.store.pipe(select(selectFavCarsList));
   }
   ngOnDestroy(): void {}

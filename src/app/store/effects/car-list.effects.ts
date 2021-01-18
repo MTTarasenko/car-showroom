@@ -36,7 +36,7 @@ export class CarListEffects {
       ).pipe(map(([resp, favCars]) => {
         resp.list.map(car => {
           favCars.map(favoriteCar => {
-            if (car.id === favoriteCar.id) {
+            if (car.id === favoriteCar) {
               car.favorite = true;
             }
           });

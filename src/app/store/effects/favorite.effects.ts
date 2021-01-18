@@ -20,17 +20,10 @@ export class FavoriteEffects {
   getFavCarList = this.actions$.pipe(
     ofType<GetFavCarList>(EFavoriteActions.GetFavCarList),
     switchMap(() => {
-      return this.favService.getFavoriteCars().pipe(map(data => {
-        const localFavCars = JSON.parse(localStorage.getItem('favorite cars'));
-        if (!!localFavCars && !!localFavCars.length) {
-          return localFavCars;
-        } else {
-          return data;
-        }
-      }));
+      return this.favService.getFavoriteCars().pipe(map(data => data));
     }),
-    switchMap((cars: Car[]) => {
-      return of(new GetFavCarListSuccess(cars));
+    switchMap((carIDs: number[]) => {
+      return of(new GetFavCarListSuccess(carIDs));
     })
   );
 

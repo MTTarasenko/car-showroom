@@ -37,9 +37,9 @@ export class CarComponent {
 
   toggleFavorite(car): void {
     if (!car.favorite) {
-      this.store.dispatch(new AddCarToFav(car));
+      this.store.dispatch(new AddCarToFav(car.id));
     } else {
-      this.store.dispatch(new RemoveCarFromFav(car));
+      this.store.dispatch(new RemoveCarFromFav(car.id));
     }
   }
 

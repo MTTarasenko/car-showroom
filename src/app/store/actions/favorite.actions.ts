@@ -14,15 +14,15 @@ export class GetFavCarList implements Action{
 }
 export class GetFavCarListSuccess implements Action{
   public readonly type = EFavoriteActions.GetFavCarListSuccess;
-  constructor(public payload: Car[]) {}
+  constructor(public payload: number[]) {}
 }
 export class AddCarToFav implements Action{
   public readonly type = EFavoriteActions.AddCarToFav;
-  constructor(public payload: Car) {}
+  constructor(public payload: number) {}
 }
 export class RemoveCarFromFav implements Action{
   public readonly type = EFavoriteActions.RemoveCarFromFav;
-  constructor(public payload: Car) {}
+  constructor(public payload: number) {}
 }
 
 export type FavoriteActions =
