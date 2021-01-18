@@ -41,7 +41,6 @@ export class CarListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(new GetCars());
     this.store.dispatch(new GetFavCarList());
-    this.pageState$ = this.store.pipe(select(selectPageState));
     this.sCars$ = this.store.pipe(select(selectCarList)).pipe(map(data => {
       // stop showing spinner
       if (data) {
@@ -62,6 +61,8 @@ export class CarListComponent implements OnInit, OnDestroy {
         pageIndex: (JSON.parse(paginationFromLS)[1] / (JSON.parse(paginationFromLS)[1] - JSON.parse(paginationFromLS)[0])) - 1,
         pageSize: JSON.parse(paginationFromLS)[1] - JSON.parse(paginationFromLS)[0]
       });
+    } else {
+      this.pageState$ = this.store.pipe(select(selectPageState));
     }
   }
 
