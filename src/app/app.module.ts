@@ -26,7 +26,7 @@ import {BasicLayoutModule} from './layout/basic-layout/basic-layout.module';
 import {CarModule} from './components/car/car.module';
 import {HighlightTextDirective} from './directives/highlight-text.directive';
 import {PaginationPipe} from './pipes/pagination.pipe';
-import {appReducers} from './store/reducers/app.reducers';
+import {appReducers, metaReducers} from './store/reducers/app.reducers';
 import {CarListEffects} from './store/effects/car-list.effects';
 import {FavoriteEffects} from './store/effects/favorite.effects';
 import {LoginEffects} from './store/effects/login.effects';
@@ -60,7 +60,7 @@ import {CarDetailsEffects} from './store/effects/car-details.effects';
     CarModule,
     FontAwesomeModule,
     MatPaginatorModule,
-    StoreModule.forRoot(appReducers),
+    StoreModule.forRoot(appReducers, {metaReducers}),
     EffectsModule.forRoot([
       CarListEffects,
       FavoriteEffects,

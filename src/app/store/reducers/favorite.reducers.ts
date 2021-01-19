@@ -1,5 +1,4 @@
 import {EFavoriteActions, FavoriteActions} from '../actions/favorite.actions';
-import {Car} from '../../models/car';
 
 export interface FavoriteState {
   favCarList: number[];
@@ -19,9 +18,6 @@ export const favoriteReducers = (
         ...state,
         favCarList: action.payload
       };
-    }
-    case EFavoriteActions.ClearFavStore: {
-      return initialFavCarState;
     }
     default:
       return state;

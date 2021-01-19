@@ -11,7 +11,6 @@ export enum ECarActions {
   GetPageInfo = 'Get Page Info',
   SetPageInfo = 'Set Page Info',
   SetLoading = 'Set Loading',
-  ClearCarsStore = 'Clear Cars Store'
 }
 
 export class GetCars implements Action{
@@ -40,9 +39,6 @@ export class SetLoading implements Action{
   constructor(public payload: boolean) {}
 }
 
-export class ClearCarsStore implements Action{
-  public readonly type = ECarActions.ClearCarsStore;
-}
 
 
 export type CarActions = GetCars |
@@ -50,5 +46,4 @@ export type CarActions = GetCars |
   AddCar |
   SetPageInfo |
   SetLoading |
-  ClearCarsStore |
   GetPageInfo;

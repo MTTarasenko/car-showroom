@@ -45,9 +45,6 @@ export const carListReducers = (
         isLoading: action.payload
       };
     }
-    case ECarActions.ClearCarsStore: {
-      return initialCarListState;
-    }
     default:
       return state;
   }

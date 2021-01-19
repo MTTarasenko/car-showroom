@@ -39,7 +39,7 @@ export class CarListComponent implements OnInit, OnDestroy {
   amountOfCarsOnPage: number[] = [4, 5, 6, 7, 8, 9, 10];
 
   ngOnInit(): void {
-    this.store.dispatch(new GetCars());
+    // this.store.dispatch(new GetCars());
     this.store.dispatch(new GetPageInfo());
 
     this.pageState$ = this.store.pipe(select(selectPageState));

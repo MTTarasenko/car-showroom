@@ -4,10 +4,6 @@ import {ELoginActions, GetLogin, LogOut} from '../actions/login.actions';
 import {tap} from 'rxjs/operators';
 import {SessionService} from '../../services/session.service';
 import {Router} from '@angular/router';
-import {ClearCarsStore} from '../actions/car.actions';
-import {Store} from '@ngrx/store';
-import {AppState} from '../state/app.state';
-import {ClearFavStore} from '../actions/favorite.actions';
 
 
 @Injectable()
@@ -29,8 +25,6 @@ export class LoginEffects {
   logOut = this.actions$.pipe(
     ofType<LogOut>(ELoginActions.LogOut),
     tap(() => {
-      this.store.dispatch(new ClearCarsStore());
-      this.store.dispatch(new ClearFavStore());
       this.service.logOut();
     })
   );
@@ -39,7 +33,6 @@ export class LoginEffects {
     private actions$: Actions,
     private service: SessionService,
     private readonly router: Router,
-    private store: Store<AppState>
   ) {
   }
 }
